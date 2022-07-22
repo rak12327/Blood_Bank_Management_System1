@@ -12,12 +12,12 @@ const NavBar = () => {
 
 
     return (
-        <div className="fixed top-0 z-50 w-[100%]">
+        <div className="fixed top-0 z-50 w-[100%] bg-[#fff]">
             <div className='flex justify-center'>
-                <div className="max-w-[1300px] w-[100%] h-[3.5rem]">
+                <div className="max-w-[1300px] w-[100%] h-[3.5rem] border-b shadow-sm'">
 
                     {/* destop view */}
-                    <div className='px-[1rem] py-[.5rem] flex items-center justify-between border-b shadow-sm'>
+                    <div className='px-[1rem] py-[.5rem] flex items-center justify-between'>
                         <div className="w-[15%] md:w-[10%] lg:w-[7%]" >
                             <img src='/assets/logo.png' alt='...' className='w-full' />
                         </div>

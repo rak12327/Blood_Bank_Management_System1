@@ -1,17 +1,16 @@
 import React from "react";
 import Hero from "./Hero";
 import NavBar from "./NavBar";
+import Style from "./Home.module.css"
 
 const Home = () => {
   return (
     <>
-      <div className=" bg-[#fff] snap-y snap-mandatory relative">
+      <div className=" bg-[#fff] h-[100vh]">
         <NavBar />
-        <Hero />
-        {/* <Hero />
-        <Hero /> */}
-
-
+        <div className={Style.section}>
+          <Hero />
+        </div>
 
       </div>
     </>

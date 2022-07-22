@@ -5,7 +5,7 @@ const Request = () => {
   return (
     <div className="">
       <NavBar />
-      <div className="max-w-[1300px] mx-auto min-h-[90vh] px-[1rem] lg:px-[2rem] bg-green-500 mt-[3.5rem]">
+      <div className="max-w-[1300px] mx-auto min-h-[90vh] px-[1rem] lg:px-[2rem] bg-green-500 mt-[3.4rem]">
         <div className="text-center">
           <h1 className="text-[crimson] text-4xl mt-[1rem] font-bold">Check Blood Stock</h1>
         </div>
