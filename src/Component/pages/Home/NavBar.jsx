@@ -12,69 +12,71 @@ const NavBar = () => {
 
 
     return (
-        <div className="fixed top-0 z-50 w-[100%] bg-[#fff]">
-            <div className='flex justify-center'>
-                <div className="max-w-[1300px] w-[100%] h-[3.5rem] border-b shadow-sm'">
+        <div className='h-[4rem]'>
 
-                    {/* destop view */}
-                    <div className='px-[1rem] py-[.5rem] flex items-center justify-between'>
-                        <div className="w-[15%] md:w-[10%] lg:w-[7%]" >
-                            <img src='/assets/logo.png' alt='...' className='w-full' />
-                        </div>
-                        <div className='hidden sm:block'>
-                            <nav>
-                                <ul className='flex items-center justify-between gap-5 md:gap-10'>
-                                    <li>
-                                        <NavLink to={"/"} className={({ isActive }) => isActive ? activeStyle : unActiveStyle}>Home</NavLink>
-                                    </li>
-                                    <li>
-                                        <NavLink to={"/Donor"} className={({ isActive }) => isActive ? activeStyle : unActiveStyle}>Donor</NavLink>
-                                    </li>
-                                    <li>
-                                        <NavLink to={"/Request"} className={({ isActive }) => isActive ? activeStyle : unActiveStyle}>Request</NavLink>
-                                    </li>
-                                    <li>
-                                        <NavLink to={"/Contact-us"} className={({ isActive }) => isActive ? activeStyle : unActiveStyle}>Contact Us</NavLink>
-                                    </li>
-                                    <li className='flex items-center justify-between gap-2'>
-                                        <NavLink to={"/sign-in"} className={({ isActive }) => isActive ? activeStyle : unActiveStyle}>Sign in</NavLink>
-                                        /
-                                        <NavLink to={"/sign-up"} className={`rounded-[.5rem] text-white bg-[black]  border-none px-[1rem] py-[.4rem]`}>Sign up</NavLink>
-                                    </li>
-                                </ul>
-                            </nav>
-                        </div>
-                        <div className='sm:hidden'>
-                            {openNavBar ? <MenuIcon className="h-5 w-5" onClick={(e) => setOpenNavBar(!openNavBar)} /> : <XIcon className='w-5 h-5' onClick={(e) => setOpenNavBar(!openNavBar)} />}
-                        </div>
-                    </div>
-
-                    {/* mobile view */}
-                    {!openNavBar && <nav className='sm:hidden bg-[#fff] max-h-[70vh] overflow-y-auto z-10 fixed shadow-md w-full duration-1000'>
-                        <ul className='px-[1.5rem] py-[1.5rem]'>
-                            <li className='border-b border-black py-[.5rem] '>
-                                <NavLink to={"/"} className={({ isActive }) => isActive ? activeStyle : unActiveStyle}>Home</NavLink>
-                            </li>
-                            <li className='border-b border-black py-[.5rem] '>
-
-                                <NavLink to={"/Donor"} className={({ isActive }) => isActive ? activeStyle : unActiveStyle}>Donor</NavLink>
-                            </li>
-                            <li className='border-b border-black py-[.5rem] '>
-
-                                <NavLink to={"/Request"} className={({ isActive }) => isActive ? activeStyle : unActiveStyle}>Request</NavLink>
-                            </li>
-                            <li className='border-b border-black py-[.5rem] '>
-
-                                <NavLink to={"/Contact-us"} className={({ isActive }) => isActive ? activeStyle : unActiveStyle}>Contact Us</NavLink>
-                            </li>
-                            <div className='flex flex-col items-center mt-[1rem]'>
-                                <NavLink to={"/sign-in"} className={"border border-black bg-transparent w-full mb-[1rem] text-center py-[.5rem] rounded-md font-normal outline-none"}>Sign in</NavLink>
-
-                                <NavLink to={"/sign-up"} className={`text-white bg-[black] outline-none w-full py-[.5rem] text-center rounded-md`}>Sign up</NavLink>
+            <div className="fixed top-0 z-50 w-[100%] bg-[#fff] shadow-sm">
+                <div className='flex justify-center'>
+                    <div className="max-w-[1300px] w-[100%] h-[4rem] border-b'">
+                        {/* destop view */}
+                        <div className='px-[1rem] py-[.8rem] flex items-center justify-between'>
+                            <div className="w-[15%] md:w-[10%] lg:w-[7%]" >
+                                <img src='/assets/logo.png' alt='...' className='w-full' />
                             </div>
-                        </ul>
-                    </nav>}
+                            <div className='hidden sm:block'>
+                                <nav>
+                                    <ul className='flex items-center justify-between gap-5 md:gap-10'>
+                                        <li>
+                                            <NavLink to={"/"} className={({ isActive }) => isActive ? activeStyle : unActiveStyle}>Home</NavLink>
+                                        </li>
+                                        <li>
+                                            <NavLink to={"/Donor"} className={({ isActive }) => isActive ? activeStyle : unActiveStyle}>Donor</NavLink>
+                                        </li>
+                                        <li>
+                                            <NavLink to={"/Request"} className={({ isActive }) => isActive ? activeStyle : unActiveStyle}>Request</NavLink>
+                                        </li>
+                                        <li>
+                                            <NavLink to={"/Contact-us"} className={({ isActive }) => isActive ? activeStyle : unActiveStyle}>Contact Us</NavLink>
+                                        </li>
+                                        <li className='flex items-center justify-between gap-2'>
+                                            <NavLink to={"/sign-in"} className={({ isActive }) => isActive ? activeStyle : unActiveStyle}>Sign in</NavLink>
+                                            /
+                                            <NavLink to={"/sign-up"} className={`rounded-[.5rem] text-white bg-[black]  border-none px-[1rem] py-[.4rem]`}>Sign up</NavLink>
+                                        </li>
+                                    </ul>
+                                </nav>
+                            </div>
+                            <div className='sm:hidden'>
+                                {openNavBar ? <MenuIcon className="h-5 w-5" onClick={(e) => setOpenNavBar(!openNavBar)} /> : <XIcon className='w-5 h-5' onClick={(e) => setOpenNavBar(!openNavBar)} />}
+                            </div>
+                        </div>
 
+                        {/* mobile view */}
+                        {!openNavBar && <nav className='sm:hidden bg-[#fff] max-h-[70vh] overflow-y-auto z-10 fixed shadow-md w-full duration-1000'>
+                            <ul className='px-[1.5rem] py-[1.5rem]'>
+                                <li className='border-b border-black py-[.5rem] '>
+                                    <NavLink to={"/"} className={({ isActive }) => isActive ? activeStyle : unActiveStyle}>Home</NavLink>
+                                </li>
+                                <li className='border-b border-black py-[.5rem] '>
+
+                                    <NavLink to={"/Donor"} className={({ isActive }) => isActive ? activeStyle : unActiveStyle}>Donor</NavLink>
+                                </li>
+                                <li className='border-b border-black py-[.5rem] '>
+
+                                    <NavLink to={"/Request"} className={({ isActive }) => isActive ? activeStyle : unActiveStyle}>Request</NavLink>
+                                </li>
+                                <li className='border-b border-black py-[.5rem] '>
+
+                                    <NavLink to={"/Contact-us"} className={({ isActive }) => isActive ? activeStyle : unActiveStyle}>Contact Us</NavLink>
+                                </li>
+                                <div className='flex flex-col items-center mt-[1rem]'>
+                                    <NavLink to={"/sign-in"} className={"border border-black bg-transparent w-full mb-[1rem] text-center py-[.5rem] rounded-md font-normal outline-none"}>Sign in</NavLink>
+
+                                    <NavLink to={"/sign-up"} className={`text-white bg-[black] outline-none w-full py-[.5rem] text-center rounded-md`}>Sign up</NavLink>
+                                </div>
+                            </ul>
+                        </nav>}
+
+                    </div>
                 </div>
             </div>
         </div>

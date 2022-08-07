@@ -3,10 +3,9 @@ import NavBar from "../Home/NavBar";
 
 const Donor = () => {
   return (
-    <div className="bg-[crimson]">
+    <div className="bg-[crimson] h-[100vh]">
       <NavBar />
-
-      <div className="max-w-[1300px] mx-auto px-[1rem] lg:px-[2rem] py-[2rem] h-[90vh] flex">
+      <div className="max-w-[1300px] mx-auto px-[1rem] lg:px-[2rem] py-[2rem] flex">
         <div className="px-[1rem] py-[2rem] max-w-[1000px] m-auto bg-[#fff] rounded-xl flex flex-col md:flex-row items-center justify-around">
           <div className="w-[100%]  md:w-[30%]">
             <img src="/assets/donate.jpg" alt="..." className=" w-[50rem] md:w-full h-[20rem] md:h-full rounded-xl object-contain" />

@@ -8,11 +8,11 @@ const Hero = () => {
 
     return (
         <div className='max-w-[1300px] h-[100vh] w-[100%] m-auto px-[1rem] py-[2rem]'>
-            <div className='flex items-center justify-center h-full py-[4rem]'>
-                <div className='w-[45%]'>
+            <div className='flex items-center justify-center flex-col lg:flex-row h-full lg:py-[4rem]'>
+                <div className='w-[100%] sm:w-[80%] md:w-[60%] lg:w-[45%]'>
                     <img src="/assets/bloodDonation.jpg" alt='...' />
                 </div>
-                <div className='w-[55%]'>
+                <div className='lg:w-[55%]'>
                     <h1 className='text-[crimson] text-2xl font-bold mb-[.5rem]'>
                         Blood donation will cost you nothing but it will save a life !
                     </h1>
