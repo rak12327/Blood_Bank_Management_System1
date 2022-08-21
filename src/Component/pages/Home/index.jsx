@@ -7,7 +7,7 @@ import ImageSlider from "./ImageSlider";
 const Home = () => {
   return (
     <>
-      <div className=" bg-[#fff] h-[100vh]">
+      <div className=" bg-[#fff]">
         <NavBar />
         <div className={Style.section}>
           <Hero />

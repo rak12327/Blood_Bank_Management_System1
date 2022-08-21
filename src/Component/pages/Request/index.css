@@ -1,0 +1,36 @@
+.cardRight {
+  flex: 60%;
+  height: 80%;
+  background-color: #fff;
+  margin-right: 15px;
+  border-radius: 10px;
+  font-size: 15px;
+  transition: 0.5s;
+}
+.option {
+  border: none;
+  border-bottom: 1px solid #000;
+  width: 90%;
+  padding: 0.5rem 0.2rem;
+}
+
+.unitValue {
+  outline: none;
+  border: none;
+  border-bottom: 1px solid black;
+}
+
+@media screen and (max-width: 720px) {
+  .cardContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 96%;
+    height: 250px;
+  }
+  .card:hover {
+    font-size: 18px;
+    width: 98%;
+    height: 100%;
+  }
+}

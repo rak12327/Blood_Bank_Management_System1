@@ -53,37 +53,30 @@ function ImageSlider() {
 
     return (
         <div className='h-[100%] bg-[crimson]'>
-            <div className='max-w-[1300px] m-auto px-[1rem] w-[100%] h-[100%]'>
-                {/* <div className='flex justify-center h-[100%]'> */}
-
+            <div className='max-w-[1300px] m-auto px-[1rem] '>
+                <div className='h-[80vh] w-[50%] mx-auto'>
                     <Slider {...settings} >
-                        <div className="flex justify-center items-center h-full">
-                            <div className="bg-[#fff] p-[1rem] max-w-[900px] w-[100%] h-[350px] flex items-center justify-around flex-row">
-                                <div className='w-[55%]'><h1>text</h1></div>
-                                <div className='w-[30%]'>
-                                    <img src='/assets/BloodSlide4.jpg' alt='...' className='w-[100%]' />
-                                </div>
+                        <div className="bg-[#fff] p-[1rem] w-[100%] h-[350px] flex items-center justify-around flex-row">
+                            <div className='w-[55%]'><h1>text</h1></div>
+                            <div className='w-[30%]'>
+                                <img src='/assets/BloodSlide4.jpg' alt='...' className='w-[100%]' />
                             </div>
                         </div>
-                        <div className="flex justify-center items-center">
-                            <div className="bg-[#fff] p-[1rem] max-w-[900px] w-[100%] h-[350px] flex items-center justify-around flex-row">
-                                <div className='w-[55%]'><h1>text</h1></div>
-                                <div className='w-[30%]'>
-                                    <img src='/assets/BloodSlide4.jpg' alt='...' className='w-[100%]' />
-                                </div>
+                        <div className="bg-[#fff] p-[1rem] w-[100%] h-[350px] flex items-center justify-around flex-row">
+                            <div className='w-[55%]'><h1>text</h1></div>
+                            <div className='w-[30%]'>
+                                <img src='/assets/BloodSlide4.jpg' alt='...' className='w-[100%]' />
                             </div>
                         </div>
-                        <div className="flex justify-center items-center">
-                            <div className="bg-[#fff] p-[1rem] max-w-[900px] w-[100%] h-[350px] flex items-center justify-around flex-row">
-                                <div className='w-[55%]'><h1>text</h1></div>
-                                <div className='w-[30%]'>
-                                    <img src='/assets/BloodSlide4.jpg' alt='...' className='w-[100%]' />
-                                </div>
+                        <div className="bg-[#fff] p-[1rem] w-[100%] h-[350px] flex items-center justify-around flex-row">
+                            <div className='w-[55%]'><h1>text</h1></div>
+                            <div className='w-[30%]'>
+                                <img src='/assets/BloodSlide4.jpg' alt='...' className='w-[100%]' />
                             </div>
                         </div>
                     </Slider>
                 </div>
-            {/* </div> */}
+            </div>
         </div>
     );
 }

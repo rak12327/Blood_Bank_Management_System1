@@ -4,10 +4,8 @@ import TypeWriterEffect from 'react-typewriter-effect';
 
 const Hero = () => {
 
-
-
     return (
-        <div className='max-w-[1300px] h-[100vh] w-[100%] m-auto px-[1rem] py-[2rem]'>
+        <div className='max-w-[1300px] w-[100%] m-auto px-[1rem] py-[2rem]'>
             <div className='flex items-center justify-center flex-col lg:flex-row h-full lg:py-[4rem]'>
                 <div className='w-[100%] sm:w-[80%] md:w-[60%] lg:w-[45%]'>
                     <img src="/assets/bloodDonation.jpg" alt='...' />

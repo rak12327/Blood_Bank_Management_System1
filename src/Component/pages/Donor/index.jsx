@@ -1,9 +1,19 @@
 import React from "react";
+// import { useState } from "react";
 import NavBar from "../Home/NavBar";
 
 const Donor = () => {
+
+  // const [openDialog, setOpenDialog] = useState(false)
+
+  // const dialogHandler = () => {
+  //   setOpenDialog(true)
+  //   console.log(openDialog);
+  // }
+
+  // const closeDialog = () => setOpenDialog(false)
   return (
-    <div className="bg-[crimson] h-[100vh]">
+    <div className="bg-[red] h-[100vh]">
       <NavBar />
       <div className="max-w-[1300px] mx-auto px-[1rem] lg:px-[2rem] py-[2rem] flex">
         <div className="px-[1rem] py-[2rem] max-w-[1000px] m-auto bg-[#fff] rounded-xl flex flex-col md:flex-row items-center justify-around">
@@ -51,11 +61,37 @@ const Donor = () => {
               Our blood supply comes from caring donors like you. It takes about one hour of your time. When you give blood, it gives someone another smile, another hug, another chance. It is the gift of life.
             </p>
             <div className="text-center mt-4 md:text-right">
-              <button className="bg-[crimson] px-[1.25rem] py-[.5rem] text-white rounded-xl">Be a Donor</button>
+              <button type="button" className="bg-[crimson] px-[1.25rem] py-[.5rem] text-white rounded-xl outline-none">Be a Donor</button>
             </div>
           </div>
         </div>
       </div>
+      {/* {openDialog &&
+        <>
+          <div onClick={closeDialog} className="fixed inset-0 overflow-y-auto bg-[#4a4c4d] bg-opacity-50 z-30">
+          </div>
+          <div className="flex inset-0 fixed items-center justify-center min-h-full p-[1rem] z-50">
+            <div className="relative w-[100%] my-[1.5rem] mx-auto max-w-[800px]">
+              <div className="bg-[#fff] p-[1rem] lg:px-0 rounded relative border-0 outline-none focus:outline-none">
+                <div className="text-center border-b border-slate-400 border-solid">
+                  <h1 className="text-2xl font-semibold mb-[1.5rem] px-[1rem]">Blood Donation Camp</h1>
+                </div>
+                <div className="border-b border-slate-400 border-solid py-[1.5rem]">
+                  <p className="text-lg font-normal px-[1rem]">73V6+GCC, Dhamankar Naka, Padma Nagar, Bhiwandi, Maharashtra 421302</p>
+                </div>
+                <div className="px-[1rem] py-[1.5rem] w-[80%] mx-auto">
+                  <form>
+                    <div className="mb-[.5rem]">
+                      <label className="block mb-[.2rem]">Name</label>
+                      <input type={"text"} placeholder='Full Name' className="w-[100%] rounded border border-slate-500 border-solid hover:bg-sky-50 outline-none focus:bg-sky-50 focus:outline-none" />
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </>
+      } */}
     </div>
   );
 };

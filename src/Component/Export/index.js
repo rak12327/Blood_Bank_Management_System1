@@ -4,8 +4,10 @@ import Register from "../pages/Register";
 import Donor from "../pages/Donor";
 import Login from "../pages/Login";
 import Request from "../pages/Request";
+import Profile from "../pages/Profile";
+import RequestForm from "../pages/Request/RequestForm";
 
-export { Home, Contact, Register, Request, Donor, Login };
+export { Home, Contact, Register, Request, Donor, Login, Profile, RequestForm };
 
 export const Data = [
   {

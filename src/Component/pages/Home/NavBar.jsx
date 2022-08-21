@@ -10,13 +10,15 @@ const NavBar = () => {
 
     const [openNavBar, setOpenNavBar] = useState(true)
 
+    const user = true
+
 
     return (
-        <div className='h-[4rem]'>
+        <div className='h-[3.5rem] lg:h-[4rem]'>
 
             <div className="fixed top-0 z-50 w-[100%] bg-[#fff] shadow-sm">
                 <div className='flex justify-center'>
-                    <div className="max-w-[1300px] w-[100%] h-[4rem] border-b'">
+                    <div className="max-w-[1300px] w-[100%] h-[3.5rem] lg:h-[4rem] border-b'">
                         {/* destop view */}
                         <div className='px-[1rem] py-[.8rem] flex items-center justify-between'>
                             <div className="w-[15%] md:w-[10%] lg:w-[7%]" >
@@ -37,11 +39,17 @@ const NavBar = () => {
                                         <li>
                                             <NavLink to={"/Contact-us"} className={({ isActive }) => isActive ? activeStyle : unActiveStyle}>Contact Us</NavLink>
                                         </li>
-                                        <li className='flex items-center justify-between gap-2'>
-                                            <NavLink to={"/sign-in"} className={({ isActive }) => isActive ? activeStyle : unActiveStyle}>Sign in</NavLink>
-                                            /
-                                            <NavLink to={"/sign-up"} className={`rounded-[.5rem] text-white bg-[black]  border-none px-[1rem] py-[.4rem]`}>Sign up</NavLink>
-                                        </li>
+                                        {!user ?
+                                            <li className='flex items-center justify-between gap-2'>
+                                                <NavLink to={"/sign-in"} className={({ isActive }) => isActive ? activeStyle : unActiveStyle}>Sign in</NavLink>
+
+                                                <NavLink to={"/"} className={`rounded-[.5rem] text-white bg-[black]  border-none px-[1rem] py-[.4rem]`}>Sign up</NavLink>
+                                            </li>
+                                            :
+                                            <li>
+                                                <NavLink to={"/profile"} className={({ isActive }) => isActive ? activeStyle : unActiveStyle}>Account</NavLink>
+                                            </li>
+                                        }
                                     </ul>
                                 </nav>
                             </div>
