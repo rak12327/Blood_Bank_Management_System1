@@ -10,6 +10,8 @@ import {
   Profile,
 } from "./Component/Export";
 import { Route, Routes } from "react-router-dom";
+import ForgotPassword from "./Component/pages/ForgotPassword";
+import ResetPassword from "./Component/pages/Reset";
 
 const App = () => {
   return (
@@ -20,6 +22,8 @@ const App = () => {
         <Route element={<Donor />} path="/donor" />
         <Route element={<Register />} path="/sign-up" />
         <Route element={<Login />} path="/sign-in" />
+        <Route element={<ForgotPassword />} path="/forgot-password" />
+        <Route element={<ResetPassword />} path="/reset-password" />
         <Route element={<Request />} path="/request" />
         <Route element={<Profile />} path="/profile" />
         <Route element={<RequestForm />} path="/request-form" />

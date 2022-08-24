@@ -1,8 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
+import { Model } from "../../Export/Model";
 import NavBar from "../Home/NavBar";
 import "./index.css"
 
 const Request = () => {
+  const [open, setOpen] = useState(false);
+
+  const handleOpen = () => setOpen(!open);
   return (
     <div className="">
       <NavBar />
@@ -32,7 +36,7 @@ const Request = () => {
                   <label htmlFor="price" className="text-sm w-[30%]">Unit </label>
                   <input type="text" disabled value={0} className='w-[70%] text-sm px-[.5rem] py-[.4rem] unitValue' />
                 </div>
-                <button className="px-[.5rem] py-[.1rem] bg-[black] rounded text-[#fff]">Request Blood</button>
+                <button className="px-[.5rem] py-[.1rem] bg-[black] rounded text-[#fff]" onClick={handleOpen}>Request Blood</button>
               </div>
             </div>
           </div>
@@ -214,6 +218,7 @@ const Request = () => {
           </div>
         </div>
       </div>
+      <Model handleOpen={handleOpen} open={open} />
     </div>
   );
 };
