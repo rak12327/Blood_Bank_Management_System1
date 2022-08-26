@@ -1,45 +1,79 @@
 import { Fragment } from "react";
 import {
-    Button,
     Dialog,
     DialogHeader,
     DialogBody,
     DialogFooter,
 } from "@material-tailwind/react";
+import { useDispatch, useSelector } from "react-redux";
+import { closeModel } from "../Redux/RequestModel";
 
-export const Model = ({ open, handleOpen }) => {
+export const Model = () => {
+
+    const { openModel, requestData } = useSelector(state => state.requestModel)
+
+    const dispatch = useDispatch()
+
+    const handleOpen = () => {
+        dispatch(closeModel())
+    }
 
 
     return (
         <Fragment>
-
             <Dialog
-                open={open}
+                open={openModel}
                 handler={handleOpen}
                 animate={{
                     mount: { scale: 1, y: 0 },
                     unmount: { scale: 0.9, y: -100 },
                 }}
             >
-                <DialogHeader>Its a simple dialog.</DialogHeader>
-                <DialogBody divider>
-                    Lorem, ipsum dolor sit amet consectetur adipisicing elit. Accusamus ad
-                    reprehenderit omnis perspiciatis aut odit! Unde architecto
-                    perspiciatis, dolorum dolorem iure quia saepe autem accusamus eum
-                    praesentium magni corrupti explicabo!
+                <DialogHeader>Blood Order</DialogHeader>
+                <DialogBody divider className="block">
+                    <div className="mb-[.5rem] w-[100%]">
+                        <label className="block mb-[.2rem]">Blood Name</label>
+                        <input
+                            type="text"
+                            className="w-[100%] px-[.5rem] py-[.4rem] rounded"
+                            placeholder="Blood Name"
+                            value={requestData.bloodName || ""}
+                            disabled={requestData.bloodName === "" ? false : true}
+                        />
+                    </div>
+                    <div className="flex items-center justify-between gap-[1rem]">
+                        <div className="mb-[.5rem] w-[100%]">
+                            <label className="block mb-[.2rem]">Unit</label>
+                            <input
+                                type="text"
+                                className="w-[100%] px-[.5rem] py-[.4rem] rounded"
+                                placeholder="Unit"
+                                value={requestData.unit || ""}
+                                disabled={requestData.unit === "" ? false : true}
+                            />
+                        </div>
+                        <div className="mb-[.5rem] w-[100%]">
+                            <label className="block mb-[.2rem]">Price</label>
+                            <input
+                                type="text"
+                                className="w-[100%] px-[.5rem] py-[.4rem] rounded"
+                                placeholder="Amount"
+                                value={requestData.price || ""}
+                                disabled={requestData.price === "" ? false : true}
+                            />
+                        </div>
+                    </div>
                 </DialogBody>
-                <DialogFooter>
-                    <Button
-                        variant="text"
-                        color="red"
+                <DialogFooter className="flex items-center justify-between">
+                    <button
                         onClick={handleOpen}
-                        className="mr-1"
+                        className="bg-[black] text-sm text-[#fff] font-normal px-[1rem] py-[.5rem] rounded"
                     >
                         <span>Cancel</span>
-                    </Button>
-                    <Button variant="gradient" color="green" onClick={handleOpen}>
+                    </button>
+                    <button className="bg-[black] text-sm font-normal px-[1rem] py-[.5rem] text-[#fff] rounded" onClick={handleOpen}>
                         <span>Confirm</span>
-                    </Button>
+                    </button>
                 </DialogFooter>
             </Dialog>
         </Fragment>

@@ -1,12 +1,17 @@
-import React, { useState } from "react";
+import React from "react";
+import { useDispatch } from "react-redux";
 import { Model } from "../../Export/Model";
+import { openABNegative, openABPositive, openANegative, openOPositive, openAPositive, openBNegative, openBPositive, openONegative } from "../../Redux/RequestModel";
 import NavBar from "../Home/NavBar";
 import "./index.css"
 
 const Request = () => {
-  const [open, setOpen] = useState(false);
+  // const [input, setInput] = useState({aPositive: "", aNegative: "", bPositive: "", bNegative: ""})
+  const dispatch = useDispatch()
+  const Data = { bloodName: "A positive", unit: "1", price: "1230" }
 
-  const handleOpen = () => setOpen(!open);
+
+
   return (
     <div className="">
       <NavBar />
@@ -30,13 +35,18 @@ const Request = () => {
                   <label htmlFor="option" className="block mb-[.2rem] text-left px-[.1rem]">Blood Component:</label>
                   <select name="option" id="option" className="w-[90%] px-[.5rem] py-[.3rem] focus:rounded option">
                     <option value="null">Select</option>
+                    <option value="ApositiveRH">ApositiveRH</option>
+                    <option value="ApositiveWipro">ApositiveWipro</option>
+                    <option value="ApositiveTCS">ApositiveTCS</option>
                   </select>
                 </div>
                 <div className="mb-[.5rem] w-[100%]">
                   <label htmlFor="price" className="text-sm w-[30%]">Unit </label>
                   <input type="text" disabled value={0} className='w-[70%] text-sm px-[.5rem] py-[.4rem] unitValue' />
                 </div>
-                <button className="px-[.5rem] py-[.1rem] bg-[black] rounded text-[#fff]" onClick={handleOpen}>Request Blood</button>
+                <button className="px-[.5rem] py-[.1rem] bg-[black] rounded text-[#fff]" onClick={() => {
+                  dispatch(openAPositive(Data))
+                }}>Request Blood</button>
               </div>
             </div>
           </div>
@@ -55,13 +65,16 @@ const Request = () => {
                   <label htmlFor="option" className="block mb-[.2rem] text-left px-[.1rem]">Blood Component:</label>
                   <select name="option" id="option" className="w-[90%] px-[.5rem] py-[.3rem] focus:rounded option">
                     <option value="null">Select</option>
+                    <option value="ApositiveRH">ApositiveRH</option>
+                    <option value="ApositiveWipro">ApositiveWipro</option>
+                    <option value="ApositiveTCS">ApositiveTCS</option>
                   </select>
                 </div>
                 <div className="mb-[.5rem] w-[100%]">
                   <label htmlFor="price" className="text-sm w-[30%]">Unit </label>
                   <input type="text" disabled value={0} className='w-[70%] text-sm px-[.5rem] py-[.4rem] unitValue' />
                 </div>
-                <button className="px-[.5rem] py-[.1rem] bg-[black] rounded text-[#fff]">Request Blood</button>
+                <button className="px-[.5rem] py-[.1rem] bg-[black] rounded text-[#fff]" onClick={() => dispatch(openANegative(Data))}>Request Blood</button>
               </div>
             </div>
           </div>
@@ -86,7 +99,9 @@ const Request = () => {
                   <label htmlFor="price" className="text-sm w-[30%]">Unit </label>
                   <input type="text" disabled value={0} className='w-[70%] text-sm px-[.5rem] py-[.4rem] unitValue' />
                 </div>
-                <button className="px-[.5rem] py-[.1rem] bg-[black] rounded text-[#fff]">Request Blood</button>
+                <button className="px-[.5rem] py-[.1rem] bg-[black] rounded text-[#fff]"
+                  onClick={() => dispatch(openBPositive(Data))}
+                >Request Blood</button>
               </div>
             </div>
           </div>
@@ -112,7 +127,9 @@ const Request = () => {
                   <label htmlFor="price" className="text-sm w-[30%]">Unit </label>
                   <input type="text" disabled value={0} className='w-[70%] text-sm px-[.5rem] py-[.4rem] unitValue' />
                 </div>
-                <button className="px-[.5rem] py-[.1rem] bg-[black] rounded text-[#fff]">Request Blood</button>
+                <button className="px-[.5rem] py-[.1rem] bg-[black] rounded text-[#fff]"
+                  onClick={() => dispatch(openBNegative(Data))}
+                >Request Blood</button>
               </div>
             </div>
           </div>
@@ -137,7 +154,9 @@ const Request = () => {
                   <label htmlFor="price" className="text-sm w-[30%]">Unit </label>
                   <input type="text" disabled value={0} className='w-[70%] text-sm px-[.5rem] py-[.4rem] unitValue' />
                 </div>
-                <button className="px-[.5rem] py-[.1rem] bg-[black] rounded text-[#fff]">Request Blood</button>
+                <button className="px-[.5rem] py-[.1rem] bg-[black] rounded text-[#fff]"
+                  onClick={() => dispatch(openABPositive(Data))}
+                >Request Blood</button>
               </div>
             </div>
           </div>
@@ -162,7 +181,9 @@ const Request = () => {
                   <label htmlFor="price" className="text-sm w-[30%]">Unit </label>
                   <input type="text" disabled value={0} className='w-[70%] text-sm px-[.5rem] py-[.4rem] unitValue' />
                 </div>
-                <button className="px-[.5rem] py-[.1rem] bg-[black] rounded text-[#fff]">Request Blood</button>
+                <button className="px-[.5rem] py-[.1rem] bg-[black] rounded text-[#fff]"
+                  onClick={() => dispatch(openABNegative(Data))}
+                >Request Blood</button>
               </div>
             </div>
           </div>
@@ -187,7 +208,9 @@ const Request = () => {
                   <label htmlFor="price" className="text-sm w-[30%]">Unit </label>
                   <input type="text" disabled value={0} className='w-[70%] text-sm px-[.5rem] py-[.4rem] unitValue' />
                 </div>
-                <button className="px-[.5rem] py-[.1rem] bg-[black] rounded text-[#fff]">Request Blood</button>
+                <button className="px-[.5rem] py-[.1rem] bg-[black] rounded text-[#fff]"
+                  onClick={() => dispatch(openOPositive(Data))}
+                >Request Blood</button>
               </div>
             </div>
           </div>
@@ -212,13 +235,13 @@ const Request = () => {
                   <label htmlFor="price" className="text-sm w-[30%]">Unit </label>
                   <input type="text" disabled value={0} className='w-[70%] text-sm px-[.5rem] py-[.4rem] unitValue' />
                 </div>
-                <button className="px-[.5rem] py-[.1rem] bg-[black] rounded text-[#fff]">Request Blood</button>
+                <button className="px-[.5rem] py-[.1rem] bg-[black] rounded text-[#fff]" onClick={() => dispatch(openONegative(Data))}>Request Blood</button>
               </div>
             </div>
           </div>
         </div>
       </div>
-      <Model handleOpen={handleOpen} open={open} />
+      <Model />
     </div>
   );
 };

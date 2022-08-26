@@ -6,19 +6,17 @@ const Profile = () => {
 
     const [updateAcc, setUpdateAcc] = useState(false)
     const [value, setValue] = useState({ name: "Rohit", email: "rohitpramanik30593@gmail.com" })
-    const [spinner, setSpinner] = useState(false)
+    // const [spinner, setSpinner] = useState(false)
 
 
     const submitHandler = () => {
-        setSpinner(true)
+        // setSpinner(true)
         console.log(value)
         setTimeout(() => {
-            setSpinner(false)
+            // setSpinner(false)
             setUpdateAcc(false)
         }, 5000)
     }
-
-    console.log(spinner);
     return (
         <div className='bg-[red] h-[100vh]'>
             <NavBar />
@@ -57,9 +55,12 @@ const Profile = () => {
                                         {!updateAcc && <button className='bg-[black] w-full lg:w-auto px-[1rem] py-[.4rem] text-[#fff] text-sm rounded'>Log out</button>}
                                         {!updateAcc && <button className='bg-[black] w-full lg:w-auto px-[1rem] py-[.4rem] text-[#fff] text-sm rounded'>Reset Password</button>}
                                         {!updateAcc ?
-                                            <button className='bg-[black] w-full lg:w-auto px-[1rem] py-[.4rem] text-[#fff] text-sm rounded' onClick={() => setUpdateAcc(true)}>Update Account</button>
+                                            <button className='bg-[black] w-full lg:w-auto px-[1rem] py-[.4rem] text-[#fff] text-sm rounded' onClick={() => setUpdateAcc(true)}>
+
+                                                Update Account</button>
                                             :
-                                            <button className='bg-[black] w-full lg:w-auto text-[#fff] px-[1rem] py-[.4rem] text-sm rounded' onClick={submitHandler}>Submit</button>}
+                                            <button className='bg-[black] w-full lg:w-auto text-[#fff] px-[1rem] py-[.4rem] text-sm rounded' onClick={submitHandler}>
+                                                Submit</button>}
                                         {!updateAcc && <button className='bg-[black] lg:w-auto w-full px-[1rem] py-[.4rem] text-[#fff] text-sm rounded'>Delete Account</button>}
                                     </div>
                                 </div>

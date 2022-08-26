@@ -2,7 +2,7 @@ import React from "react";
 import Hero from "./Hero";
 import NavBar from "./NavBar";
 import Style from "./Home.module.css"
-import ImageSlider from "./ImageSlider";
+// import ImageSlider from "./ImageSlider";
 
 const Home = () => {
   return (
@@ -11,7 +11,7 @@ const Home = () => {
         <NavBar />
         <div className={Style.section}>
           <Hero />
-          <ImageSlider />
+          {/* <ImageSlider /> */}
         </div>
 
       </div>
