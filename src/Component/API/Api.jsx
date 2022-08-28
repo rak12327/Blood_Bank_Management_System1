@@ -1,12 +1,6 @@
-// import axios from 'axois';
+import axios from 'axios';
 
-// export const api = axios.create({ baseURL:  })
-// const api = axios.create({
-//     baseURL: "",
-// });
-
-// export default api;
-
-// export const contactUs = (contactData) => API.post("/api/contactUs", contactData)
-
-export const baseURL = "http://localhost:8800"
+export default axios.create({
+    // baseURL: "http://localhost:8800"
+    baseURL: process.env.REACT_APP_API_LINK
+});

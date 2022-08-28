@@ -16,13 +16,11 @@ const Contact = () => {
     setValue(values => ({ ...values, [e.target.name]: e.target.value }))
   }
 
-
   const submitHandler = async (e) => {
     e.preventDefault()
 
     if (value.email?.trim() !== "" && value.name?.trim() !== "" && value.message?.trim() !== "") {
       console.log(value);
-      console.log(process.env.BASE_URL)
 
       try {
         await dispatch(contactUsForm(value)).unwrap()
