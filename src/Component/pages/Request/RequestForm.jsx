@@ -2,32 +2,44 @@ import React from 'react'
 import { useState } from 'react'
 import Datepicker from "react-datepicker"
 import "react-datepicker/dist/react-datepicker.css";
+import { useDispatch, useSelector } from "react-redux"
+import { useNavigate } from 'react-router-dom';
+import { inValidCSS, validCSS } from '../../Export';
+import { openAlert } from '../../Redux/AlertSlice';
+import { requestFormThunk } from '../../Redux/RequestFormSlice';
+
 
 const RequestForm = () => {
 
+  const navigate = useNavigate()
+
   const [touch, setTouch] = useState({ name: false, phoneNumber: false, adhaarNumber: false, address: false, pinCode: false, patientName: false, age: false, gender: false, hospitalName: false, hospitalPhoneNumber: false, consultantName: false, dateOfReceivingBlood: false })
   const [input, setInput] = useState({ name: "", phoneNumber: "", adhaarNumber: "", address: "", pinCode: "", patientName: "", age: "", gender: "", hospitalName: "", hospitalPhoneNumber: "", consultantName: "", dateOfReceivingBlood: "" })
-
-  const validCSS = 'w-[100%] px-[.5rem] py-[.4rem] text-sm rounded outline-none focus:bg-sky-50 hover:bg-sky-50'
-  const inValidCSS = 'w-[100%] px-[.5rem] py-[.4rem] text-sm border-[red] rounded outline-none focus:bg-sky-50 hover:bg-sky-50'
 
   const changeHandler = e => {
     setInput(values => ({ ...values, [e.target.name]: e.target.value }))
   }
 
+  const dispatch = useDispatch()
+  const responseData = useSelector(state => state.requestForm)
 
-  console.log(input)
-  console.log(touch);
-  console.log(input?.dateOfReceivingBlood)
-  const submitHandler = e => {
+  console.log(responseData)
+
+  const submitHandler = async (e) => {
     e.preventDefault()
 
     if (input.name?.length >= 4 && input.phoneNumber?.length >= 10) {
       console.log(input);
+      try {
+        await dispatch(requestFormThunk({ input, dispatch, navigate })).unwrap()
+      } catch (rejectedValueOrSerializedError) {
+        dispatch(openAlert({ message: rejectedValueOrSerializedError?.message, color: "red" }))
+      }
       setTouch({ name: false, phoneNumber: false, adhaarNumber: false, address: false, pinCode: false, patientName: false, age: false, gender: false, hospitalName: false, hospitalPhoneNumber: false, consultantName: false, dateOfReceivingBlood: false })
-      setInput({ name: "", phoneNumber: "", adhaarNumber: "", address: "", pinCode: "", patientName: "", age: "", gender: "", hospitalName: "", hospitalPhoneNumber: "", consultantName: "", dateOfReceivingBlood: null })
+      setInput({ name: "", phoneNumber: "", adhaarNumber: "", address: "", pinCode: "", patientName: "", age: null, gender: "", hospitalName: "", hospitalPhoneNumber: "", consultantName: "", dateOfReceivingBlood: null })
     } else {
       setTouch({ name: true, phoneNumber: true, adhaarNumber: true, address: true, pinCode: true, patientName: true, age: true, gender: true, hospitalName: true, hospitalPhoneNumber: true, consultantName: true, dateOfReceivingBlood: true })
+      dispatch(openAlert({ message: "Please fill all value", color: "red" }))
     }
   }
 
@@ -98,7 +110,7 @@ const RequestForm = () => {
                           type={"text"}
                           placeholder="Your Address"
                           className={input.address.trim() === "" && touch.address ? inValidCSS : validCSS}
-                          style={{ height: "6.5rem" }}
+                          style={{ height: "6.5rem", resize: "none" }}
                           value={input.address || ""}
                           name={"address"}
                           onChange={changeHandler}
@@ -149,13 +161,13 @@ const RequestForm = () => {
                             <input
                               type="tel"
                               placeholder='18'
-                              className={input.age.trim() === "" && touch.age ? inValidCSS : validCSS}
+                              className={input.age < 17 && touch.age ? inValidCSS : validCSS}
                               value={input.age || ""}
                               name="age"
                               onChange={changeHandler}
                               onBlur={() => setTouch(event => ({ ...event, age: true }))}
                             />
-                            {input.age?.trim() === "" && touch.age && <p className='text-[red] text-sm'>Please enter your age, make sure your age must +18</p>}
+                            {input.age < 17 && touch.age && <p className='text-[red] text-sm'>Please enter your age, make sure your age must +18</p>}
                           </div>
                         </div>
                         <div className='basis-[48%]'>
@@ -240,11 +252,22 @@ const RequestForm = () => {
                   </div>
                   <div className='flex items-center justify-between flex-col-reverse lg:flex-row gap-[.5rem] mt-[.5rem]'>
                     <button
-                      className='bg-[black] text-[#fff] w-[100%] lg:w-[10%] py-[.4rem] outline-none text-sm rounded'>Back</button>
+                      className='bg-[black] text-[#fff] w-[100%] lg:w-[10%] py-[.4rem] outline-none text-sm rounded'
+                      onClick={(e) => {
+                        e.preventDefault();
+                        navigate("/request");
+                      }}
+                    >Back</button>
                     <button
                       onClick={submitHandler}
+                      disabled={responseData.loading}
                       className='bg-[black] text-[#ffff] w-[100%] lg:w-[10%] py-[.4rem] outline-none text-sm rounded'
-                    >Submit
+                    >
+                      {responseData.loading && <svg role="status" className="inline mr-3 w-4 h-4 text-white animate-spin" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="#E5E7EB" />
+                        <path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="currentColor" />
+                      </svg>}
+                      Submit
                     </button>
                   </div>
                 </form>

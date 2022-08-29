@@ -3,6 +3,8 @@ import { useState } from "react";
 import NavBar from "../Home/NavBar";
 import { useDispatch, useSelector } from 'react-redux'
 import { contactUsForm } from "../../Redux/ContactUsSlice";
+import { inValidCSS, validCSS } from "../../Export";
+import { openAlert } from "../../Redux/AlertSlice";
 
 const Contact = () => {
 
@@ -24,9 +26,10 @@ const Contact = () => {
 
       try {
         await dispatch(contactUsForm(value)).unwrap()
-        alert("your response was succussfully submited")
+        dispatch(openAlert({ message: "your response was succussfully submited", color: "green" }))
+
       } catch (rejectedValueOrSerializedError) {
-        alert(rejectedValueOrSerializedError?.error?.message);
+        dispatch(openAlert({ message: rejectedValueOrSerializedError?.error?.message, color: "red" }))
       }
 
       setInputTouch({ nameTouch: false, emailTouch: false, msgTouch: false })
@@ -35,14 +38,12 @@ const Contact = () => {
 
     } else {
       setInputTouch({ nameTouch: true, emailTouch: true, msgTouch: true })
-      alert("please fill all value")
+      dispatch(openAlert({ message: "please fill all value", color: "red" }))
     }
 
 
   }
 
-  const valid = "block w-full py-1 px-2 leading-[.5rem] text-[1rem] rounded hover:bg-sky-50 focus:bg-sky-50 focus:border-sky-50"
-  const notValid = "block w-full py-1 px-2 leading-[.5rem] text-[1rem] rounded border-[red] bg-red-50 focus:bg-sky-100"
   return (
     <div className="bg-[red] min-h-[100vh] h-[100%]">
       <NavBar />
@@ -71,7 +72,7 @@ const Contact = () => {
                   value={value.name}
                   type={"text"}
                   name={"name"}
-                  className={inputTouch.nameTouch && value.name?.trim() === "" ? notValid : valid} />
+                  className={inputTouch.nameTouch && value.name?.trim() === "" ? inValidCSS : validCSS} />
                 {inputTouch.nameTouch && value.name?.trim() === "" ? <p className="text-[red] text-sm">Please enter your Full Name</p> : null}
               </div>
               {/* <div className="mb-2">
@@ -87,7 +88,7 @@ const Contact = () => {
                   value={value.email}
                   onChange={handleChange}
                   onBlur={() => setInputTouch(e => ({ ...e, emailTouch: true }))}
-                  className={inputTouch.emailTouch && value.email?.trim() === "" ? notValid : valid}
+                  className={inputTouch.emailTouch && value.email?.trim() === "" ? inValidCSS : validCSS}
                 />
                 {inputTouch.emailTouch && value.email?.trim() === "" && <p className="text-[red] text-sm">Please enter your email address</p>}
               </div>
@@ -100,7 +101,7 @@ const Contact = () => {
                   value={value.message}
                   onChange={handleChange}
                   onBlur={() => setInputTouch(e => ({ ...e, msgTouch: true }))}
-                  className={inputTouch.msgTouch && value.message?.trim() === "" ? notValid : valid}
+                  className={inputTouch.msgTouch && value.message?.trim() === "" ? inValidCSS : validCSS}
                   style={{ height: "5rem", resize: "none" }} />
                 {inputTouch.msgTouch && value.message?.trim() === "" && <p className="text-[red] text-sm">Please enter your Message</p>}
               </div>

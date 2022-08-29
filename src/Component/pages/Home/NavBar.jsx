@@ -16,7 +16,7 @@ const NavBar = () => {
     return (
         <div className='h-[3.5rem] lg:h-[4rem]'>
 
-            <div className="fixed top-0 z-50 w-[100%] bg-[#fff] shadow-sm">
+            <div className="fixed top-0 z-20 w-[100%] bg-[#fff] shadow-sm">
                 <div className='flex justify-center'>
                     <div className="max-w-[1300px] w-[100%] h-[3.5rem] lg:h-[4rem] border-b'">
                         {/* destop view */}

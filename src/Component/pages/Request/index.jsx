@@ -19,10 +19,10 @@ const Request = () => {
         <div className="text-center">
           <h1 className="text-[crimson] text-4xl font-bold">Check Blood Stock</h1>
         </div>
-        <div className="flex items-start justify-center flex-wrap gap-[1rem] mt-[1%]">
+        <div className="w-[100%] flex items-start justify-around flex-wrap gap-[1rem] mt-[1%]">
 
           {/* ---------FOR A+--------- */}
-          <div className="w-[100%] sm:w-[49%] lg:w-[24%] h-[14.5rem] flex items-center justify-center">
+          <div className="w-[100%] sm:w-[49%] lg:w-[30%] xl:w-[24%] h-[14.5rem] flex items-center justify-center">
             <div className="bg-[red] w-[100%] h-[100%] text-center flex items-center justify-between rounded-[.5rem]">
               <div className="flex justify-center w-[40%] basis-[40%]">
                 <img src={"/assets/b1.png"} alt={"..."} className='w-[6rem] h-[8rem] duration-500' />
@@ -52,7 +52,7 @@ const Request = () => {
           </div>
 
           {/* ---------FOR A- --------- */}
-          <div className="w-[100%] sm:w-[49%] lg:w-[24%]  h-[14.5rem] flex items-center justify-center">
+          <div className="w-[100%] sm:w-[49%] lg:w-[30%] xl:w-[24%]  h-[14.5rem] flex items-center justify-center">
             <div className="bg-[red] w-[100%] h-[100%] text-center flex items-center justify-between rounded-[.5rem]">
               <div className="flex justify-center w-[40%] basis-[40%]">
                 <img src={"/assets/b2.png"} alt={"..."} className='w-[6rem] h-[8rem] duration-500' />
@@ -80,7 +80,7 @@ const Request = () => {
           </div>
 
           {/* ----- B+ --------*/}
-          <div className="w-[100%] sm:w-[49%] lg:w-[24%]  h-[14.5rem] flex items-center justify-center">
+          <div className="w-[100%] sm:w-[49%] lg:w-[30%] xl:w-[24%]  h-[14.5rem] flex items-center justify-center">
             <div className="bg-[red] w-[100%] h-[100%] text-center flex items-center justify-between rounded-[.5rem]">
               <div className="flex justify-center w-[40%] basis-[40%]">
                 <img src={"/assets/b3.png"} alt={"..."} className='w-[6rem] h-[8rem] duration-500' />
@@ -108,7 +108,7 @@ const Request = () => {
 
 
           {/*------- B- -------*/}
-          <div className="w-[100%] sm:w-[49%] lg:w-[24%]  h-[14.5rem] flex items-center justify-center">
+          <div className="w-[100%] sm:w-[49%] lg:w-[30%] xl:w-[24%]  h-[14.5rem] flex items-center justify-center">
             <div className="bg-[red] w-[100%] h-[100%] text-center flex items-center justify-between rounded-[.5rem]">
               <div className="flex justify-center w-[40%] basis-[40%]">
                 <img src={"/assets/b4.png"} alt={"..."} className='w-[6rem] h-[8rem] duration-500' />
@@ -135,7 +135,7 @@ const Request = () => {
           </div>
 
           {/*-------AB+-------*/}
-          <div className="w-[100%] sm:w-[49%] lg:w-[24%]  h-[14.5rem] flex items-center justify-center">
+          <div className="w-[100%] sm:w-[49%] lg:w-[30%] xl:w-[24%]  h-[14.5rem] flex items-center justify-center">
             <div className="bg-[red] w-[100%] h-[100%] text-center flex items-center justify-between rounded-[.5rem]">
               <div className="flex justify-center w-[40%] basis-[40%]">
                 <img src={"/assets/b5.png"} alt={"..."} className='w-[6rem] h-[8rem] duration-500' />
@@ -162,7 +162,7 @@ const Request = () => {
           </div>
 
           {/*--------AB----------*/}
-          <div className="w-[100%] sm:w-[49%] lg:w-[24%]  h-[14.5rem] flex items-center justify-center">
+          <div className="w-[100%] sm:w-[49%] lg:w-[30%] xl:w-[24%]  h-[14.5rem] flex items-center justify-center">
             <div className="bg-[red] w-[100%] h-[100%] text-center flex items-center justify-between rounded-[.5rem]">
               <div className="flex justify-center w-[40%] basis-[40%]">
                 <img src={"/assets/b6.png"} alt={"..."} className='w-[6rem] h-[8rem] duration-500' />
@@ -189,7 +189,7 @@ const Request = () => {
           </div>
 
           {/*--------O+--------*/}
-          <div className="w-[100%] sm:w-[49%] lg:w-[24%]  h-[14.5rem] flex items-center justify-center">
+          <div className="w-[100%] sm:w-[49%] lg:w-[30%] xl:w-[24%]  h-[14.5rem] flex items-center justify-center">
             <div className="bg-[red] w-[100%] h-[100%] text-center flex items-center justify-between rounded-[.5rem]">
               <div className="flex justify-center w-[40%] basis-[40%]">
                 <img src={"/assets/b7.png"} alt={"..."} className='w-[6rem] h-[8rem] duration-500' />
@@ -216,7 +216,7 @@ const Request = () => {
           </div>
 
           {/*------- O- ---------*/}
-          <div className="w-[100%] sm:w-[49%] lg:w-[24%]  h-[14.5rem] flex items-center justify-center">
+          <div className="w-[100%] sm:w-[49%] lg:w-[30%] xl:w-[24%]  h-[14.5rem] flex items-center justify-center">
             <div className="bg-[red] w-[100%] h-[100%] text-center flex items-center justify-between rounded-[.5rem]">
               <div className="flex justify-center w-[40%] basis-[40%]">
                 <img src={"/assets/b8.png"} alt={"..."} className='w-[6rem] h-[8rem] duration-500' />

@@ -7,15 +7,26 @@ import {
 } from "@material-tailwind/react";
 import { useDispatch, useSelector } from "react-redux";
 import { closeModel } from "../Redux/RequestModel";
+import { useNavigate } from "react-router-dom";
 
 export const Model = () => {
 
     const { openModel, requestData } = useSelector(state => state.requestModel)
 
     const dispatch = useDispatch()
+    const navigate = useNavigate()
 
     const handleOpen = () => {
         dispatch(closeModel())
+    }
+
+    const handleOpenForm = (e) => {
+        e.preventDefault();
+
+        if (requestData.unit > 0) {
+            dispatch(closeModel())
+            navigate("/request-form")
+        }
     }
 
 
@@ -28,6 +39,7 @@ export const Model = () => {
                     mount: { scale: 1, y: 0 },
                     unmount: { scale: 0.9, y: -100 },
                 }}
+                className="min-w-[60%] lg:min-w-[50%] w-[100%]"
             >
                 <DialogHeader>Blood Order</DialogHeader>
                 <DialogBody divider className="block">
@@ -71,7 +83,7 @@ export const Model = () => {
                     >
                         <span>Cancel</span>
                     </button>
-                    <button className="bg-[black] text-sm font-normal px-[1rem] py-[.5rem] text-[#fff] rounded" onClick={handleOpen}>
+                    <button className="bg-[black] text-sm font-normal px-[1rem] py-[.5rem] text-[#fff] rounded" onClick={handleOpenForm}>
                         <span>Confirm</span>
                     </button>
                 </DialogFooter>
