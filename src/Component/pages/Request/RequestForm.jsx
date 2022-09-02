@@ -46,17 +46,17 @@ const RequestForm = () => {
 
   return (
     <>
-      <div className='bg-[red] h-[100vh]'>
-        <div className='max-w-[1300px] mx-auto px-[1rem] lg:px-[2rem] py-[1rem]'>
-          <div className='flex items-center justify-center h-[90vh]'>
-            <div className='max-w-[900px] w-[100%]'>
+      <div className='bg-[red] '>
+        <div className='max-w-[1300px] mx-auto px-[1rem] lg:px-[2rem] py-[1rem] h-[100%]'>
+          <div className='flex items-center justify-center min-h-[100vh] h-[100%]'>
+            <div className='max-w-[900px] w-[100%] h-[100%]'>
               <div className='bg-[#fff] px-[1rem] py-[1.5rem]'>
 
                 <form>
-                  <div className='flex items-start justify-around'>
+                  <div className='flex items-start justify-around flex-col lg:flex-row gap-[1rem]'>
 
                     {/* Form A side */}
-                    <div className='basis-[48%]'>
+                    <div className='w-[100%]'>
 
                       {/* ----------Name---------- */}
                       <div className='mb-[.5rem]'>
@@ -136,7 +136,7 @@ const RequestForm = () => {
                     </div>
 
                     {/* ----------Form B side---------- */}
-                    <div className='basis-[48%]'>
+                    <div className='w-[100%]'>
 
                       {/* ----------Patient Name---------- */}
                       <div className='mb-[.5rem]'>

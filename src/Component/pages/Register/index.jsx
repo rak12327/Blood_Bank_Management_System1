@@ -40,7 +40,7 @@ const Register = () => {
     <div className="bg-[red] h-[100vh]">
       <div className="max-w-[1300px] mx-auto px-[1rem] lg:px-[2rem] py-[1rem]">
         <div className="h-[90vh] flex items-center justify-center">
-          <div className="bg-[#fff] px-[1rem] py-[2rem] w-[30%] rounded">
+          <div className="bg-[#fff] px-[1rem] py-[2rem] w-[100%] lg:w-[30%] rounded">
 
             {/*---------Form Submission-------------*/}
             <form onSubmit={submitHandler}>

@@ -31,7 +31,7 @@ const Login = () => {
       <div className="max-w-[1300px] mx-auto px-[1rem] lg:px-[2rem] py-[2rem]">
         <div className="flex justify-center items-center h-[90vh]">
 
-          <div className="bg-[#fff] p-[1rem] w-[30%] rounded-lg shadow-md">
+          <div className="bg-[#fff] p-[1rem] w-[100%] lg:w-[30%] rounded-lg shadow-md">
             <form>
               <h1 className="text-center font-bold text-2xl mb-[1rem]">Sign In</h1>
               <div className="mb-[.5rem]">

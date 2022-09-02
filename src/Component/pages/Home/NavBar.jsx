@@ -26,7 +26,7 @@ const NavBar = () => {
                             </div>
                             <div className='hidden sm:block'>
                                 <nav>
-                                    <ul className='flex items-center justify-between gap-5 md:gap-10'>
+                                    <ul className='flex items-center justify-between gap-[1.25rem] md:gap-[2.5rem]'>
                                         <li>
                                             <NavLink to={"/"} className={({ isActive }) => isActive ? activeStyle : unActiveStyle}>Home</NavLink>
                                         </li>
@@ -37,7 +37,7 @@ const NavBar = () => {
                                             <NavLink to={"/Request"} className={({ isActive }) => isActive ? activeStyle : unActiveStyle}>Request</NavLink>
                                         </li>
                                         <li>
-                                            <NavLink to={"/Contact-us"} className={({ isActive }) => isActive ? activeStyle : unActiveStyle}>Contact Us</NavLink>
+                                            <NavLink to={"/Contact-us"} style={{ width: "80%" }} className={({ isActive }) => isActive ? activeStyle : unActiveStyle}>Contact Us</NavLink>
                                         </li>
                                         {!user ?
                                             <li className='flex items-center justify-between gap-2'>
@@ -76,14 +76,21 @@ const NavBar = () => {
 
                                     <NavLink to={"/Contact-us"} className={({ isActive }) => isActive ? activeStyle : unActiveStyle}>Contact Us</NavLink>
                                 </li>
-                                <div className='flex flex-col items-center mt-[1rem]'>
-                                    <NavLink to={"/sign-in"} className={"border border-black bg-transparent w-full mb-[1rem] text-center py-[.5rem] rounded-md font-normal outline-none"}>Sign in</NavLink>
+                                <div className='flex flex-col items-start mt-[1rem]'>
+                                    {!user ?
+                                        <>
+                                            <NavLink to={"/sign-in"} className={"border border-black bg-transparent w-full mb-[1rem] text-center py-[.5rem] rounded-md font-normal outline-none"}>Sign in</NavLink>
 
-                                    <NavLink to={"/sign-up"} className={`text-white bg-[black] outline-none w-full py-[.5rem] text-center rounded-md`}>Sign up</NavLink>
+                                            <NavLink to={"/sign-up"} className={`text-white bg-[black] outline-none w-full py-[.5rem] text-center rounded-md`}>Sign up</NavLink>
+                                        </>
+
+                                        :
+                                        <NavLink to={"/profile"} className={({ isActive }) => isActive ? activeStyle : unActiveStyle}>Account</NavLink>
+
+                                    }
                                 </div>
                             </ul>
                         </nav>}
-
                     </div>
                 </div>
             </div>

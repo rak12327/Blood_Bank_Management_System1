@@ -39,7 +39,7 @@ export const Model = () => {
                     mount: { scale: 1, y: 0 },
                     unmount: { scale: 0.9, y: -100 },
                 }}
-                className="min-w-[60%] lg:min-w-[50%] w-[100%]"
+                className="min-w-[90%] lg:min-w-[50%] w-[100%]"
             >
                 <DialogHeader>Blood Order</DialogHeader>
                 <DialogBody divider className="block">
