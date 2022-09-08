@@ -46,8 +46,3 @@ export const validCSS =
   "w-[100%] rounded px-[.5rem] border py-[.4rem] text-sm outline-none hover:bg-sky-50 focus:bg-sky-50";
 export const inValidCSS =
   "w-[100%] rounded px-[.5rem] border border-[red] py-[.4rem] text-sm outline-none bg-red-50 hover:bg-red-50 focus:bg-sky-50";
-
-// export const selectValue = {
-//   value: "positive A component",
-//   value: "",
-// }

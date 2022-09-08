@@ -10,8 +10,7 @@ const NavBar = () => {
 
     const [openNavBar, setOpenNavBar] = useState(true)
 
-    const user = true
-
+    const user = JSON.parse(localStorage.getItem("token"))
 
     return (
         <div className='h-[3.5rem] lg:h-[4rem]'>

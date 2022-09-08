@@ -1,6 +1,8 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const User = () => {
+  const navigate = useNavigate();
   const [updateAcc, setUpdateAcc] = useState(false);
   const [value, setValue] = useState({
     name: "Rohit",
@@ -16,12 +18,17 @@ const User = () => {
 
   const submitHandler = () => {
     setLoading(true);
-    console.log(value);
     setTimeout(() => {
       setLoading(false);
       setUpdateAcc(false);
     }, 5000);
   };
+
+  const logOut = () => {
+    localStorage.removeItem("token");
+    navigate("/sign-in");
+  };
+
   return (
     <div className="basis-[70%] w-[100%] min-h-[50vh] h-[100%] pl-[1rem]">
       <div className="w-[100%] h-[100%]">
@@ -162,7 +169,10 @@ const User = () => {
         <div className="mt-[1.25rem] lg:m-0">
           <div className="flex items-start justify-between gap-[.5rem] flex-col lg:flex-row">
             {!updateAcc && (
-              <button className="bg-[black] w-full lg:w-auto px-[1rem] py-[.4rem] text-[#fff] text-sm rounded">
+              <button
+                className="bg-[black] w-full lg:w-auto px-[1rem] py-[.4rem] text-[#fff] text-sm rounded"
+                onClick={logOut}
+              >
                 Log out
               </button>
             )}

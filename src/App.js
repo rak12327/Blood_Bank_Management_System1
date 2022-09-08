@@ -16,6 +16,7 @@ import { useSelector } from "react-redux";
 import Toster from "./Component/Export/Alert";
 import User from "./Component/pages/Profile/User";
 import RequestOrder from "./Component/pages/Profile/RequestOrder";
+import { CheckRoute, ProtectedRoute } from "./Component/Export/ProtectedRoute";
 
 const App = () => {
   const alert = useSelector((state) => state.alert);
@@ -27,22 +28,57 @@ const App = () => {
         </div>
       )}
       <Routes>
-        <Route element={<Home />} path="/" />
+        <Route
+          element={
+            <ProtectedRoute>
+              <Home />
+            </ProtectedRoute>
+          }
+          path="/"
+        />
         <Route element={<Contact />} path="/contact-us" />
         <Route element={<Donor />} path="/donor" />
         <Route element={<Register />} path="/sign-up" />
-        <Route element={<Login />} path="/sign-in" />
+        <Route
+          element={
+            <CheckRoute>
+              <Login />
+            </CheckRoute>
+          }
+          path="/sign-in"
+        />
         <Route element={<ForgotPassword />} path="/forgot-password" />
         <Route element={<ResetPassword />} path="/reset-password" />
-        <Route element={<Profile />} path="/">
+        <Route
+          element={
+            <ProtectedRoute>
+              <Profile />
+            </ProtectedRoute>
+          }
+          path="/"
+        >
           <Route element={<User />} path="/profile" />
           <Route element={<RequestOrder />} path="/request-oder-list" />
         </Route>
 
         <Route element={<Request />} path="/request/">
-          <Route element={<RequestForm />} path="request-form" />
+          <Route
+            element={
+              <ProtectedRoute>
+                <RequestForm />
+              </ProtectedRoute>
+            }
+            path="request-form"
+          />
         </Route>
-        <Route element={<RequestForm />} path="/request-form" />
+        <Route
+          element={
+            <ProtectedRoute>
+              <RequestForm />
+            </ProtectedRoute>
+          }
+          path="/request-form"
+        />
         <Route element={<h1>Hello</h1>} path="/*" />
       </Routes>
     </div>
