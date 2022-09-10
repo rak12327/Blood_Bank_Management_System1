@@ -1,10 +1,10 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import Api from "../API/Api";
+import Api, { requestFormLink } from "../API/Api";
 import { openAlert } from "./AlertSlice";
 
 export const requestFormThunk = createAsyncThunk("request-form", async ({ formData, dispatch, navigate }, { rejectWithValue }) => {
     try {
-        const response = await Api.post("/api/v1/request-form", formData)
+        const response = await Api.post(requestFormLink, formData)
         navigate("/request")
         dispatch(openAlert({ message: "your response was succussfully submited", color: "green" }))
         return response;

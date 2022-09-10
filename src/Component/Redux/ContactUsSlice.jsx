@@ -1,11 +1,11 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import Api from "../API/Api";
+import Api, { contactFormLink } from "../API/Api";
 
 export const contactUsForm = createAsyncThunk(
-    "api/contactUs",
+    contactFormLink,
     async (data, { rejectWithValue }) => {
         try {
-            await Api.post(`/api/contactUs`, data)
+            await Api.post(contactFormLink, data)
 
         } catch (error) {
             return rejectWithValue({ error: error, message: 'Opps there seems to be an error' })

@@ -21,13 +21,13 @@ const Contact = () => {
   const handleChange = e => {
     setValue(values => ({ ...values, [e.target.name]: e.target.value }))
   }
+  const user = useSelector(state => state.user.user);
 
   const submitHandler = async (e) => {
     e.preventDefault()
 
     if (value.email?.trim() !== "" && value.name?.trim() !== "" && value.message?.trim() !== "") {
 
-      const user = localStorage.getItem("token");
       if (!user) {
         dispatch(openAlert({ message: "Your are not authenticated, Please login your self", color: "red" }));
         navigate("/sign-in", { state: { path: location.pathname } })

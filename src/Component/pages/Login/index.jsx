@@ -73,7 +73,7 @@ const Login = () => {
                   onClick={signInHandler}
                 >
                   {data.loading && (
-                    <Loading />
+                    <Loading width={"1rem"} height={"1rem"} />
                   )}
                   Sign in</button>
               </div>

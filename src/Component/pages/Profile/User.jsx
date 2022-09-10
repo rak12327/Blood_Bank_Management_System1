@@ -1,18 +1,22 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import Loading from "../../Export/Loading";
 
 const User = () => {
   const navigate = useNavigate();
+  const data = useSelector((state) => state.user);
+
   const [updateAcc, setUpdateAcc] = useState(false);
   const [value, setValue] = useState({
-    name: "Rohit",
-    email: "rohitpramanik30593@gmail.com",
-    adhaarNumber: "",
-    phoneNumber: "",
-    address: "",
-    pinCode: "",
-    age: "",
-    gender: "",
+    name: data?.user?.data?.name || "",
+    email: data?.user?.data?.email,
+    adhaarNumber: data?.user?.data?.adhaarNumber || "",
+    phoneNumber: data?.user?.data?.phoneNumber || "",
+    address: data?.user?.data?.address || "",
+    pinCode: data?.user?.data?.pinCode || "",
+    age: data?.user?.data?.age || "",
+    gender: data?.user?.data?.gender || "",
   });
   const [loading, setLoading] = useState(false);
 
@@ -21,6 +25,7 @@ const User = () => {
     setTimeout(() => {
       setLoading(false);
       setUpdateAcc(false);
+      console.log(value);
     }, 5000);
   };
 
@@ -42,7 +47,7 @@ const User = () => {
             disabled={!updateAcc}
             onChange={
               updateAcc
-                ? (e) => setValue({ name: e.target.value })
+                ? (e) => setValue({ ...value, name: e.target.value })
                 : () => setValue({ name: value.name })
             }
             className="px-[.5rem] py-[.4rem] w-[100%] text-sm rounded"
@@ -57,7 +62,7 @@ const User = () => {
             disabled={!updateAcc}
             onChange={
               updateAcc
-                ? (e) => setValue({ email: e.target.value })
+                ? (e) => setValue({ ...value, email: e.target.value })
                 : () => setValue({ email: value.email })
             }
             type="email"
@@ -74,7 +79,7 @@ const User = () => {
               disabled={!updateAcc}
               onChange={
                 updateAcc
-                  ? (e) => setValue({ gender: e.target.value })
+                  ? (e) => setValue({ ...value, gender: e.target.value })
                   : () => setValue({ gender: value.gender })
               }
               className="px-[.5rem] py-[.4rem] w-[100%] text-sm rounded"
@@ -94,7 +99,7 @@ const User = () => {
               disabled={!updateAcc}
               onChange={
                 updateAcc
-                  ? (e) => setValue({ age: e.target.value })
+                  ? (e) => setValue({ ...value, age: e.target.value })
                   : () => setValue({ age: value.age })
               }
               type="tel"
@@ -113,7 +118,7 @@ const User = () => {
               disabled={!updateAcc}
               onChange={
                 updateAcc
-                  ? (e) => setValue({ adhaarNumber: e.target.value })
+                  ? (e) => setValue({ ...value, adhaarNumber: e.target.value })
                   : () => setValue({ adhaarNumber: value.adhaarNumber })
               }
               className="px-[.5rem] py-[.4rem] w-[100%] text-sm rounded"
@@ -128,7 +133,7 @@ const User = () => {
               disabled={!updateAcc}
               onChange={
                 updateAcc
-                  ? (e) => setValue({ phoneNumber: e.target.value })
+                  ? (e) => setValue({ ...value, phoneNumber: e.target.value })
                   : () => setValue({ phoneNumber: value.pinCode })
               }
               type="tel"
@@ -145,7 +150,7 @@ const User = () => {
             disabled={!updateAcc}
             onChange={
               updateAcc
-                ? (e) => setValue({ address: e.target.value })
+                ? (e) => setValue({ ...value, address: e.target.value })
                 : () => setValue({ address: value.address })
             }
             className="px-[.5rem] py-[.4rem] w-[100%] text-[1rem] leading-[20px] rounded"
@@ -159,7 +164,7 @@ const User = () => {
             disabled={!updateAcc}
             onChange={
               updateAcc
-                ? (e) => setValue({ pinCode: e.target.value })
+                ? (e) => setValue({ ...value, pinCode: e.target.value })
                 : () => setValue({ pinCode: value.pinCode })
             }
             type="tel"
@@ -193,24 +198,7 @@ const User = () => {
                 className="bg-[black] w-full lg:w-auto text-[#fff] px-[1rem] py-[.4rem] text-sm rounded"
                 onClick={submitHandler}
               >
-                {loading && (
-                  <svg
-                    role="status"
-                    className="inline mr-3 w-4 h-4 text-white animate-spin"
-                    viewBox="0 0 100 101"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
-                      fill="#E5E7EB"
-                    />
-                    <path
-                      d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
-                      fill="currentColor"
-                    />
-                  </svg>
-                )}
+                {loading && <Loading width={"1rem"} height={"1rem"} />}
                 Submit
               </button>
             )}

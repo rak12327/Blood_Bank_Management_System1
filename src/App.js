@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   Home,
   Contact,
@@ -12,14 +12,37 @@ import {
 import { Route, Routes } from "react-router-dom";
 import ForgotPassword from "./Component/pages/ForgotPassword";
 import ResetPassword from "./Component/pages/Reset";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Toster from "./Component/Export/Alert";
 import User from "./Component/pages/Profile/User";
 import RequestOrder from "./Component/pages/Profile/RequestOrder";
 import { CheckRoute, ProtectedRoute } from "./Component/Export/ProtectedRoute";
+import { UserDataThunk } from "./Component/Redux/UserDataSlice";
+import Loading from "./Component/Export/Loading";
 
 const App = () => {
   const alert = useSelector((state) => state.alert);
+  const dispatch = useDispatch();
+
+  // If Error Something is server Then, I have tih show something on screen;
+  useEffect(() => {
+    const token = JSON.parse(localStorage.getItem("token"));
+    if (token) {
+      dispatch(UserDataThunk({ token, dispatch }));
+    }
+  }, [dispatch]);
+
+  const user = useSelector((state) => state.user);
+
+  if (user.loading) {
+    return (
+      <div className="h-screen w-screen bg-black flex items-center justify-center flex-col">
+        <Loading width={"10rem"} height={"10rem"} />
+        <h1 className="text-white text-lg mt-[1rem]">Loading...</h1>
+      </div>
+    );
+  }
+
   return (
     <div>
       {alert.alertOpen && (

@@ -1,10 +1,11 @@
 import React from 'react'
 
-const Loading = () => {
+const Loading = ({ width, height }) => {
     return (
         <svg
             role="status"
-            className="inline mr-3 w-4 h-4 text-white animate-spin"
+            className="inline mr-3 text-white animate-spin"
+            style={{ height, width }}
             viewBox="0 0 100 101"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
