@@ -6,12 +6,12 @@ export const ProtectedRoute = ({ children }) => {
     const location = useLocation();
 
     const userData = useSelector(state => state.user)
-    return userData.user ? (children) : <Navigate to="/sign-in" replace state={{ path: location.pathname }} />
+    return userData.user ? (children) : <Navigate to="/sign-in" replace state={{ path: location?.pathname }} />
 }
 
 export const CheckRoute = ({ children }) => {
     const { state } = useLocation();
     const userData = useSelector(state => state.user)
 
-    return userData.user ? <Navigate to={state.path || '/'} replace /> : (children)
+    return userData.user ? <Navigate to={state?.path || '/'} replace /> : (children)
 }

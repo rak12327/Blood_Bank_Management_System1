@@ -7,8 +7,8 @@ export const SignInThunk = createAsyncThunk("signin", async ({ value, dispatch, 
 
     try {
         const response = await Api.post(signInLink, value);
-        dispatch(openAlert({ message: `Welcome back!!!`, color: "green" }));
-        navigate(state?.path || "/")
+        await dispatch(openAlert({ message: `Welcome back!!!`, color: "green" }));
+        await navigate(state?.path || "/")
         return response;
     } catch (error) {
         console.log(error)

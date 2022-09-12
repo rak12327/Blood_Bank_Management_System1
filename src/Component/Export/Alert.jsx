@@ -16,7 +16,7 @@ export default function Toster() {
 
 
     return (
-        <div className="w-[100%] relative z-50">
+        <div className="w-[100%] z-50 fixed top-0">
             <Alert
                 show={alert.alertOpen}
                 animate={{

@@ -4,7 +4,7 @@ const Loading = ({ width, height }) => {
     return (
         <svg
             role="status"
-            className="inline mr-3 text-white animate-spin"
+            className="inline mr-3 text-[white] animate-spin"
             style={{ height, width }}
             viewBox="0 0 100 101"
             fill="none"

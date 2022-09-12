@@ -25,12 +25,12 @@ const App = () => {
   const dispatch = useDispatch();
 
   // If Error Something is server Then, I have tih show something on screen;
+  const token = JSON.parse(localStorage.getItem("token"));
   useEffect(() => {
-    const token = JSON.parse(localStorage.getItem("token"));
     if (token) {
       dispatch(UserDataThunk({ token, dispatch }));
     }
-  }, [dispatch]);
+  }, [dispatch, token]);
 
   const user = useSelector((state) => state.user);
 
@@ -53,30 +53,17 @@ const App = () => {
       <Routes>
         <Route
           element={
-            <ProtectedRoute>
-              <Home />
-            </ProtectedRoute>
+            // <ProtectedRoute>
+            <Home />
+            // </ProtectedRoute>
           }
           path="/"
         />
-        <Route element={<Contact />} path="/contact-us" />
-        <Route element={<Donor />} path="/donor" />
-        <Route element={<Register />} path="/sign-up" />
         <Route
           element={
-            <CheckRoute>
-              <Login />
-            </CheckRoute>
-          }
-          path="/sign-in"
-        />
-        <Route element={<ForgotPassword />} path="/forgot-password" />
-        <Route element={<ResetPassword />} path="/reset-password" />
-        <Route
-          element={
-            <ProtectedRoute>
-              <Profile />
-            </ProtectedRoute>
+            // <ProtectedRoute>
+            <Profile />
+            // </ProtectedRoute>
           }
           path="/"
         >
@@ -102,6 +89,22 @@ const App = () => {
           }
           path="/request-form"
         />
+
+        <Route
+          element={
+            <CheckRoute>
+              <Login />
+            </CheckRoute>
+          }
+          path="/sign-in"
+        />
+
+        <Route element={<Register />} path="/sign-up" />
+        <Route element={<ForgotPassword />} path="/forgot-password" />
+        <Route element={<ResetPassword />} path="/reset-password" />
+        <Route element={<Contact />} path="/contact-us" />
+        <Route element={<Donor />} path="/donor" />
+
         <Route element={<h1>Hello</h1>} path="/*" />
       </Routes>
     </div>

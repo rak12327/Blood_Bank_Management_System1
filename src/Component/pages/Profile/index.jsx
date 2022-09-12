@@ -1,12 +1,17 @@
 import React from 'react'
+import { useSelector } from 'react-redux'
 import { Outlet } from 'react-router-dom'
+import DeleteConformation from '../../Export/DeleteConformation'
 import NavBar from '../Home/NavBar'
 
 const Profile = () => {
 
+    const open = useSelector(state => state.dailog.openDailog)
+
 
     return (
         <div className='bg-[red] min-h-[100vh] h-[100%]'>
+            {open && <DeleteConformation />}
             <NavBar />
             <div className='max-w-[1300px] mx-auto px-[1rem] py-[1rem]'>
                 <div className='flex items-center justify-center'>

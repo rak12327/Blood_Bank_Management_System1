@@ -114,7 +114,7 @@ const Contact = () => {
               <div className="text-right">
 
                 <button disabled={loading} type="submit" className="text-white bg-[black] font-medium rounded-lg text-sm px-[1rem] py-[.5rem] text-center mr-2 inline-flex items-center">
-                  {loading && <Loading />}
+                  {loading && <Loading height={'1rem'} width={'1rem'} />}
                   Submit
                 </button>
               </div>

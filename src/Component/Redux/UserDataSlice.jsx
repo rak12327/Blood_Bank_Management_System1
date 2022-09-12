@@ -23,6 +23,11 @@ const UserDataSlice = createSlice({
         user: null,
         error: null
     },
+    reducers: {
+        deleteUserData(state, action) {
+            state.user = null
+        }
+    },
     extraReducers: (builder) => {
         builder.addCase(UserDataThunk.pending, (state, action) => {
             state.loading = true;
@@ -37,5 +42,7 @@ const UserDataSlice = createSlice({
         })
     }
 })
+
+export const { deleteUserData } = UserDataSlice.actions;
 
 export default UserDataSlice.reducer;
