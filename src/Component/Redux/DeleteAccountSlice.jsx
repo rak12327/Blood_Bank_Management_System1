@@ -6,15 +6,16 @@ import { deleteUserData } from "./UserDataSlice";
 
 export const DeleteAccountThunk = createAsyncThunk(deleteUserLink, async ({ id, dispatch, navigate }, { rejectWithValue }) => {
     dispatch(dailogHandler());
-    console.log(id)
+    console.log({ id })
     try {
-        const response = await Api.delete(deleteUserLink, id)
+        const response = await Api.delete(deleteUserLink, { data: { id } });
         dispatch(openAlert({ color: "green", message: "Your account deleted" }));
         localStorage.removeItem("token")
         dispatch(deleteUserData());
         navigate("/sign-in")
         return response;
     } catch (error) {
+        console.log(error);
         dispatch(openAlert({ message: "something went wrong, please try again later", color: "red" }))
         return rejectWithValue({ error, message: "Something went wrong form our site, please try again later" })
     }

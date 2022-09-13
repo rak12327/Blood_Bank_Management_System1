@@ -20,7 +20,9 @@ const DeleteConformation = () => {
 
     const submitHandler = e => {
         e.preventDefault()
-        dispatch(DeleteAccountThunk({ id: userData?.user?.data?._id, dispatch, navigate }))
+        if (userData?.user?.data?._id) {
+            dispatch(DeleteAccountThunk({ id: userData?.user?.data?._id, dispatch, navigate }))
+        }
     }
 
     return (
