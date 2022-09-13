@@ -6,6 +6,7 @@ import { updateUserThunk } from "../../Redux/UpdateSlice";
 import { openAlert } from "../../Redux/AlertSlice";
 import { dailogHandler } from "../../Redux/DailogHandlerSlice";
 import { deleteUserData } from "../../Redux/UserDataSlice";
+import { changePasswordThunk } from "../../Redux/ChangePasswordSlice";
 
 const User = () => {
   const navigate = useNavigate();
@@ -17,7 +18,7 @@ const User = () => {
 
   const [value, setValue] = useState({
     name: data?.user?.data?.name || "",
-    email: data?.user?.data?.email,
+    email: data?.user?.data?.email || "",
     adhaarNumber: data?.user?.data?.adhaarNumber || "",
     phoneNumber: data?.user?.data?.phoneNumber || "",
     address: data?.user?.data?.address || "",
@@ -34,11 +35,20 @@ const User = () => {
   const submitHandler = (e) => {
     e.preventDefault();
 
+    if (!data?.user?.data) {
+      dispatch(openAlert({ message: "Opps, Something went wrong with your session. Please login again...", color: "yellow" }))
+      return navigate("/sign-in")
+    }
+
     if (updateAcc === 'update') {
-      if (!data?.user?.data) {
-        return dispatch(openAlert({ message: "There is no data to updated", color: "yellow" }))
-      }
       dispatch(updateUserThunk({ value: { ...value, id: data?.user?.data?._id }, dispatch, setUpdateAcc }))
+    } else if (updateAcc === "change") {
+      if (!value.currentPassword || !value.confirmPassword || !value.newPassword) {
+        return dispatch(openAlert({ color: "yellow", message: "Please enter current, new and confirm password" }))
+      }
+      dispatch(changePasswordThunk({ value: { ...value, id: data?.user?.data?._id }, dispatch, setUpdateAcc, setValue }))
+    } else {
+      return dispatch(openAlert({ color: "yellow", message: "Opps, It's seems something went wrong. Please refresh it or login again" }))
     }
   }
 
@@ -63,13 +73,14 @@ const User = () => {
             type={"text"}
             name="name"
             value={value.name}
-            disabled={!updateAcc}
+            disabled={updateAcc !== "update"}
             onChange={
-              updateAcc
+              updateAcc === "update"
                 ? (e) => setValue({ ...value, name: e.target.value })
                 : () => setValue({ name: value.name })
             }
             className="px-[.5rem] py-[.4rem] w-[100%] text-sm rounded"
+            style={updateAcc === "update" ? { color: "black" } : { color: "gray" }}
           />
         </div>
         <div className="mb-[.5rem]">
@@ -78,14 +89,15 @@ const User = () => {
             placeholder="Your Email"
             name="email"
             value={value.email}
-            disabled={!updateAcc}
+            disabled={updateAcc !== "update"}
             onChange={
-              updateAcc
+              updateAcc === "update"
                 ? (e) => setValue({ ...value, email: e.target.value })
                 : () => setValue({ email: value.email })
             }
             type="email"
             className="px-[.5rem] py-[.4rem] w-[100%] text-sm rounded"
+            style={updateAcc === "update" ? { color: "black" } : { color: "gray" }}
           />
         </div>
         {updateAcc !== 'change' ? (<>
@@ -103,6 +115,7 @@ const User = () => {
                     : () => setValue({ gender: value.gender })
                 }
                 className="px-[.5rem] py-[.4rem] w-[100%] text-sm rounded"
+                style={updateAcc === "update" ? { color: "black" } : { color: "gray" }}
               >
                 <option value={"null"}>Select your Gender</option>
                 <option value={"male"}>Male</option>
@@ -124,6 +137,7 @@ const User = () => {
                 }
                 type="tel"
                 className="px-[.5rem] py-[.4rem] w-[100%] text-sm rounded"
+                style={updateAcc === "update" ? { color: "black" } : { color: "gray" }}
               />
             </div>
           </div>
@@ -144,6 +158,7 @@ const User = () => {
                     : () => setValue({ adhaarNumber: value.adhaarNumber })
                 }
                 className="px-[.5rem] py-[.4rem] w-[100%] text-sm rounded"
+                style={updateAcc === "update" ? { color: "black" } : { color: "gray" }}
               />
               {updateAcc && false && value.adhaarNumber.length !== 12 && <p className="text-[red] text-sm">Please enter 12 digit adhaar number</p>}
             </div>
@@ -161,6 +176,8 @@ const User = () => {
                 }
                 type="tel"
                 className="px-[.5rem] py-[.4rem] w-[100%] text-sm rounded"
+                style={updateAcc === "update" ? { color: "black" } : { color: "gray" }}
+
               />
             </div>
           </div>
@@ -168,7 +185,6 @@ const User = () => {
             <label className="block mb-[.2rem]">Address</label>
             <textarea
               placeholder="Your Name"
-              style={{ resize: "none", height: "3.5rem" }}
               value={value.address}
               disabled={!updateAcc}
               onChange={
@@ -176,7 +192,9 @@ const User = () => {
                   ? (e) => setValue({ ...value, address: e.target.value })
                   : () => setValue({ address: value.address })
               }
-              className="px-[.5rem] py-[.4rem] w-[100%] text-[1rem] leading-[20px] rounded"
+              className="px-[.5rem] py-[.4rem] w-[100%] text-[1rem] leading-[20px] rounded resize-none h-[3.5rem]"
+              style={updateAcc === "update" ? { color: "black" } : { color: "gray" }}
+
             />
           </div>
           <div className="mb-[.5rem]">
@@ -192,6 +210,7 @@ const User = () => {
               }
               type="tel"
               className="px-[.5rem] py-[.4rem] w-[100%] text-sm rounded"
+              style={updateAcc === "update" ? { color: "black" } : { color: "gray" }}
             />
           </div>
         </>
@@ -203,7 +222,7 @@ const User = () => {
                 placeholder="Your current password"
                 value={value.currentPassword}
                 onChange={
-                  () => setValue({ currentPassword: value.currentPassword })
+                  (e) => setValue({ ...value, currentPassword: e.target.value })
                 }
                 type="text"
                 className="px-[.5rem] py-[.4rem] w-[100%] text-sm rounded"
@@ -215,7 +234,7 @@ const User = () => {
                 placeholder="Your current password"
                 value={value.newPassword}
                 onChange={
-                  () => setValue({ newPassword: value.newPassword })
+                  (e) => setValue({ ...value, newPassword: e.target.value })
                 }
                 type="text"
                 className="px-[.5rem] py-[.4rem] w-[100%] text-sm rounded"
@@ -227,7 +246,7 @@ const User = () => {
                 placeholder="Your current password"
                 value={value.confirmPassword}
                 onChange={
-                  () => setValue({ confirmPassword: value.confirmPassword })
+                  (e) => setValue({ ...value, confirmPassword: e.target.value })
                 }
                 type="text"
                 className="px-[.5rem] py-[.4rem] w-[100%] text-sm rounded"

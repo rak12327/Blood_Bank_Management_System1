@@ -1,11 +1,18 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import Api, { deleteUserLink } from "../API/Api";
 import { openAlert } from "./AlertSlice";
+import { dailogHandler } from "./DailogHandlerSlice";
+import { deleteUserData } from "./UserDataSlice";
 
-export const DeleteAccountThunk = createAsyncThunk(deleteUserLink, async ({ value, dispatch }, { rejectWithValue }) => {
+export const DeleteAccountThunk = createAsyncThunk(deleteUserLink, async ({ id, dispatch, navigate }, { rejectWithValue }) => {
+    dispatch(dailogHandler());
+    console.log(id)
     try {
-        const response = await Api.delete(deleteUserLink, value)
+        const response = await Api.delete(deleteUserLink, id)
         dispatch(openAlert({ color: "green", message: "Your account deleted" }));
+        localStorage.removeItem("token")
+        dispatch(deleteUserData());
+        navigate("/sign-in")
         return response;
     } catch (error) {
         dispatch(openAlert({ message: "something went wrong, please try again later", color: "red" }))

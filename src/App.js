@@ -9,7 +9,7 @@ import {
   RequestForm,
   Profile,
 } from "./Component/Export";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useNavigate } from "react-router-dom";
 import ForgotPassword from "./Component/pages/ForgotPassword";
 import ResetPassword from "./Component/pages/Reset";
 import { useDispatch, useSelector } from "react-redux";
@@ -23,14 +23,15 @@ import Loading from "./Component/Export/Loading";
 const App = () => {
   const alert = useSelector((state) => state.alert);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   // If Error Something is server Then, I have tih show something on screen;
   const token = JSON.parse(localStorage.getItem("token"));
   useEffect(() => {
     if (token) {
-      dispatch(UserDataThunk({ token, dispatch }));
+      dispatch(UserDataThunk({ token, dispatch, navigate }));
     }
-  }, [dispatch, token]);
+  }, [dispatch, token, navigate]);
 
   const user = useSelector((state) => state.user);
 
@@ -61,9 +62,9 @@ const App = () => {
         />
         <Route
           element={
-            // <ProtectedRoute>
-            <Profile />
-            // </ProtectedRoute>
+            <ProtectedRoute>
+              <Profile />
+            </ProtectedRoute>
           }
           path="/"
         >

@@ -2,14 +2,17 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import Api, { changePasswordLink } from "../API/Api";
 import { openAlert } from "./AlertSlice";
 
-export const changePasswordThunk = createAsyncThunk(changePasswordLink, async ({ value, dispatch }, { rejectWithValue }) => {
+export const changePasswordThunk = createAsyncThunk(changePasswordLink, async ({ value, dispatch, setUpdateAcc, setValue }, { rejectWithValue }) => {
+    console.log(value);
     try {
         const response = Api.patch(changePasswordLink, value);
         console.log((await response).status);
         dispatch(openAlert({ message: "Your pasword has been changed", color: "green" }));
+        setUpdateAcc("");
+        setValue({ currentPassword: "", newPassword: "", confirmPassword: "" });
         return response;
     } catch (error) {
-        dispatch(openAlert({ message: "Something went wrong, please try again later", color: "rel" }))
+        dispatch(openAlert({ message: error?.response?.data?.message ? error?.response?.data?.message : "Something went wrong, please try again later", color: "red" }))
         return rejectWithValue({ error, message: "Something went wrong, please try again later" })
     }
 })

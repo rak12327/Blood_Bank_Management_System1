@@ -8,16 +8,19 @@ import {
 } from "@material-tailwind/react";
 import { useDispatch, useSelector } from 'react-redux';
 import { dailogHandler } from '../Redux/DailogHandlerSlice';
+import { useNavigate } from 'react-router-dom';
+import { DeleteAccountThunk } from '../Redux/DeleteAccountSlice';
 
 const DeleteConformation = () => {
 
+    const navigate = useNavigate();
     const dispatch = useDispatch();
     const open = useSelector(state => state.dailog.openDailog)
-
+    const userData = useSelector(state => state.user)
 
     const submitHandler = e => {
         e.preventDefault()
-        dispatch(dailogHandler())
+        dispatch(DeleteAccountThunk({ id: userData?.user?.data?._id, dispatch, navigate }))
     }
 
     return (
@@ -37,10 +40,10 @@ const DeleteConformation = () => {
                     Delete Account
                 </DialogHeader>
                 <DialogBody divider className='block'>
-                    <Typography className="w-[100%]">
+                    <h1 className="text-[black] text-lg font-semibold">
                         Are you sure, you want to delete you account?
-                    </Typography>
-                    <Typography className="w-[100%]">
+                    </h1>
+                    <Typography className="">
                         If you you want to delete your account, you'll permanently remove from our system. You can't get your information back.
                     </Typography>
                 </DialogBody>
