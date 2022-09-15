@@ -100,7 +100,14 @@ const App = () => {
           path="/sign-in"
         />
 
-        <Route element={<Register />} path="/sign-up" />
+        <Route
+          element={
+            <CheckRoute>
+              <Register />
+            </CheckRoute>
+          }
+          path="/sign-up"
+        />
         <Route element={<ForgotPassword />} path="/forgot-password" />
         <Route element={<ResetPassword />} path="/reset-password" />
         <Route element={<Contact />} path="/contact-us" />

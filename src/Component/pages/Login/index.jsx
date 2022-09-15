@@ -38,8 +38,8 @@ const Login = () => {
       <div className="max-w-[1300px] mx-auto px-[1rem] lg:px-[2rem] py-[2rem]">
         <div className="flex justify-center items-center h-[90vh]">
 
-          <div className="bg-[#fff] p-[1rem] w-[100%] lg:w-[30%] rounded-lg shadow-md">
-            <form>
+          <div className="bg-[#fff] w-[100%] lg:w-[40%] rounded-lg shadow-md">
+            <form className="px-[1rem] pt-[1rem]">
               <h1 className="text-center font-bold text-2xl mb-[1rem]">Sign In</h1>
               <div className="mb-[.5rem]">
                 <label className="block mb-[.2rem] text-base">Email ID</label>
@@ -77,10 +77,14 @@ const Login = () => {
                   )}
                   Sign in</button>
               </div>
-              <div className="mb-[1rem] w-[100%] text-center">
-                <p>Not have an <Link to={'/sign-up'} className='text-blue-600 underline'>Account</Link> ?</p>
-              </div>
+
             </form>
+            <div className="mb-[1rem] w-[100%] text-right px-[1rem]">
+              <Link to={'/forgot-password'} className="text-gray-600">Forgot Password?</Link>
+            </div>
+            <div className="mb-[1rem] w-[100%] text-center border-t border-black pt-[.5rem]">
+              <p>Not have an <Link to={'/sign-up'} className='text-blue-600 underline'>Account</Link> ?</p>
+            </div>
           </div>
         </div>
       </div>

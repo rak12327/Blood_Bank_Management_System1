@@ -42,7 +42,7 @@ const NavBar = () => {
                                             <li className='flex items-center justify-between gap-2'>
                                                 <NavLink to={"/sign-in"} className={({ isActive }) => isActive ? activeStyle : unActiveStyle}>Sign in</NavLink>
 
-                                                <NavLink to={"/"} className={`rounded-[.5rem] text-white bg-[black]  border-none px-[1rem] py-[.4rem]`}>Sign up</NavLink>
+                                                <NavLink to={"/sign-up"} className={`rounded-[.5rem] text-white bg-[black]  border-none px-[1rem] py-[.4rem]`}>Sign up</NavLink>
                                             </li>
                                             :
                                             <li>
