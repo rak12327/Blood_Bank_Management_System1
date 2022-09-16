@@ -13,5 +13,7 @@ const contactFormLink = `/api/contactUs`
 const updateUserLink = "/api/v1/update"
 const changePasswordLink = "/api/v1/change-password"
 const deleteUserLink = "/api/v1/delete"
+const forgotPasswordLink = '/api/v1/forgot-password'
+const resetPasswordLink = '/api/v1/reset-password'
 
-export { signUpLink, userLink, signInLink, requestFormLink, contactFormLink, updateUserLink, changePasswordLink, deleteUserLink }
+export { signUpLink, userLink, signInLink, requestFormLink, contactFormLink, updateUserLink, changePasswordLink, deleteUserLink, forgotPasswordLink, resetPasswordLink }

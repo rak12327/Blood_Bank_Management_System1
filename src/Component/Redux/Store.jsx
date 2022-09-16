@@ -1,5 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit";
 import AlertSlice from "./AlertSlice";
+import ForgotPasswordSlice from "./Authentication/ForgotPasswordSlice";
+import ResetPasswordSlice from "./Authentication/ResetPasswordSlice";
 import ChangePasswordSlice from "./ChangePasswordSlice";
 import ContactUsSlice from "./ContactUsSlice";
 import DailogHandlerSlice from "./DailogHandlerSlice";
@@ -22,7 +24,9 @@ const Store = configureStore({
         user: UserDataSlice,
         update: UpdateSlice,
         changePassword: ChangePasswordSlice,
-        dailog: DailogHandlerSlice
+        dailog: DailogHandlerSlice,
+        forgotPassword: ForgotPasswordSlice,
+        resetPassword: ResetPasswordSlice
     },
     middleware: (getDefaultMiddleware) => getDefaultMiddleware({
         serializableCheck: false

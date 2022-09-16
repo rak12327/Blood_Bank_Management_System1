@@ -16,7 +16,11 @@ import { useDispatch, useSelector } from "react-redux";
 import Toster from "./Component/Export/Alert";
 import User from "./Component/pages/Profile/User";
 import RequestOrder from "./Component/pages/Profile/RequestOrder";
-import { CheckRoute, ProtectedRoute } from "./Component/Export/ProtectedRoute";
+import {
+  CheckRoute,
+  ProtectedRoute,
+  ProtectResetPassword,
+} from "./Component/Export/ProtectedRoute";
 import { UserDataThunk } from "./Component/Redux/UserDataSlice";
 import Loading from "./Component/Export/Loading";
 
@@ -109,7 +113,14 @@ const App = () => {
           path="/sign-up"
         />
         <Route element={<ForgotPassword />} path="/forgot-password" />
-        <Route element={<ResetPassword />} path="/reset-password" />
+        <Route
+          path="/reset-password/:token"
+          element={
+            <ProtectResetPassword>
+              <ResetPassword />
+            </ProtectResetPassword>
+          }
+        />
         <Route element={<Contact />} path="/contact-us" />
         <Route element={<Donor />} path="/donor" />
 

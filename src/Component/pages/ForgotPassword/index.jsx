@@ -1,20 +1,26 @@
 import React from 'react'
 import { useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from "react-router-dom";
 import { inValidCSS, validCSS } from '../../Export';
+import Loading from '../../Export/Loading';
+import { ForgotPasswordThunk } from '../../Redux/Authentication/ForgotPasswordSlice';
 
 
 const ForgotPassword = () => {
 
     const [input, setInput] = useState("")
     const [touch, setTouch] = useState(false)
+    const dispatch = useDispatch();
+    const userData = useSelector(state => state.forgotPassword)
 
+    console.log(input)
 
     const submitHandler = e => {
         e.preventDefault()
 
-        if (input.trim() !== "") {
-            console.log(input);
+        if (input.includes("@")) {
+            dispatch(ForgotPasswordThunk({ email: input, dispatch }))
             setInput("")
             setTouch(false)
         } else {
@@ -41,7 +47,9 @@ const ForgotPassword = () => {
                             <button
                                 onClick={submitHandler}
                                 className="w-[100%] text-center bg-[black] text-[#fff] text-md py-[.5rem] rounded"
-                            >Submit</button>
+                            >
+                                {userData.loading && <Loading width={"1rem"} height={"1rem"} />}
+                                Submit</button>
                         </form>
 
                         <div className='w-[100%] text-center mt-[.5rem]'>
