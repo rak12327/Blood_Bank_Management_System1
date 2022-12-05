@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import Api, { signInLink } from "../API/Api";
-import { openAlert } from "./AlertSlice";
+import Api, { signInLink } from "../../API/Api";
+import { openAlert } from "../Model/AlertSlice";
 
 export const SignInThunk = createAsyncThunk("signin", async ({ value, dispatch, navigate, state }, { rejectWithValue }) => {
 
@@ -9,6 +9,7 @@ export const SignInThunk = createAsyncThunk("signin", async ({ value, dispatch, 
         const response = await Api.post(signInLink, value);
         await dispatch(openAlert({ message: `Welcome back!!!`, color: "green" }));
         await navigate(state?.path || "/")
+        // window.location.reload();
         return response;
     } catch (error) {
         console.log(error)
@@ -30,8 +31,8 @@ const SignInSlice = createSlice({
         });
         builder.addCase(SignInThunk.fulfilled, (state, action) => {
             state.loading = false;
-            state.data = action.payload;
             localStorage.setItem("token", JSON.stringify(action?.payload?.data?.token))
+            state.data = action.payload;
         });
         builder.addCase(SignInThunk.rejected, (state, action) => {
             state.loading = false;

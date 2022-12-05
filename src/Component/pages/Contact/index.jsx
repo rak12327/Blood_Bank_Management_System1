@@ -2,10 +2,10 @@ import React from "react";
 import { useState } from "react";
 import NavBar from "../Home/NavBar";
 import { useDispatch, useSelector } from 'react-redux'
-import { contactUsForm } from "../../Redux/ContactUsSlice";
-import { inValidCSS, validCSS } from "../../Export";
-import { openAlert } from "../../Redux/AlertSlice";
-import Loading from "../../Export/Loading";
+import { contactUsForm } from "../../Redux/Contact/ContactUsSlice";
+import { emailValid, inValidCSS, validCSS } from "../../Export";
+import { openAlert } from "../../Redux/Model/AlertSlice";
+import Loading from "../../Export/Icons/Loading";
 import { useLocation, useNavigate } from "react-router-dom";
 
 const Contact = () => {
@@ -14,6 +14,9 @@ const Contact = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { loading } = useSelector(state => state.contactUsForm)
+
+  //Token
+  const token = JSON.parse(localStorage.getItem("token"))
 
   const [value, setValue] = useState({ name: "", email: "", message: "" })
   const [inputTouch, setInputTouch] = useState({ nameTouch: false, emailTouch: false, msgTouch: false })
@@ -26,25 +29,21 @@ const Contact = () => {
   const submitHandler = async (e) => {
     e.preventDefault()
 
-    if (value.email?.trim() !== "" && value.name?.trim() !== "" && value.message?.trim() !== "") {
+    if (emailValid(value.email) && value.name?.trim() !== "" && value.message?.trim() !== "") {
 
       if (!user) {
         dispatch(openAlert({ message: "Your are not authenticated, Please login your self", color: "red" }));
         navigate("/sign-in", { state: { path: location.pathname } })
       } else {
-        try {
-          await dispatch(contactUsForm(value)).unwrap()
-          dispatch(openAlert({ message: "your response was succussfully submited", color: "green" }))
-        } catch (rejectedValueOrSerializedError) {
-          dispatch(openAlert({ message: rejectedValueOrSerializedError?.error?.message, color: "red" }))
-        }
+        dispatch(contactUsForm({ value, dispatch, token }))
+
         setInputTouch({ nameTouch: false, emailTouch: false, msgTouch: false })
         setValue({ name: "", email: "", message: "" })
       }
 
     } else {
       setInputTouch({ nameTouch: true, emailTouch: true, msgTouch: true })
-      dispatch(openAlert({ message: "please fill all value", color: "red" }))
+      dispatch(openAlert({ message: "Please fill all value", color: "yellow" }))
     }
 
 
@@ -94,9 +93,9 @@ const Contact = () => {
                   value={value.email}
                   onChange={handleChange}
                   onBlur={() => setInputTouch(e => ({ ...e, emailTouch: true }))}
-                  className={inputTouch.emailTouch && value.email?.trim() === "" ? inValidCSS : validCSS}
+                  className={inputTouch.emailTouch && !emailValid(value.email) ? inValidCSS : validCSS}
                 />
-                {inputTouch.emailTouch && value.email?.trim() === "" && <p className="text-[red] text-sm">Please enter your email address</p>}
+                {inputTouch.emailTouch && !emailValid(value.email) && <p className="text-[red] text-sm">Please enter your email address</p>}
               </div>
               <div className="mb-2">
                 <div className="block mb-1">Your Message</div>

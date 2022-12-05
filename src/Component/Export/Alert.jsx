@@ -1,6 +1,9 @@
 import { Alert } from "@material-tailwind/react";
 import { useDispatch, useSelector } from "react-redux";
-import { closeALert } from "../Redux/AlertSlice";
+import { closeALert } from "../Redux/Model/AlertSlice";
+import Bell from "./Icons/Bell";
+import Success from "./Icons/Success";
+import Warning from "./Icons/Warning";
 
 export default function Toster() {
 
@@ -11,12 +14,12 @@ export default function Toster() {
         setTimeout(() => {
             dispatch(closeALert())
         }, 5000);
-        // clearTimeout()
+        clearTimeout()
     }
 
 
     return (
-        <div className="w-[100%] z-50 fixed top-0">
+        <div className="w-[100%] z-50 fixed lg:top-[.5rem] top-[1rem]">
             <Alert
                 show={alert.alertOpen}
                 animate={{
@@ -27,9 +30,12 @@ export default function Toster() {
                     onClose: () => dispatch(closeALert()),
                 }}
                 color={alert.color || "green"}
-                className={"w-[50%] absolute right-0"}
+                className={"lg:w-[50%] w-[95%] text-sm lg:text-lg absolute right-0 flex flex-row"}
             >
-                {alert.message || "Somthing went wrong"}
+                {alert.color === "green" && <Success />}
+                {alert.color === "red" && <Warning />}
+                {alert.color === "yellow" && <Bell />}
+                {alert.message || "Somthing went wrong, try again later"}
             </Alert>
         </div>
     );

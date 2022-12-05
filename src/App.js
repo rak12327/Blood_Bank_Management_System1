@@ -9,7 +9,7 @@ import {
   RequestForm,
   Profile,
 } from "./Component/Export";
-import { Route, Routes, useNavigate } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import ForgotPassword from "./Component/pages/ForgotPassword";
 import ResetPassword from "./Component/pages/Reset";
 import { useDispatch, useSelector } from "react-redux";
@@ -18,26 +18,27 @@ import User from "./Component/pages/Profile/User";
 import RequestOrder from "./Component/pages/Profile/RequestOrder";
 import {
   CheckRoute,
+  CheckUserData,
   ProtectedRoute,
   ProtectResetPassword,
 } from "./Component/Export/ProtectedRoute";
-import { UserDataThunk } from "./Component/Redux/UserDataSlice";
-import Loading from "./Component/Export/Loading";
+import { UserDataThunk } from "./Component/Redux/Authentication/UserDataSlice";
+import Loading from "./Component/Export/Icons/Loading";
+import RequestList from "./Component/pages/Profile/RequestList/RequestList";
+import NotComplete from "./Component/pages/Profile/RequestList/NotComplete";
+import Complete from "./Component/pages/Profile/RequestList/Complete";
 
 const App = () => {
   const alert = useSelector((state) => state.alert);
   const dispatch = useDispatch();
-  const navigate = useNavigate();
+  const user = useSelector((state) => state.user);
 
-  // If Error Something is server Then, I have tih show something on screen;
   const token = JSON.parse(localStorage.getItem("token"));
   useEffect(() => {
     if (token) {
-      dispatch(UserDataThunk({ token, dispatch, navigate }));
+      dispatch(UserDataThunk({ token, dispatch }));
     }
-  }, [dispatch, token, navigate]);
-
-  const user = useSelector((state) => state.user);
+  }, [dispatch, token]);
 
   if (user.loading) {
     return (
@@ -66,33 +67,30 @@ const App = () => {
         />
         <Route
           element={
-            <ProtectedRoute>
-              <Profile />
-            </ProtectedRoute>
+            // <ProtectedRoute>
+            <Profile />
+            // </ProtectedRoute>
           }
-          path="/"
+          path="profile/"
         >
-          <Route element={<User />} path="/profile" />
-          <Route element={<RequestOrder />} path="/request-oder-list" />
+          <Route element={<User />} index path="user" />
+          <Route element={<RequestOrder />} path="request-order-list">
+            <Route element={<RequestList />} path="request-list"></Route>
+            <Route element={<NotComplete />} path="not-complete"></Route>
+            <Route element={<Complete />} path="complete"></Route>
+          </Route>
         </Route>
 
-        <Route element={<Request />} path="/request/">
-          <Route
-            element={
-              <ProtectedRoute>
-                <RequestForm />
-              </ProtectedRoute>
-            }
-            path="request-form"
-          />
-        </Route>
+        <Route element={<Request />} path="request" />
         <Route
           element={
             <ProtectedRoute>
-              <RequestForm />
+              <CheckUserData>
+                <RequestForm />
+              </CheckUserData>
             </ProtectedRoute>
           }
-          path="/request-form"
+          path="request-form"
         />
 
         <Route
@@ -112,7 +110,14 @@ const App = () => {
           }
           path="/sign-up"
         />
-        <Route element={<ForgotPassword />} path="/forgot-password" />
+        <Route
+          path="/forgot-password"
+          element={
+            <CheckRoute>
+              <ForgotPassword />
+            </CheckRoute>
+          }
+        />
         <Route
           path="/reset-password/:token"
           element={

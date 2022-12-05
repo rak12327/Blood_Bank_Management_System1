@@ -2,9 +2,13 @@ import React from 'react'
 import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from "react-router-dom";
-import { inValidCSS, validCSS } from '../../Export';
-import Loading from '../../Export/Loading';
+import { emailValid, inValidCSS, validCSS } from '../../Export';
+import Loading from '../../Export/Icons/Loading';
+import { openAlert } from '../../Redux/Model/AlertSlice';
 import { ForgotPasswordThunk } from '../../Redux/Authentication/ForgotPasswordSlice';
+
+
+
 
 
 const ForgotPassword = () => {
@@ -14,16 +18,15 @@ const ForgotPassword = () => {
     const dispatch = useDispatch();
     const userData = useSelector(state => state.forgotPassword)
 
-    console.log(input)
-
     const submitHandler = e => {
         e.preventDefault()
 
-        if (input.includes("@")) {
+        if (emailValid(input)) {
             dispatch(ForgotPasswordThunk({ email: input, dispatch }))
             setInput("")
             setTouch(false)
         } else {
+            dispatch(openAlert({ color: "yellow", message: "Please enter valid email address" }))
             setTouch(true)
         }
     }
@@ -31,18 +34,18 @@ const ForgotPassword = () => {
         <div className='bg-[red] h-[100vh]'>
             <div className='max-w-[1300px] m-auto h-[100%] px-[1rem] lg:px-[2rem] py-[1.5rem]'>
                 <div className='flex items-center justify-center h-[90vh]'>
-                    <div className='w-[30%] p-[1rem] bg-[#fff] rounded'>
+                    <div className='lg:w-[40%] w-[100%] p-[1rem] bg-[#fff] rounded'>
                         <form>
                             <div className='mb-[1rem]'>
                                 <label className='mb-[.2rem] block'>Register Email ID</label>
                                 <input
                                     type={"text"}
-                                    className={input.trim() === "" && touch ? inValidCSS : validCSS}
+                                    className={!emailValid(input) && touch ? inValidCSS : validCSS}
                                     onChange={(e) => setInput(e.target.value)}
                                     onBlur={() => setTouch(true)}
                                     value={input}
                                 />
-                                {input.trim() === "" && touch && <p className='text-[red] text-sm'>Please enter email id</p>}
+                                {!emailValid(input) && touch && <p className='text-[red] text-sm'>Please enter email id</p>}
                             </div>
                             <button
                                 onClick={submitHandler}
@@ -63,3 +66,4 @@ const ForgotPassword = () => {
 }
 
 export default ForgotPassword
+

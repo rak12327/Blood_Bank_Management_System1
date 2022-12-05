@@ -1,12 +1,11 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import Loading from "../../Export/Loading";
-import { updateUserThunk } from "../../Redux/UpdateSlice";
-import { openAlert } from "../../Redux/AlertSlice";
-import { dailogHandler } from "../../Redux/DailogHandlerSlice";
-import { deleteUserData } from "../../Redux/UserDataSlice";
-import { changePasswordThunk } from "../../Redux/ChangePasswordSlice";
+import Loading from "../../Export/Icons/Loading";
+import { updateUserThunk } from "../../Redux/Authentication/UpdateSlice";
+import { openAlert } from "../../Redux/Model/AlertSlice";
+import { deleteUserData } from "../../Redux/Authentication/UserDataSlice";
+import { changePasswordThunk } from "../../Redux/Authentication/ChangePasswordSlice";
 
 const User = () => {
   const navigate = useNavigate();
@@ -14,41 +13,65 @@ const User = () => {
   const { loading } = useSelector((state) => state.update);
   const dispatch = useDispatch();
 
+  console.log(data);
+
   const [updateAcc, setUpdateAcc] = useState('');
 
   const [value, setValue] = useState({
-    name: data?.user?.data?.name || "",
-    email: data?.user?.data?.email || "",
-    adhaarNumber: data?.user?.data?.adhaarNumber || "",
-    phoneNumber: data?.user?.data?.phoneNumber || "",
-    address: data?.user?.data?.address || "",
-    pinCode: data?.user?.data?.pinCode || "",
-    age: data?.user?.data?.age || "",
-    gender: data?.user?.data?.gender || "",
+    name: data?.user?.name || "",
+    email: data?.user?.email || "",
+    adhaarNumber: data?.user?.adhaarNumber || "",
+    phoneNumber: data?.user?.phoneNumber || "",
+    address: data?.user?.address || "",
+    pinCode: data?.user?.pinCode || "",
+    age: data?.user?.age || "",
+    gender: data?.user?.gender || "",
+  });
+
+  const [passwordValue, setPasswordValue] = useState({
     currentPassword: "",
     newPassword: "",
     confirmPassword: ""
-  });
+  })
 
+  //Token
+  const token = JSON.parse(localStorage.getItem("token"))
 
 
   const submitHandler = (e) => {
     e.preventDefault();
 
-    if (!data?.user?.data) {
+    if (!data?.user) {
       dispatch(openAlert({ message: "Opps, Something went wrong with your session. Please login again...", color: "yellow" }))
       return navigate("/sign-in")
     }
 
     if (updateAcc === 'update') {
-      dispatch(updateUserThunk({ value: { ...value, id: data?.user?.data?._id }, dispatch, setUpdateAcc }))
+      dispatch(updateUserThunk({ value, dispatch, setUpdateAcc, token, setValue }))
     } else if (updateAcc === "change") {
-      if (!value.currentPassword || !value.confirmPassword || !value.newPassword) {
+      if (!passwordValue.currentPassword || !passwordValue.confirmPassword || !passwordValue.newPassword) {
         return dispatch(openAlert({ color: "yellow", message: "Please enter current, new and confirm password" }))
       }
-      dispatch(changePasswordThunk({ value: { ...value, id: data?.user?.data?._id }, dispatch, setUpdateAcc, setValue }))
+      dispatch(changePasswordThunk({ value: passwordValue, token, dispatch, setUpdateAcc, setPasswordValue }))
     } else {
       return dispatch(openAlert({ color: "yellow", message: "Opps, It's seems something went wrong. Please refresh it or login again" }))
+    }
+  }
+
+  const backHandler = () => {
+    setUpdateAcc("")
+    if (updateAcc === "update") {
+      setValue({
+        ...value,
+        adhaarNumber: data?.user?.adhaarNumber || "",
+        phoneNumber: data?.user?.phoneNumber || "",
+        address: data?.user?.address || "",
+        pinCode: data?.user?.pinCode || "",
+        age: data?.user?.age || "",
+        gender: data?.user?.gender || "",
+      })
+    } else if (updateAcc === "change") {
+      setPasswordValue({ newPassword: "", currentPassword: "", confirmPassword: "" })
     }
   }
 
@@ -56,12 +79,12 @@ const User = () => {
   const logOut = () => {
     localStorage.removeItem("token");
     if (data.user) {
+      console.log(data.user)
       dispatch(deleteUserData())
     }
     navigate("/sign-in");
   };
 
-  console.log(updateAcc)
 
   return (
     <div className="basis-[70%] w-[100%] min-h-[50vh] h-[100%] pl-[1rem]">
@@ -220,9 +243,9 @@ const User = () => {
               <label className="block mb-[.2rem]">Current Password</label>
               <input
                 placeholder="Your current password"
-                value={value.currentPassword}
+                value={passwordValue.currentPassword || ""}
                 onChange={
-                  (e) => setValue({ ...value, currentPassword: e.target.value })
+                  (e) => setPasswordValue({ ...passwordValue, currentPassword: e.target.value })
                 }
                 type="text"
                 className="px-[.5rem] py-[.4rem] w-[100%] text-sm rounded"
@@ -232,9 +255,9 @@ const User = () => {
               <label className="block mb-[.2rem]">New Password</label>
               <input
                 placeholder="Your current password"
-                value={value.newPassword}
+                value={passwordValue.newPassword || ""}
                 onChange={
-                  (e) => setValue({ ...value, newPassword: e.target.value })
+                  (e) => setPasswordValue({ ...passwordValue, newPassword: e.target.value })
                 }
                 type="text"
                 className="px-[.5rem] py-[.4rem] w-[100%] text-sm rounded"
@@ -244,9 +267,9 @@ const User = () => {
               <label className="block mb-[.2rem]">Confirm Password</label>
               <input
                 placeholder="Your current password"
-                value={value.confirmPassword}
+                value={passwordValue.confirmPassword || ""}
                 onChange={
-                  (e) => setValue({ ...value, confirmPassword: e.target.value })
+                  (e) => setPasswordValue({ ...passwordValue, confirmPassword: e.target.value })
                 }
                 type="text"
                 className="px-[.5rem] py-[.4rem] w-[100%] text-sm rounded"
@@ -259,37 +282,39 @@ const User = () => {
             {!updateAcc && (
               <button
                 className="bg-[black] w-full lg:w-auto px-[1rem] py-[.4rem] text-[#fff] text-sm rounded"
-                onClick={logOut}
-              >
-                Log out
-              </button>
-            )}
-            {!updateAcc && (
-              <button className="bg-[black] w-full lg:w-auto px-[1rem] py-[.4rem] text-[#fff] text-sm rounded"
-                onClick={() => setUpdateAcc("change")}
-              >
-                Reset Password
-              </button>
-            )}
-            {!updateAcc && (
-              <button
-                className="bg-[black] w-full lg:w-auto px-[1rem] py-[.4rem] text-[#fff] text-sm rounded"
                 onClick={() => setUpdateAcc("update")}
               >
                 Update Account
               </button>
             )}
+
             {!updateAcc && (
+              <button className="bg-[black] w-full lg:w-auto px-[1rem] py-[.4rem] text-[#fff] text-sm rounded"
+                onClick={() => setUpdateAcc("change")}
+              >
+                Change Password
+              </button>
+            )}
+            {!updateAcc && (
+              <button
+                className="bg-[black] w-full lg:w-auto px-[1rem] py-[.4rem] text-[#fff] text-sm rounded"
+                onClick={logOut}
+              >
+                {data.loading && <Loading />}
+                Log out
+              </button>
+            )}
+            {/* {!updateAcc && (
               <button className="bg-[black] lg:w-auto w-full px-[1rem] py-[.4rem] text-[#fff] text-sm rounded"
                 onClick={() => dispatch(dailogHandler())}
               >
                 Delete Account
               </button>
-            )}
+            )} */}
             {updateAcc && <div className="flex items-start justify-between gap-[.5rem] flex-col-reverse lg:flex-row w-[100%]">
               <button
                 className="bg-[black] w-full lg:w-auto text-[#fff] px-[1rem] py-[.4rem] text-sm rounded"
-                onClick={() => setUpdateAcc("")}
+                onClick={backHandler}
               >Back</button>
               <button
                 className="bg-[black] w-full lg:w-auto text-[#fff] px-[1rem] py-[.4rem] text-sm rounded"

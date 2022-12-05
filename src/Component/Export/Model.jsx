@@ -6,7 +6,7 @@ import {
     DialogFooter,
 } from "@material-tailwind/react";
 import { useDispatch, useSelector } from "react-redux";
-import { closeModel } from "../Redux/RequestModel";
+import { closeModel } from "../Redux/Model/RequestModel";
 import { useNavigate } from "react-router-dom";
 
 export const Model = () => {
@@ -49,8 +49,8 @@ export const Model = () => {
                             type="text"
                             className="w-[100%] px-[.5rem] py-[.4rem] rounded"
                             placeholder="Blood Name"
-                            value={requestData.bloodName || ""}
-                            disabled={requestData.bloodName === "" ? false : true}
+                            value={requestData.componentName || ""}
+                            disabled={requestData.componentName === "" ? false : true}
                         />
                     </div>
                     <div className="flex items-center justify-between gap-[1rem]">

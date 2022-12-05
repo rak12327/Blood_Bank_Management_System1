@@ -7,9 +7,9 @@ import {
     Typography,
 } from "@material-tailwind/react";
 import { useDispatch, useSelector } from 'react-redux';
-import { dailogHandler } from '../Redux/DailogHandlerSlice';
+import { dailogHandler } from '../Redux/Model/DailogHandlerSlice';
 import { useNavigate } from 'react-router-dom';
-import { DeleteAccountThunk } from '../Redux/DeleteAccountSlice';
+import { DeleteAccountThunk } from '../Redux/Authentication/DeleteAccountSlice';
 
 const DeleteConformation = () => {
 

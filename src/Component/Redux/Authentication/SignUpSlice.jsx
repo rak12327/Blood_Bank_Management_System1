@@ -1,14 +1,14 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import Api, { signUpLink } from "../API/Api";
-import { openAlert } from "./AlertSlice";
+import Api, { signUpLink } from "../../API/Api";
+import { openAlert } from "../Model/AlertSlice";
 
-export const UserSliceThunk = createAsyncThunk('userAuth', async ({ value, dispatch, navigate, state }, { rejectWithValue }) => {
+export const SignUpSliceThunk = createAsyncThunk('userAuth', async ({ value, dispatch, navigate, state }, { rejectWithValue }) => {
 
     try {
         const response = await Api.post(signUpLink, value);
-        dispatch(openAlert({ message: `Welcome ${value.name}`, color: "green" }))
+        await dispatch(openAlert({ message: `Welcome ${value.name}`, color: "green" }))
         localStorage.setItem("token", JSON.stringify(response?.data?.token))
-        navigate(state?.path || "/")
+        await navigate(state?.path || "/")
         return response;
     } catch (error) {
         console.log(error);
@@ -18,26 +18,29 @@ export const UserSliceThunk = createAsyncThunk('userAuth', async ({ value, dispa
 })
 
 
-const UserSlice = createSlice({
+
+
+const SignUpSlice = createSlice({
     name: 'userSlice',
     initialState: {
         loading: false,
         error: null,
         data: null,
+        // token
     },
     extraReducers: {
-        [UserSliceThunk.pending]: (state, action) => {
+        [SignUpSliceThunk.pending]: (state, action) => {
             state.loading = true;
         },
-        [UserSliceThunk.fulfilled]: (state, action) => {
+        [SignUpSliceThunk.fulfilled]: (state, action) => {
             state.loading = false;
             state.data = action.payload;
         },
-        [UserSliceThunk.rejected]: (state, action) => {
+        [SignUpSliceThunk.rejected]: (state, action) => {
             state.loading = false;
             state.error = action.payload
         }
     }
 });
 
-export default UserSlice.reducer;
+export default SignUpSlice.reducer;

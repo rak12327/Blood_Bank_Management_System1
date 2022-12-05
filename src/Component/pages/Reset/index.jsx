@@ -3,8 +3,8 @@ import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate, useParams } from 'react-router-dom'
 import { inValidCSS, validCSS } from '../../Export'
-import Loading from '../../Export/Loading'
-import { openAlert } from '../../Redux/AlertSlice'
+import Loading from '../../Export/Icons/Loading'
+import { openAlert } from '../../Redux/Model/AlertSlice'
 import { ResetPasswordThunk } from '../../Redux/Authentication/ResetPasswordSlice'
 
 const ResetPassword = () => {
@@ -23,24 +23,30 @@ const ResetPassword = () => {
         }))
     }
 
-    console.log(userData.error)
     const submitHandler = (e) => {
         e.preventDefault()
-        if (value.newPassword && value.confirmPassword) {
-            dispatch(ResetPasswordThunk({ value, dispatch, navigate, token: params?.token }))
-            setTouch({ newPassword: false, confirmPassword: false })
-            setValue({ newPassword: '', confirmPassword: '' })
+        if (value.newPassword.trim() === "" || value.confirmPassword.trim() === "") {
+            setTouch({ newPassword: true, confirmPassword: true })
+            return dispatch(openAlert({ color: "yellow", message: "Please enter your new password and confirm password" }))
+        }
+        else if (!value.newPassword.length > 8 || !value.confirmPassword.length > 8) {
+            return dispatch(openAlert({ color: "yellow", message: "Please enter your 8 digit new password and confirm password" }))
+        }
+        else if (value.newPassword !== value.confirmPassword) {
+            return dispatch(openAlert({ color: "yellow", message: "Please enter your new password and confirm password does not match" }))
         }
         else {
-            setTouch({ newPassword: true, confirmPassword: true })
-            dispatch(openAlert({ color: "yellow", message: "Please enter your new password and confirm password" }))
+            setTouch({ newPassword: false, confirmPassword: false })
+            setValue({ newPassword: '', confirmPassword: '' })
+            return dispatch(ResetPasswordThunk({ value, dispatch, navigate, token: params?.token }))
         }
+
     }
     return (
         <div className="bg-[red] h-[100vh]">
             <div className='max-w-[1300px] mx-auto h-[100%] px-[1rem] lg:px-[2rem] py-[1.5rem]'>
                 <div className='flex items-center justify-center h-[90vh]'>
-                    <div className='w-[30%] p-[1rem] bg-[#fff] rounded'>
+                    <div className='lg:w-[40%] w-[100%] p-[1rem] bg-[#fff] rounded'>
                         <form>
                             <div className='mb-[.5rem]'>
                                 <label className='block mb-[.2rem]'>New Password</label>

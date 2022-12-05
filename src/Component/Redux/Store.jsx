@@ -1,16 +1,20 @@
 import { configureStore } from "@reduxjs/toolkit";
-import AlertSlice from "./AlertSlice";
+import AlertSlice from "./Model/AlertSlice";
 import ForgotPasswordSlice from "./Authentication/ForgotPasswordSlice";
 import ResetPasswordSlice from "./Authentication/ResetPasswordSlice";
-import ChangePasswordSlice from "./ChangePasswordSlice";
-import ContactUsSlice from "./ContactUsSlice";
-import DailogHandlerSlice from "./DailogHandlerSlice";
-import RequestFormSlice from "./RequestFormSlice";
-import RequestModel from "./RequestModel";
-import SignInSlice from "./SignInSlice";
-import UpdateSlice from "./UpdateSlice";
-import UserDataSlice from "./UserDataSlice";
-import UserSlice from "./UserSlice";
+import ChangePasswordSlice from "./Authentication/ChangePasswordSlice";
+import ContactUsSlice from "./Contact/ContactUsSlice";
+import DailogHandlerSlice from "./Model/DailogHandlerSlice";
+import RequestFormSlice from "./Request/RequestFormSlice";
+import RequestModel from "./Model/RequestModel";
+import SignInSlice from "./Authentication/SignInSlice";
+import UpdateSlice from "./Authentication/UpdateSlice";
+import UserDataSlice from "./Authentication/UserDataSlice";
+import SignUpSlice from "./Authentication/SignUpSlice";
+import DeleteAccountSlice from "./Authentication/DeleteAccountSlice";
+import RequestFormListSlice from "./Request/RequestFormListSlice";
+import ComponentNameSlice from "./Request/ComopentNameSlice"
+import BloodDetailsSlice from "./Request/BloodDetailsSlice";
 
 
 const Store = configureStore({
@@ -19,14 +23,18 @@ const Store = configureStore({
         contactUsForm: ContactUsSlice,
         requestForm: RequestFormSlice,
         alert: AlertSlice,
-        signup: UserSlice,
+        signup: SignUpSlice,
         signin: SignInSlice,
         user: UserDataSlice,
         update: UpdateSlice,
         changePassword: ChangePasswordSlice,
         dailog: DailogHandlerSlice,
         forgotPassword: ForgotPasswordSlice,
-        resetPassword: ResetPasswordSlice
+        resetPassword: ResetPasswordSlice,
+        deleteAccount: DeleteAccountSlice,
+        requestList: RequestFormListSlice,
+        componentName: ComponentNameSlice,
+        bloodDetails: BloodDetailsSlice,
     },
     middleware: (getDefaultMiddleware) => getDefaultMiddleware({
         serializableCheck: false

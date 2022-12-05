@@ -2,10 +2,10 @@ import React from "react";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { inValidCSS, validCSS } from "../../Export";
-import Loading from "../../Export/Loading";
-import { openAlert } from "../../Redux/AlertSlice";
-import { SignInThunk } from "../../Redux/SignInSlice";
+import { emailValid, inValidCSS, validCSS } from "../../Export";
+import Loading from "../../Export/Icons/Loading";
+import { openAlert } from "../../Redux/Model/AlertSlice";
+import { SignInThunk } from "../../Redux/Authentication/SignInSlice";
 
 const Login = () => {
 
@@ -18,12 +18,10 @@ const Login = () => {
 
   const [touch, setTouch] = useState({ emailTouch: false, passwordTouch: false })
 
-
-
   const signInHandler = (e) => {
     e.preventDefault()
 
-    if (value.email?.length >= 4 && value.password?.length >= 4) {
+    if (emailValid(value.email) && value.password?.length >= 8) {
       dispatch(SignInThunk({ value, dispatch, navigate, state }))
 
       setValue({ email: "", password: "" })
@@ -50,9 +48,9 @@ const Login = () => {
                   name={"email"}
                   onChange={(e) => setValue(value => ({ ...value, [e.target.name]: e.target.value }))}
                   onBlur={() => setTouch(e => ({ ...e, emailTouch: true }))}
-                  className={touch.emailTouch && value.email?.trim() === "" ? inValidCSS : validCSS}
+                  className={touch.emailTouch && !emailValid(value.email) ? inValidCSS : validCSS}
                 />
-                {touch.emailTouch && value.email?.trim() === "" ? <p className="text-[red] text-sm">Please type your email id</p> : null}
+                {touch.emailTouch && !emailValid(value.email) ? <p className="text-[red] text-sm">Please type your email id</p> : null}
               </div>
               <div className="mb-[1rem]">
                 <label className="block mb-[.2rem] text-base">Password</label>

@@ -19,6 +19,7 @@ const Loading = ({ width, height }) => {
                 fill="currentColor"
             />
         </svg>
+
     )
 }
 

@@ -2,10 +2,10 @@ import React from "react";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { inValidCSS, validCSS } from "../../Export";
-import Loading from "../../Export/Loading";
-import { openAlert } from "../../Redux/AlertSlice";
-import { UserSliceThunk } from "../../Redux/UserSlice";
+import { emailValid, inValidCSS, validCSS } from "../../Export";
+import Loading from "../../Export/Icons/Loading";
+import { openAlert } from "../../Redux/Model/AlertSlice";
+import { SignUpSliceThunk } from "../../Redux/Authentication/SignUpSlice";
 
 const Register = () => {
 
@@ -28,14 +28,14 @@ const Register = () => {
   const submitHandler = async (e) => {
     e.preventDefault()
 
-    if (input.firstName.length >= 4 && input.lastName.length >= 4 && input.email.includes("@") && input.password.length >= 8) {
+    if (input.firstName.length >= 2 && input.lastName.length >= 2 && emailValid(input.email) && input.password.length >= 8) {
       const value = {
         name: input.firstName + " " + input.lastName,
         email: input.email,
         password: input.password
       }
 
-      dispatch(UserSliceThunk({ value, dispatch, navigate, state }))
+      dispatch(SignUpSliceThunk({ value, dispatch, navigate, state }))
 
       setInput({ firstName: "", lastName: "", email: "", password: "" })
       setTouch({
@@ -52,7 +52,7 @@ const Register = () => {
     <div className="bg-[red] h-[100vh]">
       <div className="max-w-[1300px] mx-auto px-[1rem] lg:px-[2rem] py-[1rem]">
         <div className="h-[90vh] flex items-center justify-center">
-          <div className="bg-[#fff] px-[1rem] py-[2rem] w-[100%] lg:w-[30%] rounded">
+          <div className="bg-[#fff] px-[1rem] py-[2rem] w-[100%] lg:w-[40%] rounded">
 
             {/*---------Form Submission-------------*/}
             <form onSubmit={submitHandler}>
@@ -100,9 +100,9 @@ const Register = () => {
                   value={input.email || ""}
                   onChange={changeHandler}
                   onBlur={() => setTouch(event => ({ ...event, emailTouch: true }))}
-                  className={input.email?.trim() === "" && touch.emailTouch ? inValidCSS : validCSS}
+                  className={!emailValid(input.email) && touch.emailTouch ? inValidCSS : validCSS}
                 />
-                {input.email?.trim() === "" && touch.emailTouch ? <p className="text-[red] text-sm">Please enter your email</p> : null}
+                {!emailValid(input.email) && touch.emailTouch ? <p className="text-[red] text-sm">Please enter your email</p> : null}
               </div>
 
               {/*---------Password-------------*/}
