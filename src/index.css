@@ -7,3 +7,20 @@ body {
   padding: 0;
   box-sizing: border-box;
 }
+
+@layer components {
+  /* universel css */
+  .mainDiv {
+    @apply max-w-[1300px] mx-auto px-[1rem] py-[1rem];
+  }
+  .center {
+    @apply flex justify-center items-center;
+  }
+
+  /* page wise */
+
+  /* profile - navbarComponent */
+  .navbarLink {
+    @apply flex items-center gap-2 max-w-[8rem] w-full lg:max-w-full mx-1 xs:px-4 p-2 text-base border border-black rounded-lg;
+  }
+}
