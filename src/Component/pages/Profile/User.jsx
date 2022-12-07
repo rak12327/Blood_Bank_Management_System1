@@ -278,10 +278,10 @@ const User = () => {
           </>
         }
         <div className="mt-[1.25rem] lg:m-0">
-          <div className="flex items-start justify-between gap-[.5rem] flex-col lg:flex-row">
+          <div className="flex items-start justify-between gap-[.5rem] flex-col sm:flex-row">
             {!updateAcc && (
               <button
-                className="bg-[black] w-full lg:w-auto px-[1rem] py-[.4rem] text-[#fff] text-sm rounded"
+                className="userButton"
                 onClick={() => setUpdateAcc("update")}
               >
                 Update Account
@@ -289,7 +289,7 @@ const User = () => {
             )}
 
             {!updateAcc && (
-              <button className="bg-[black] w-full lg:w-auto px-[1rem] py-[.4rem] text-[#fff] text-sm rounded"
+              <button className="userButton"
                 onClick={() => setUpdateAcc("change")}
               >
                 Change Password
@@ -297,7 +297,7 @@ const User = () => {
             )}
             {!updateAcc && (
               <button
-                className="bg-[black] w-full lg:w-auto px-[1rem] py-[.4rem] text-[#fff] text-sm rounded"
+                className="userButton"
                 onClick={logOut}
               >
                 {data.loading && <Loading />}
@@ -313,11 +313,11 @@ const User = () => {
             )} */}
             {updateAcc && <div className="flex items-start justify-between gap-[.5rem] flex-col-reverse lg:flex-row w-[100%]">
               <button
-                className="bg-[black] w-full lg:w-auto text-[#fff] px-[1rem] py-[.4rem] text-sm rounded"
+                className="userButton"
                 onClick={backHandler}
               >Back</button>
               <button
-                className="bg-[black] w-full lg:w-auto text-[#fff] px-[1rem] py-[.4rem] text-sm rounded"
+                className="userButton"
                 onClick={submitHandler}
               >
                 {loading && <Loading height={'1rem'} width={'1rem'} />}

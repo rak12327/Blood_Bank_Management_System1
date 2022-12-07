@@ -19,7 +19,12 @@ body {
 
   /* page wise */
 
-  /* profile - navbarComponent */
+  /* profile - user form component */
+  .userButton {
+    @apply bg-black w-full sm:w-auto px-4 py-2 text-white text-sm rounded;
+  }
+
+  /* profile - DataListnavbarComponent */
   .navbarLink {
     @apply flex items-center gap-2 max-w-[8rem] w-full lg:max-w-full mx-1 xs:px-4 p-2 text-base border border-black rounded-lg;
   }
