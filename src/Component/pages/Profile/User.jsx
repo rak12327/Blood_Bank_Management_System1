@@ -6,6 +6,8 @@ import { updateUserThunk } from "../../Redux/Authentication/UpdateSlice";
 import { openAlert } from "../../Redux/Model/AlertSlice";
 import { deleteUserData } from "../../Redux/Authentication/UserDataSlice";
 import { changePasswordThunk } from "../../Redux/Authentication/ChangePasswordSlice";
+import { defaultPasswordValue } from "../../Export/Default/Password";
+
 
 const User = () => {
   const navigate = useNavigate();
@@ -28,14 +30,16 @@ const User = () => {
     gender: data?.user?.gender || "",
   });
 
-  const [passwordValue, setPasswordValue] = useState({
-    currentPassword: "",
-    newPassword: "",
-    confirmPassword: ""
-  })
+  const [passwordValue, setPasswordValue] = useState(defaultPasswordValue)
+
+  console.log(passwordValue)
 
   //Token
   const token = JSON.parse(localStorage.getItem("token"))
+
+  const changeHandler = (e) => {
+    setPasswordValue({ ...passwordValue, [e.target.name]: e.target.value })
+  }
 
 
   const submitHandler = (e) => {
@@ -244,9 +248,8 @@ const User = () => {
               <input
                 placeholder="Your current password"
                 value={passwordValue.currentPassword || ""}
-                onChange={
-                  (e) => setPasswordValue({ ...passwordValue, currentPassword: e.target.value })
-                }
+                onChange={changeHandler}
+                name="currentPassword"
                 type="text"
                 className="px-[.5rem] py-[.4rem] w-[100%] text-sm rounded"
               />
@@ -256,9 +259,8 @@ const User = () => {
               <input
                 placeholder="Your current password"
                 value={passwordValue.newPassword || ""}
-                onChange={
-                  (e) => setPasswordValue({ ...passwordValue, newPassword: e.target.value })
-                }
+                onChange={changeHandler}
+                name="newPassword"
                 type="text"
                 className="px-[.5rem] py-[.4rem] w-[100%] text-sm rounded"
               />
@@ -268,9 +270,8 @@ const User = () => {
               <input
                 placeholder="Your current password"
                 value={passwordValue.confirmPassword || ""}
-                onChange={
-                  (e) => setPasswordValue({ ...passwordValue, confirmPassword: e.target.value })
-                }
+                onChange={changeHandler}
+                name="confirmPassword"
                 type="text"
                 className="px-[.5rem] py-[.4rem] w-[100%] text-sm rounded"
               />
@@ -311,7 +312,7 @@ const User = () => {
                 Delete Account
               </button>
             )} */}
-            {updateAcc && <div className="flex items-start justify-between gap-[.5rem] flex-col-reverse lg:flex-row w-[100%]">
+            {updateAcc && <div className="w-full flex justify-between gap-2 flex-col-reverse sm:flex-row">
               <button
                 className="userButton"
                 onClick={backHandler}

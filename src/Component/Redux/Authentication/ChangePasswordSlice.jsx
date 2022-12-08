@@ -1,17 +1,15 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import Api, { changePasswordLink } from "../../API/Api";
+import { defaultPasswordValue } from "../../Export/Default/Password";
 import { openAlert } from "../Model/AlertSlice";
 
 export const changePasswordThunk = createAsyncThunk(changePasswordLink, async ({ value, dispatch, setUpdateAcc, setPasswordValue, token }, { rejectWithValue }) => {
-    console.log(value);
     try {
         const response = await Api.patch(changePasswordLink, value, { headers: { Authorization: "Bearer " + token } });
-        console.log((response).status);
-        await setPasswordValue({ currentPassword: "", newPassword: "", confirmPassword: "" });
+        await setPasswordValue(defaultPasswordValue);
         localStorage.setItem("token", JSON.stringify(response?.data?.userToken))
         await dispatch(openAlert({ message: "Your pasword has been changed", color: "green" }));
         await setUpdateAcc("");
-        console.log(response);
         return response;
     } catch (error) {
         if (error.response && error.response.data.message) {
