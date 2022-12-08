@@ -27,18 +27,23 @@ import Loading from "./Component/Export/Icons/Loading";
 import RequestList from "./Component/pages/Profile/RequestList/RequestList";
 import NotComplete from "./Component/pages/Profile/RequestList/NotComplete";
 import Complete from "./Component/pages/Profile/RequestList/Complete";
+import { useSnackbar } from "notistack";
 
 const App = () => {
   const alert = useSelector((state) => state.alert);
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
+  const { enqueueSnackbar } = useSnackbar();
 
-  const token = JSON.parse(localStorage.getItem("token"));
+  // const token = JSON.parse(localStorage.getItem("token"));
+  let token = "hello";
   useEffect(() => {
-    if (token) {
-      dispatch(UserDataThunk({ token, dispatch }));
-    }
-  }, [dispatch, token]);
+    return () => {
+      if (token) {
+        dispatch(UserDataThunk({ token, enqueueSnackbar }));
+      }
+    };
+  }, [token]);
 
   if (user.loading) {
     return (

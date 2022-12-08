@@ -1,8 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import Api, { userLink } from "../../API/Api";
-import { openAlert } from "../Model/AlertSlice";
 
-export const UserDataThunk = createAsyncThunk('userData', async ({ token, dispatch }, { rejectWithValue }) => {
+export const UserDataThunk = createAsyncThunk('userData', async ({ token, enqueueSnackbar }, { rejectWithValue }) => {
     try {
         const response = await Api.get(userLink
             , { headers: { Authorization: "Bearer " + token } }
@@ -13,21 +12,22 @@ export const UserDataThunk = createAsyncThunk('userData', async ({ token, dispat
         if (error.response && error.response.data.message) {
 
             if (error.response.data.message === "Please login again.") {
-                return
+                return enqueueSnackbar("Something Went Wrong", { variant: "error" });
+
             }
             if (error.response.data.error.message === "invalid signature") {
-                return dispatch(openAlert({ message: "Your Account can't dedected, Please log in again!!", color: "red" }))
+                return enqueueSnackbar("Your Account can't dedected, Please log in again!!", { variant: "error" });
             }
 
             if (error.response.data.error.message === "jwt expired") {
                 localStorage.removeItem("token")
-                return dispatch(openAlert({ message: "Opps, Your session is expired. Please login again...", color: "red" }))
+                return enqueueSnackbar("Opps, Your session is expired. Please login again...", { variant: "error" });
             }
 
-            dispatch(openAlert({ message: error.response.data.message, color: "red" }))
+            enqueueSnackbar(error.response.data.message, { variant: "error" })
             return rejectWithValue(error.response.data.message);
         } else {
-            dispatch(openAlert({ message: "Something went wrong with network site, Please try again late", color: "red" }))
+            enqueueSnackbar("Something went wrong with network site, Please try again late", { variant: "error" })
             return rejectWithValue(error)
         }
 

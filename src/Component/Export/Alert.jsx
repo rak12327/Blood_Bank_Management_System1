@@ -1,9 +1,8 @@
 import { Alert } from "@material-tailwind/react";
 import { useDispatch, useSelector } from "react-redux";
 import { closeALert } from "../Redux/Model/AlertSlice";
-import Bell from "./Icons/Bell";
-import Success from "./Icons/Success";
-import Warning from "./Icons/Warning";
+
+
 
 export default function Toster() {
 
@@ -32,11 +31,41 @@ export default function Toster() {
                 color={alert.color || "green"}
                 className={"lg:w-[50%] w-[95%] text-sm lg:text-lg absolute right-0 flex flex-row"}
             >
-                {alert.color === "green" && <Success />}
+                {/* {alert.color === "green" && <Success />}
                 {alert.color === "red" && <Warning />}
-                {alert.color === "yellow" && <Bell />}
+                {alert.color === "yellow" && <Bell />} */}
                 {alert.message || "Somthing went wrong, try again later"}
             </Alert>
         </div>
     );
 }
+
+// function SnackbarCloseButton({ id }) {
+//     const { closeSnackbar } = useSnackbar();
+
+//     return (
+//         <div onClick={() => closeSnackbar(id)}>
+//             <GrClose />
+//         </div>
+//     );
+// }
+
+// const CustomSnackBarProvider = (props) => (
+//     <SnackbarProvider
+//         anchorOrigin={{
+//             vertical: "top",
+//             horizontal: "right",
+//         }}
+//         iconVariant={{
+//             error: <BiErrorCircle />,
+//             info: <AiOutlineInfo />,
+//             success: <AiOutlineCheck />,
+//             warning: <ImWarning />,
+//         }}
+//         action={(key) => <SnackbarCloseButton id={key} />}
+//     >
+//         {props.children}
+//     </SnackbarProvider>
+// );
+
+// export default CustomSnackBarProvider;

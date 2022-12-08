@@ -17,6 +17,10 @@ body {
     @apply flex justify-center items-center;
   }
 
+  .iconSize {
+    @apply w-6 h-6;
+  }
+
   /* page wise */
 
   /* profile - user form component */
