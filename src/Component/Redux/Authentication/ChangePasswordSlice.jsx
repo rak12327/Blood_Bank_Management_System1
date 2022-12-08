@@ -3,13 +3,13 @@ import Api, { changePasswordLink } from "../../API/Api";
 import { defaultPasswordValue } from "../../Export/Default/Password";
 import { openAlert } from "../Model/AlertSlice";
 
-export const changePasswordThunk = createAsyncThunk(changePasswordLink, async ({ value, dispatch, setUpdateAcc, setPasswordValue, token }, { rejectWithValue }) => {
+export const changePasswordThunk = createAsyncThunk(changePasswordLink, async ({ value, dispatch, setPasswordValue }, { rejectWithValue }) => {
+    const token = JSON.parse(localStorage.getItem("token"))
     try {
         const response = await Api.patch(changePasswordLink, value, { headers: { Authorization: "Bearer " + token } });
         await setPasswordValue(defaultPasswordValue);
         localStorage.setItem("token", JSON.stringify(response?.data?.userToken))
         await dispatch(openAlert({ message: "Your pasword has been changed", color: "green" }));
-        await setUpdateAcc("");
         return response;
     } catch (error) {
         if (error.response && error.response.data.message) {

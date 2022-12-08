@@ -15,8 +15,7 @@ import { UpdatedRequestList } from "../../Redux/Request/RequestFromThunk";
 
 export const RequestFormEdit = () => {
 
-    const open = useSelector(state => state?.dailog?.id)
-
+    const open = useSelector(state => state?.dailog?.type)
 
     const [touch, setTouch] = useState({ patientName: false, age: false, gender: false, hospitalName: false, hospitalPhoneNumber: false, consultantName: false, dateOfReceivingBlood: false })
     const [input, setInput] = useState({ patientName: "", age: "", gender: "", hospitalName: "", hospitalPhoneNumber: "", consultantName: "", dateOfReceivingBlood: null })

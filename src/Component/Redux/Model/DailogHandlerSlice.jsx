@@ -4,17 +4,17 @@ const DailogHandlerSlice = createSlice({
   name: "Dialog",
   initialState: {
     openDailog: false,
-    id: null
+    type: "",
   },
   reducers: {
     dailogHandler(state, action) {
       state.openDailog = !state.openDailog;
     },
     openForm(state, action) {
-      state.id = action.payload
+      state.type = action.payload
     },
     closeForm(state, action) {
-      state.id = null
+      state.type = ""
     }
   },
 });

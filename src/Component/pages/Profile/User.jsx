@@ -5,8 +5,8 @@ import Loading from "../../Export/Icons/Loading";
 import { updateUserThunk } from "../../Redux/Authentication/UpdateSlice";
 import { openAlert } from "../../Redux/Model/AlertSlice";
 import { deleteUserData } from "../../Redux/Authentication/UserDataSlice";
-import { changePasswordThunk } from "../../Redux/Authentication/ChangePasswordSlice";
-import { defaultPasswordValue } from "../../Export/Default/Password";
+import { openForm } from "../../Redux/Model/DailogHandlerSlice";
+import ChangePassword from "../../Export/Dialog/Profile/ChangePassword";
 
 
 const User = () => {
@@ -15,7 +15,6 @@ const User = () => {
   const { loading } = useSelector((state) => state.update);
   const dispatch = useDispatch();
 
-  console.log(data);
 
   const [updateAcc, setUpdateAcc] = useState('');
 
@@ -30,16 +29,11 @@ const User = () => {
     gender: data?.user?.gender || "",
   });
 
-  const [passwordValue, setPasswordValue] = useState(defaultPasswordValue)
 
-  console.log(passwordValue)
 
   //Token
   const token = JSON.parse(localStorage.getItem("token"))
 
-  const changeHandler = (e) => {
-    setPasswordValue({ ...passwordValue, [e.target.name]: e.target.value })
-  }
 
 
   const submitHandler = (e) => {
@@ -52,11 +46,6 @@ const User = () => {
 
     if (updateAcc === 'update') {
       dispatch(updateUserThunk({ value, dispatch, setUpdateAcc, token, setValue }))
-    } else if (updateAcc === "change") {
-      if (!passwordValue.currentPassword || !passwordValue.confirmPassword || !passwordValue.newPassword) {
-        return dispatch(openAlert({ color: "yellow", message: "Please enter current, new and confirm password" }))
-      }
-      dispatch(changePasswordThunk({ value: passwordValue, token, dispatch, setUpdateAcc, setPasswordValue }))
     } else {
       return dispatch(openAlert({ color: "yellow", message: "Opps, It's seems something went wrong. Please refresh it or login again" }))
     }
@@ -92,6 +81,7 @@ const User = () => {
 
   return (
     <div className="basis-[70%] w-[100%] min-h-[50vh] h-[100%] pl-[1rem]">
+      <ChangePassword />
       <div className="w-[100%] h-[100%]">
         <div className="mb-[.5rem]">
           <label className="block mb-[.2rem]">Name</label>
@@ -127,157 +117,119 @@ const User = () => {
             style={updateAcc === "update" ? { color: "black" } : { color: "gray" }}
           />
         </div>
-        {updateAcc !== 'change' ? (<>
-          <div className="flex items-center justify-center gap-[1rem] flex-col-reverse md:flex-row-reverse">
-            <div className="mb-[.5rem] w-[100%]">
-              <label className="block mb-[.2rem]">Gender</label>
-              <select
-                placeholder="Gender"
-                value={value.gender}
-                name="gender"
-                disabled={!updateAcc}
-                onChange={
-                  updateAcc
-                    ? (e) => setValue({ ...value, gender: e.target.value })
-                    : () => setValue({ gender: value.gender })
-                }
-                className="px-[.5rem] py-[.4rem] w-[100%] text-sm rounded"
-                style={updateAcc === "update" ? { color: "black" } : { color: "gray" }}
-              >
-                <option value={"null"}>Select your Gender</option>
-                <option value={"male"}>Male</option>
-                <option value={"female"}>Female</option>
-                <option value={"other"}>Other</option>
-              </select>
-            </div>
-            <div className="mb-[.5rem] w-[100%]">
-              <label className="block mb-[.2rem]">Age</label>
-              <input
-                placeholder="Age"
-                value={value.age}
-                name="age"
-                disabled={!updateAcc}
-                onChange={
-                  updateAcc
-                    ? (e) => setValue({ ...value, age: e.target.value })
-                    : () => setValue({ age: value.age })
-                }
-                type="tel"
-                className="px-[.5rem] py-[.4rem] w-[100%] text-sm rounded"
-                style={updateAcc === "update" ? { color: "black" } : { color: "gray" }}
-              />
-            </div>
-          </div>
-          <div className="flex items-center justify-center gap-[1rem] flex-col-reverse md:flex-row-reverse">
-            <div className="mb-[.5rem] w-[100%]">
-              <label className="block mb-[.2rem]">Adhaar Number</label>
-              <input
-                placeholder="Adhaar Number"
-                type={"tel"}
-                maxLength={12}
-                minLength={12}
-                name="adhaarNumber"
-                value={value.adhaarNumber}
-                disabled={!updateAcc}
-                onChange={
-                  updateAcc
-                    ? (e) => setValue({ ...value, adhaarNumber: e.target.value })
-                    : () => setValue({ adhaarNumber: value.adhaarNumber })
-                }
-                className="px-[.5rem] py-[.4rem] w-[100%] text-sm rounded"
-                style={updateAcc === "update" ? { color: "black" } : { color: "gray" }}
-              />
-              {updateAcc && false && value.adhaarNumber.length !== 12 && <p className="text-[red] text-sm">Please enter 12 digit adhaar number</p>}
-            </div>
-            <div className="mb-[.5rem] w-[100%]">
-              <label className="block mb-[.2rem]">Phone Number</label>
-              <input
-                placeholder="Phone Number"
-                value={value.phoneNumber}
-                name="phoneNumber"
-                disabled={!updateAcc}
-                onChange={
-                  updateAcc
-                    ? (e) => setValue({ ...value, phoneNumber: e.target.value })
-                    : () => setValue({ phoneNumber: value.pinCode })
-                }
-                type="tel"
-                className="px-[.5rem] py-[.4rem] w-[100%] text-sm rounded"
-                style={updateAcc === "update" ? { color: "black" } : { color: "gray" }}
-
-              />
-            </div>
-          </div>
-          <div className="mb-[.5rem]">
-            <label className="block mb-[.2rem]">Address</label>
-            <textarea
-              placeholder="Your Name"
-              value={value.address}
+        <div className="flex items-center justify-center gap-[1rem] flex-col-reverse md:flex-row-reverse">
+          <div className="mb-[.5rem] w-[100%]">
+            <label className="block mb-[.2rem]">Gender</label>
+            <select
+              placeholder="Gender"
+              value={value.gender}
+              name="gender"
               disabled={!updateAcc}
               onChange={
                 updateAcc
-                  ? (e) => setValue({ ...value, address: e.target.value })
-                  : () => setValue({ address: value.address })
+                  ? (e) => setValue({ ...value, gender: e.target.value })
+                  : () => setValue({ gender: value.gender })
               }
-              className="px-[.5rem] py-[.4rem] w-[100%] text-[1rem] leading-[20px] rounded resize-none h-[3.5rem]"
+              className="px-[.5rem] py-[.4rem] w-[100%] text-sm rounded"
               style={updateAcc === "update" ? { color: "black" } : { color: "gray" }}
-
-            />
+            >
+              <option value={"null"}>Select your Gender</option>
+              <option value={"male"}>Male</option>
+              <option value={"female"}>Female</option>
+              <option value={"other"}>Other</option>
+            </select>
           </div>
-          <div className="mb-[.5rem]">
-            <label className="block mb-[.2rem]">Pin Code</label>
+          <div className="mb-[.5rem] w-[100%]">
+            <label className="block mb-[.2rem]">Age</label>
             <input
-              placeholder="Your pin code"
-              value={value.pinCode}
+              placeholder="Age"
+              value={value.age}
+              name="age"
               disabled={!updateAcc}
               onChange={
                 updateAcc
-                  ? (e) => setValue({ ...value, pinCode: e.target.value })
-                  : () => setValue({ pinCode: value.pinCode })
+                  ? (e) => setValue({ ...value, age: e.target.value })
+                  : () => setValue({ age: value.age })
               }
               type="tel"
               className="px-[.5rem] py-[.4rem] w-[100%] text-sm rounded"
               style={updateAcc === "update" ? { color: "black" } : { color: "gray" }}
             />
           </div>
-        </>
-        ) :
-          <>
-            <div className="mb-[.5rem]">
-              <label className="block mb-[.2rem]">Current Password</label>
-              <input
-                placeholder="Your current password"
-                value={passwordValue.currentPassword || ""}
-                onChange={changeHandler}
-                name="currentPassword"
-                type="text"
-                className="px-[.5rem] py-[.4rem] w-[100%] text-sm rounded"
-              />
-            </div>
-            <div className="mb-[.5rem]">
-              <label className="block mb-[.2rem]">New Password</label>
-              <input
-                placeholder="Your current password"
-                value={passwordValue.newPassword || ""}
-                onChange={changeHandler}
-                name="newPassword"
-                type="text"
-                className="px-[.5rem] py-[.4rem] w-[100%] text-sm rounded"
-              />
-            </div>
-            <div className="mb-[.5rem]">
-              <label className="block mb-[.2rem]">Confirm Password</label>
-              <input
-                placeholder="Your current password"
-                value={passwordValue.confirmPassword || ""}
-                onChange={changeHandler}
-                name="confirmPassword"
-                type="text"
-                className="px-[.5rem] py-[.4rem] w-[100%] text-sm rounded"
-              />
-            </div>
-          </>
-        }
+        </div>
+        <div className="flex items-center justify-center gap-[1rem] flex-col-reverse md:flex-row-reverse">
+          <div className="mb-[.5rem] w-[100%]">
+            <label className="block mb-[.2rem]">Adhaar Number</label>
+            <input
+              placeholder="Adhaar Number"
+              type={"tel"}
+              maxLength={12}
+              minLength={12}
+              name="adhaarNumber"
+              value={value.adhaarNumber}
+              disabled={!updateAcc}
+              onChange={
+                updateAcc
+                  ? (e) => setValue({ ...value, adhaarNumber: e.target.value })
+                  : () => setValue({ adhaarNumber: value.adhaarNumber })
+              }
+              className="px-[.5rem] py-[.4rem] w-[100%] text-sm rounded"
+              style={updateAcc === "update" ? { color: "black" } : { color: "gray" }}
+            />
+            {updateAcc && false && value.adhaarNumber.length !== 12 && <p className="text-[red] text-sm">Please enter 12 digit adhaar number</p>}
+          </div>
+          <div className="mb-[.5rem] w-[100%]">
+            <label className="block mb-[.2rem]">Phone Number</label>
+            <input
+              placeholder="Phone Number"
+              value={value.phoneNumber}
+              name="phoneNumber"
+              disabled={!updateAcc}
+              onChange={
+                updateAcc
+                  ? (e) => setValue({ ...value, phoneNumber: e.target.value })
+                  : () => setValue({ phoneNumber: value.pinCode })
+              }
+              type="tel"
+              className="px-[.5rem] py-[.4rem] w-[100%] text-sm rounded"
+              style={updateAcc === "update" ? { color: "black" } : { color: "gray" }}
+
+            />
+          </div>
+        </div>
+        <div className="mb-[.5rem]">
+          <label className="block mb-[.2rem]">Address</label>
+          <textarea
+            placeholder="Your Name"
+            value={value.address}
+            disabled={!updateAcc}
+            onChange={
+              updateAcc
+                ? (e) => setValue({ ...value, address: e.target.value })
+                : () => setValue({ address: value.address })
+            }
+            className="px-[.5rem] py-[.4rem] w-[100%] text-[1rem] leading-[20px] rounded resize-none h-[3.5rem]"
+            style={updateAcc === "update" ? { color: "black" } : { color: "gray" }}
+
+          />
+        </div>
+        <div className="mb-[.5rem]">
+          <label className="block mb-[.2rem]">Pin Code</label>
+          <input
+            placeholder="Your pin code"
+            value={value.pinCode}
+            disabled={!updateAcc}
+            onChange={
+              updateAcc
+                ? (e) => setValue({ ...value, pinCode: e.target.value })
+                : () => setValue({ pinCode: value.pinCode })
+            }
+            type="tel"
+            className="px-[.5rem] py-[.4rem] w-[100%] text-sm rounded"
+            style={updateAcc === "update" ? { color: "black" } : { color: "gray" }}
+          />
+        </div>
+
         <div className="mt-[1.25rem] lg:m-0">
           <div className="flex items-start justify-between gap-[.5rem] flex-col sm:flex-row">
             {!updateAcc && (
@@ -291,7 +243,9 @@ const User = () => {
 
             {!updateAcc && (
               <button className="userButton"
-                onClick={() => setUpdateAcc("change")}
+                onClick={() => {
+                  dispatch(openForm("change"))
+                }}
               >
                 Change Password
               </button>
