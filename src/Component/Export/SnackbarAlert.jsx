@@ -27,6 +27,7 @@ const CustomSnackBarProvider = ({ children }) => (
             warning: <ImWarning className="iconSize mr-2" />,
         }}
         action={(key) => <SnackbarCloseButton id={key} />}
+        style={{ zIndex: "1000" }}
     >
         {children}
     </SnackbarProvider>

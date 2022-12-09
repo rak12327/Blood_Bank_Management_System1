@@ -35,8 +35,7 @@ const App = () => {
   const user = useSelector((state) => state.user);
   const { enqueueSnackbar } = useSnackbar();
 
-  // const token = JSON.parse(localStorage.getItem("token"));
-  let token = "hello";
+  const token = JSON.parse(localStorage.getItem("token"));
   useEffect(() => {
     return () => {
       if (token) {
