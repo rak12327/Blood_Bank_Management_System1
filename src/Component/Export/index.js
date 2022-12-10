@@ -76,7 +76,7 @@ export const formatDate = (date) => {
 };
 
 export const Token = () => {
-  return localStorage.getItem("token")
-    ? JSON.parse(localStorage.getItem("token"))
-    : window.location.reload();
+  return (
+    localStorage.getItem("token") && JSON.parse(localStorage.getItem("token"))
+  );
 };

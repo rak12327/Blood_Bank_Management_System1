@@ -12,16 +12,15 @@ export const UserDataThunk = createAsyncThunk('userData', async ({ token, enqueu
         if (error.response && error.response.data.message) {
 
             if (error.response.data.message === "Please login again.") {
-                return enqueueSnackbar("Something Went Wrong", { variant: "error" });
-
+                enqueueSnackbar("Something Went Wrong", { variant: "error" });
             }
             if (error.response.data.error.message === "invalid signature") {
-                return enqueueSnackbar("Your Account can't dedected, Please log in again!!", { variant: "error" });
+                enqueueSnackbar("Your Account can't dedected, Please log in again!!", { variant: "error" });
             }
 
             if (error.response.data.error.message === "jwt expired") {
                 localStorage.removeItem("token")
-                return enqueueSnackbar("Opps, Your session is expired. Please login again...", { variant: "error" });
+                enqueueSnackbar("Opps, Your session is expired. Please login again...", { variant: "error" });
             }
 
             enqueueSnackbar(error.response.data.message, { variant: "error" })

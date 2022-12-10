@@ -1,22 +1,29 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import Api, { changePasswordLink } from "../../API/Api";
+import { Token } from "../../Export";
 import { defaultPasswordValue } from "../../Export/Default/Password";
-import { openAlert } from "../Model/AlertSlice";
+import { passwordSchema } from "../../Export/Schema/Password";
 
-export const changePasswordThunk = createAsyncThunk(changePasswordLink, async ({ value, dispatch, setPasswordValue }, { rejectWithValue }) => {
-    const token = JSON.parse(localStorage.getItem("token"))
+export const changePasswordThunk = createAsyncThunk(changePasswordLink, async ({ value, setPasswordValue, enqueueSnackbar }, { rejectWithValue }) => {
     try {
-        const response = await Api.patch(changePasswordLink, value, { headers: { Authorization: "Bearer " + token } });
+        await passwordSchema.validate(value, {
+            abortEarly: false,
+        })
+        const response = await Api.patch(changePasswordLink, value, { headers: { Authorization: "Bearer " + Token() } });
         await setPasswordValue(defaultPasswordValue);
         localStorage.setItem("token", JSON.stringify(response?.data?.userToken))
-        await dispatch(openAlert({ message: "Your pasword has been changed", color: "green" }));
+        enqueueSnackbar("Your pasword has been changed", { variant: "success" });
         return response;
     } catch (error) {
-        if (error.response && error.response.data.message) {
-            dispatch(openAlert({ message: error?.response?.data?.message ? error?.response?.data?.message : "Something went wrong, please try again later", color: "red" }))
+        if (error.errors) {
+            enqueueSnackbar(error?.errors[0], { variant: "warning" })
+            console.log(error?.errors)
+        } else if (error.response && error.response.data.message) {
+            enqueueSnackbar(error?.response?.data?.message ? error?.response?.data?.message : "Something went wrong, please try again later", { variant: "error" })
             return rejectWithValue(error.response.data)
-        } else {
-            await dispatch(openAlert({ message: "Something went wrong, please try again later", color: "red" }))
+        }
+        else {
+            enqueueSnackbar("Something went wrong, please try again later", { variant: "error" })
             return rejectWithValue({ error, message: "Something went wrong, please try again later" })
         }
     }

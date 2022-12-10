@@ -10,11 +10,6 @@ import { closeForm } from "../../../Redux/Model/DailogHandlerSlice";
 import { defaultPasswordValue } from "../../Default/Password";
 import { changePasswordThunk } from "../../../Redux/Authentication/ChangePasswordSlice";
 import { useSnackbar } from "notistack";
-import { object, string } from "yup"
-
-let schema = object({
-  currentPassword: string().trim().min([8, "Current password must have 8 character"]).required("Current Password is required"),
-});
 
 
 const ChangePassword = () => {
@@ -32,14 +27,7 @@ const ChangePassword = () => {
 
   const submitHandler = async (e) => {
     e.preventDefault();
-    console.log("hello");
-    await schema.validate(passwordValue.currentPassword, {
-      abortEarly: false,
-    })
-    // if (!passwordValue.currentPassword || !passwordValue.confirmPassword || !passwordValue.newPassword) {
-    //   return enqueueSnackbar("Please enter current, new and confirm password", { variant: "warning" })
-    // }
-    dispatch(changePasswordThunk({ value: passwordValue, dispatch, setPasswordValue, enqueueSnackbar }))
+    dispatch(changePasswordThunk({ value: passwordValue, setPasswordValue, enqueueSnackbar }))
   }
 
   return (
@@ -91,7 +79,7 @@ const ChangePassword = () => {
             />
           </div>
         </DialogBody>
-        <DialogFooter className="flex items-center justify-between">
+        <DialogFooter className="flex flex-wrap-reverse justify-between gap-4">
           <button onClick={() => dispatch(closeForm())} className="userButton">
             Close
           </button>

@@ -37,11 +37,13 @@ const App = () => {
 
   const token = JSON.parse(localStorage.getItem("token"));
   useEffect(() => {
-    return () => {
-      if (token) {
-        dispatch(UserDataThunk({ token, enqueueSnackbar }));
-      }
-    };
+    dispatch(UserDataThunk({ token, enqueueSnackbar }));
+    // return () => {
+    //   if (token) {
+    //     console.log("hello");
+    //     dispatch(UserDataThunk({ token, enqueueSnackbar }));
+    //   }
+    // };
   }, [token]);
 
   if (user.loading) {
