@@ -20,9 +20,11 @@ body {
   .center {
     @apply flex justify-center items-center;
   }
-
   .iconSize {
     @apply w-6 h-6;
+  }
+  .inputField {
+    @apply w-full rounded px-2 border py-2 text-sm outline-none;
   }
 
   /* page wise */

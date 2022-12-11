@@ -3,7 +3,6 @@ import { useState } from "react";
 import NavBar from "../Home/NavBar";
 import { useDispatch, useSelector } from 'react-redux'
 import { contactUsForm } from "../../Redux/Contact/ContactUsSlice";
-import { emailValid, validCSS } from "../../Export";
 import Loading from "../../Export/Icons/Loading";
 import { useLocation, useNavigate } from "react-router-dom";
 import { defaultContactUs } from "../../Export/Default/contact";
@@ -15,6 +14,7 @@ const Contact = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { loading } = useSelector(state => state.contactUsForm)
+
 
   const { enqueueSnackbar } = useSnackbar()
 
@@ -37,23 +37,23 @@ const Contact = () => {
   }
 
   return (
-    <div className="bg-[red] min-h-[100vh] h-[100%]">
+    <div className="bg-[red] min-h-[100vh] h-full">
       <NavBar />
       <div className="max-w-[1300px] mx-auto">
 
         {/* Heading  */}
         <div className="text-center text-white">
-          <h1 className=" font-bold text-4xl pt-[1rem]">Contact Us</h1>
-          <h3 className="text-xl">How Can We Help You?</h3>
+          <h1 className=" font-bold text-2xl sm:text-4xl pt-4">Contact Us</h1>
+          <h3 className="text-lg sm:text-xl">How Can We Help You?</h3>
         </div>
 
 
         {/* image container */}
-        <div className="flex flex-col lg:flex-row items-center justify-between px-[1rem] lg:px-[2rem] py-[1rem] lg:py-[2rem] gap-10">
+        <div className="flex flex-wrap items-center justify-between p-4 lg:p-8 gap-10">
           <div className="w-[100%] lg:w-[40%]">
             <img src="/assets/contactUs.jpg" alt="..." className="w-[100%] rounded-xl" />
           </div>
-          <div className="w-[100%] lg:w-[50%] px-[1rem] py-[1rem] bg-[#fff] rounded shadow-md">
+          <div className="w-full lg:w-1/2 p-4 bg-white rounded shadow-md">
             <form onSubmit={submitHandler}>
               <div className="mb-2">
                 <label className="block mb-1">Full Name</label>
@@ -63,13 +63,8 @@ const Contact = () => {
                   value={value.name}
                   type={"text"}
                   name={"name"}
-                  className={validCSS} />
-                {/* {inputTouch.nameTouch && value.name?.trim() === "" ? <p className="text-[red] text-sm">Please enter your Full Name</p> : null} */}
+                  className={"inputField"} />
               </div>
-              {/* <div className="mb-2">
-                <label className="block mb-1">Phone Number</label>
-                <input placeholder="Your Full Name" type={"text"} className="block w-full py-1 px-2 leading-[.5rem] text-[1rem] rounded hover:bg-sky-100 focus:bg-sky-100 focus:border-sky-100" />
-              </div> */}
               <div className="mb-2">
                 <label className="block mb-1">Email ID</label>
                 <input
@@ -78,9 +73,8 @@ const Contact = () => {
                   name={"email"}
                   value={value.email}
                   onChange={handleChange}
-                  className={validCSS}
+                  className={"inputField"}
                 />
-                {/* {inputTouch.emailTouch && !emailValid(value.email) && <p className="text-[red] text-sm">Please enter your email address</p>} */}
               </div>
               <div className="mb-2">
                 <div className="block mb-1">Your Message</div>
@@ -90,17 +84,13 @@ const Contact = () => {
                   name={"message"}
                   value={value.message}
                   onChange={handleChange}
-                  className={validCSS}
+                  className={"inputField"}
                   style={{ height: "5rem", resize: "none" }} />
-                {/* {inputTouch.msgTouch && value.message?.trim() === "" && <p className="text-[red] text-sm">Please enter your Message</p>} */}
               </div>
-              <div className="text-right">
-
-                <button disabled={loading} type="submit" className="text-white bg-[black] font-medium rounded-lg text-sm px-[1rem] py-[.5rem] text-center mr-2 inline-flex items-center">
-                  {loading && <Loading height={'1rem'} width={'1rem'} />}
-                  Submit
-                </button>
-              </div>
+              <button disabled={loading} type="submit" className="text-white bg-black font-medium rounded-lg text-sm px-4 py-2 text-center mr-2 float-right">
+                {loading && <Loading height={'1rem'} width={'1rem'} />}
+                Submit
+              </button>
             </form>
           </div>
         </div>
