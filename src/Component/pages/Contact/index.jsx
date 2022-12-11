@@ -3,10 +3,11 @@ import { useState } from "react";
 import NavBar from "../Home/NavBar";
 import { useDispatch, useSelector } from 'react-redux'
 import { contactUsForm } from "../../Redux/Contact/ContactUsSlice";
-import { emailValid, inValidCSS, validCSS } from "../../Export";
-import { openAlert } from "../../Redux/Model/AlertSlice";
+import { emailValid, validCSS } from "../../Export";
 import Loading from "../../Export/Icons/Loading";
 import { useLocation, useNavigate } from "react-router-dom";
+import { defaultContactUs } from "../../Export/Default/contact";
+import { useSnackbar } from "notistack";
 
 const Contact = () => {
 
@@ -15,11 +16,9 @@ const Contact = () => {
   const location = useLocation();
   const { loading } = useSelector(state => state.contactUsForm)
 
-  //Token
-  const token = JSON.parse(localStorage.getItem("token"))
+  const { enqueueSnackbar } = useSnackbar()
 
-  const [value, setValue] = useState({ name: "", email: "", message: "" })
-  const [inputTouch, setInputTouch] = useState({ nameTouch: false, emailTouch: false, msgTouch: false })
+  const [value, setValue] = useState(defaultContactUs)
 
   const handleChange = e => {
     setValue(values => ({ ...values, [e.target.name]: e.target.value }))
@@ -29,24 +28,12 @@ const Contact = () => {
   const submitHandler = async (e) => {
     e.preventDefault()
 
-    if (emailValid(value.email) && value.name?.trim() !== "" && value.message?.trim() !== "") {
-
-      if (!user) {
-        dispatch(openAlert({ message: "Your are not authenticated, Please login your self", color: "red" }));
-        navigate("/sign-in", { state: { path: location.pathname } })
-      } else {
-        dispatch(contactUsForm({ value, dispatch, token }))
-
-        setInputTouch({ nameTouch: false, emailTouch: false, msgTouch: false })
-        setValue({ name: "", email: "", message: "" })
-      }
-
+    if (!user) {
+      enqueueSnackbar("Your are not authenticated, Please login your self", { variant: "error" });
+      navigate("/sign-in", { state: { path: location.pathname } })
     } else {
-      setInputTouch({ nameTouch: true, emailTouch: true, msgTouch: true })
-      dispatch(openAlert({ message: "Please fill all value", color: "yellow" }))
+      dispatch(contactUsForm({ value, enqueueSnackbar, setValue }))
     }
-
-
   }
 
   return (
@@ -73,12 +60,11 @@ const Contact = () => {
                 <input
                   placeholder="Your Full Name"
                   onChange={handleChange}
-                  onBlur={() => setInputTouch(e => ({ ...e, nameTouch: true }))}
                   value={value.name}
                   type={"text"}
                   name={"name"}
-                  className={inputTouch.nameTouch && value.name?.trim() === "" ? inValidCSS : validCSS} />
-                {inputTouch.nameTouch && value.name?.trim() === "" ? <p className="text-[red] text-sm">Please enter your Full Name</p> : null}
+                  className={validCSS} />
+                {/* {inputTouch.nameTouch && value.name?.trim() === "" ? <p className="text-[red] text-sm">Please enter your Full Name</p> : null} */}
               </div>
               {/* <div className="mb-2">
                 <label className="block mb-1">Phone Number</label>
@@ -92,10 +78,9 @@ const Contact = () => {
                   name={"email"}
                   value={value.email}
                   onChange={handleChange}
-                  onBlur={() => setInputTouch(e => ({ ...e, emailTouch: true }))}
-                  className={inputTouch.emailTouch && !emailValid(value.email) ? inValidCSS : validCSS}
+                  className={validCSS}
                 />
-                {inputTouch.emailTouch && !emailValid(value.email) && <p className="text-[red] text-sm">Please enter your email address</p>}
+                {/* {inputTouch.emailTouch && !emailValid(value.email) && <p className="text-[red] text-sm">Please enter your email address</p>} */}
               </div>
               <div className="mb-2">
                 <div className="block mb-1">Your Message</div>
@@ -105,10 +90,9 @@ const Contact = () => {
                   name={"message"}
                   value={value.message}
                   onChange={handleChange}
-                  onBlur={() => setInputTouch(e => ({ ...e, msgTouch: true }))}
-                  className={inputTouch.msgTouch && value.message?.trim() === "" ? inValidCSS : validCSS}
+                  className={validCSS}
                   style={{ height: "5rem", resize: "none" }} />
-                {inputTouch.msgTouch && value.message?.trim() === "" && <p className="text-[red] text-sm">Please enter your Message</p>}
+                {/* {inputTouch.msgTouch && value.message?.trim() === "" && <p className="text-[red] text-sm">Please enter your Message</p>} */}
               </div>
               <div className="text-right">
 

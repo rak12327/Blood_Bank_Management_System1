@@ -1,32 +1,34 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import Api, { contactFormLink } from "../../API/Api";
-import { openAlert } from "../Model/AlertSlice";
+import { Token } from "../../Export";
+import { ContactUsSchema } from "../../Export/Default/contact";
 
-export const contactUsForm = createAsyncThunk(
-    contactFormLink,
-    async ({ value, dispatch, token }, { rejectWithValue }) => {
-        try {
-            await Api.post(contactFormLink, value
-                , { headers: { Authorization: "Bearer " + token } }
-            )
-            dispatch(openAlert({ message: "Your response was succussfully submited", color: "green" }))
+export const contactUsForm = createAsyncThunk(contactFormLink, async ({ value, enqueueSnackbar, setValue }, { rejectWithValue }) => {
+    try {
+        await ContactUsSchema.validate(value, { abortEarly: false })
+        await Api.post(contactFormLink, value
+            , { headers: { Authorization: "Bearer " + Token() } }
+        )
+        enqueueSnackbar("Your response was succussfully submited", { variant: "success" })
+        setValue(defaultContactUs)
 
-        } catch (error) {
-            console.log(error)
-            console.log(error.response.data.message)
-            if (error.response && error.response.data.message) {
-                if (error.response.data.message === `Can't find ${contactFormLink} on this server!`) {
-                    return dispatch(openAlert({ message: "", color: "red" }))
-                }
-                dispatch(openAlert({ message: error.response.data.message, color: "red" }))
-                return rejectWithValue(error.response.data)
-            } else {
-                dispatch(openAlert({ message: error?.data, color: "red" }))
-                return rejectWithValue({ error: error, message: 'Opps there seems to be an error' })
-            }
-
+    } catch (error) {
+        if (error.errors) {
+            enqueueSnackbar(error.errors[0], { variant: "warning" })
         }
+        else if (error.response && error.response.data.message) {
+            if (error.response.data.message === `Can't find ${contactFormLink} on this server!`) {
+                enqueueSnackbar("Something went wrong, Please try after some time", { variant: "error" })
+            }
+            enqueueSnackbar(error.response.data.message, { variant: "error" });
+            return rejectWithValue(error.response.data)
+        } else {
+            enqueueSnackbar(error?.data, { variant: "error" })
+            return rejectWithValue({ error: error, message: 'Opps there seems to be an error' })
+        }
+
     }
+}
 )
 
 const contactUsSlice = createSlice({

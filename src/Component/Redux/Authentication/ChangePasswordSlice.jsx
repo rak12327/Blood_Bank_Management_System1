@@ -1,8 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import Api, { changePasswordLink } from "../../API/Api";
 import { Token } from "../../Export";
-import { defaultPasswordValue } from "../../Export/Default/Password";
-import { passwordSchema } from "../../Export/Schema/Password";
+import { defaultPasswordValue, passwordSchema } from "../../Export/Default/Password";
 
 export const changePasswordThunk = createAsyncThunk(changePasswordLink, async ({ value, setPasswordValue, enqueueSnackbar }, { rejectWithValue }) => {
     try {
