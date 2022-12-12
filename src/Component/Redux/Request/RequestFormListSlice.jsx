@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { RequestFormListBeforeDeliver, RequestFormListComplete } from "./RequestFromThunk";
+import { RequestFormListBeforeDeliver, RequestFormListComplete, RequestFormListNotComplete } from "./RequestFromThunk";
 
 const RequestFormListSlice = createSlice({
     name: "requestFormList",
@@ -39,6 +39,20 @@ const RequestFormListSlice = createSlice({
             state.loading = false
             state.error = action.payload
             // state.completeList = null
+        })
+        builder.addCase(RequestFormListNotComplete.pending, (state, action) => {
+            state.loading = true
+            state.error = null
+        })
+        builder.addCase(RequestFormListNotComplete.fulfilled, (state, action) => {
+            state.loading = false
+            state.error = null
+            state.notCompleteList = action.payload
+        })
+        builder.addCase(RequestFormListNotComplete.rejected, (state, action) => {
+            state.loading = false
+            state.error = action.payload
+            // state.requestList = null
         })
     }
 })

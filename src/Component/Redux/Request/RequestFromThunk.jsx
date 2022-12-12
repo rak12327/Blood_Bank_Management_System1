@@ -1,5 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import Api, { BloodDetails, ComponentName, deleteRequestFromList, requestFormComplete, requestFormList, requestFormNotComplete, updatedRequestForm } from "../../API/Api";
+import { Token } from "../../Export";
 import { openAlert } from "../Model/AlertSlice";
 import { closeForm } from "../Model/DailogHandlerSlice";
 
@@ -44,21 +45,25 @@ export const RequestFormListComplete = createAsyncThunk("requestFormComplete", a
     }
 })
 
-export const RequestFormListNotComplete = createAsyncThunk("requestFormNotComplete", async (dispatch, { rejectWithValue }) => {
+export const RequestFormListNotComplete = createAsyncThunk("requestFormNotComplete", async ({ enqueueSnackbar }, { rejectWithValue }) => {
     try {
         return await Api.get(requestFormNotComplete,
             {
                 headers: {
-                    Authorization: `Bearer ` + JSON.parse(localStorage.getItem("token"))
+                    Authorization: `Bearer ` + Token()
                 }
             }
-        ).then(res => { return res.data })
+        ).then(res => {
+            return res.data
+        })
     } catch (error) {
+        console.log(error)
         if (error.response && error.response.data.message) {
-            dispatch(openAlert({ color: "red", message: error.response.data.message }))
+            console.log(error.response.data.message)
+            enqueueSnackbar(error.response.data.message, { variant: "error" })
             return rejectWithValue(error.response.data.message)
         } else {
-            dispatch(openAlert({ color: "red", message: "Opps!, there seems to be an error. Please try again later" }))
+            enqueueSnackbar("Opps!, there seems to be an error. Please try again later", { variant: "error" })
             return rejectWithValue({ error, message: "Opps!, there seems to be an error. Please try again later" })
         }
     }
