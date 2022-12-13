@@ -1,11 +1,12 @@
+import { useSnackbar } from "notistack";
 import React from "react";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { emailValid, inValidCSS, validCSS } from "../../Export";
+import { defaultValue } from "../../Export/Default/Login";
 import Loading from "../../Export/Icons/Loading";
-import { openAlert } from "../../Redux/Model/AlertSlice";
 import { SignInThunk } from "../../Redux/Authentication/SignInSlice";
+
 
 const Login = () => {
 
@@ -14,61 +15,56 @@ const Login = () => {
   const { state } = useLocation()
   const data = useSelector(state => state.signin);
 
-  const [value, setValue] = useState({ email: "", password: "" })
+  const [value, setValue] = useState(defaultValue);
+  const { enqueueSnackbar } = useSnackbar();
 
-  const [touch, setTouch] = useState({ emailTouch: false, passwordTouch: false })
+  const changeHandler = (e) => {
+    setValue({ ...value, [e.target.name]: e.target.value })
+  }
+
 
   const signInHandler = (e) => {
     e.preventDefault()
 
-    if (emailValid(value.email) && value.password?.length >= 8) {
-      dispatch(SignInThunk({ value, dispatch, navigate, state }))
+    dispatch(SignInThunk({ value, navigate, state, enqueueSnackbar }))
 
-      setValue({ email: "", password: "" })
-      setTouch({ emailTouch: false, passwordTouch: false })
-    } else {
-      setTouch({ emailTouch: true, passwordTouch: true })
-      dispatch(openAlert({ message: "Please enter your email and password", color: "yellow" }))
-    }
   }
   return (
-    <div className="bg-[red] h-[100vh]">
-      <div className="max-w-[1300px] mx-auto px-[1rem] lg:px-[2rem] py-[2rem]">
-        <div className="flex justify-center items-center h-[90vh]">
+    <div className="bg-red-500 h-screen">
+      <div className="max-w-[1300px] mx-auto px-4 lg:px-8 py-8">
+        <div className="center h-[90vh]">
 
-          <div className="bg-[#fff] w-[100%] lg:w-[40%] rounded-lg shadow-md">
-            <form className="px-[1rem] pt-[1rem]">
-              <h1 className="text-center font-bold text-2xl mb-[1rem]">Sign In</h1>
-              <div className="mb-[.5rem]">
-                <label className="block mb-[.2rem] text-base">Email ID</label>
+          <div className="bg-white w-full lg:w-2/5 rounded-lg shadow-md">
+            <form className="px-4 pt-4"
+              onSubmit={signInHandler}
+            >
+              <h1 className="text-center font-bold text-2xl mb-4">Sign In</h1>
+              <div className="mb-4">
+                <label className="block mb-1 text-base">Email ID</label>
                 <input
                   type={"email"}
                   placeholder='Email ID'
                   value={value.email}
                   name={"email"}
-                  onChange={(e) => setValue(value => ({ ...value, [e.target.name]: e.target.value }))}
-                  onBlur={() => setTouch(e => ({ ...e, emailTouch: true }))}
-                  className={touch.emailTouch && !emailValid(value.email) ? inValidCSS : validCSS}
+                  onChange={changeHandler}
+                  className={"inputField"}
                 />
-                {touch.emailTouch && !emailValid(value.email) ? <p className="text-[red] text-sm">Please type your email id</p> : null}
               </div>
-              <div className="mb-[1rem]">
-                <label className="block mb-[.2rem] text-base">Password</label>
+              <div className="mb-4">
+                <label className="block mb-1 text-base">Password</label>
                 <input
                   type={"password"}
                   placeholder='Password'
                   value={value.password}
                   name={"password"}
-                  onChange={(e) => setValue(value => ({ ...value, [e.target.name]: e.target.value }))}
-                  onBlur={() => setTouch(e => ({ ...e, passwordTouch: true }))}
-                  className={touch.passwordTouch && value.password?.trim() === "" ? inValidCSS : validCSS}
+                  onChange={changeHandler}
+                  className={"inputField"}
                 />
-                {touch.passwordTouch && value.password?.trim() === "" ? <p className="text-[red] text-sm">Please type your password </p> : null}
               </div>
-              <div className="mb-[1rem]">
+              <div className="mb-4">
                 <button
-                  className="text-[#fff] text-base bg-black w-[100%] py-[.3rem] rounded outline-none inline-block"
-                  onClick={signInHandler}
+                  className="text-white text-base bg-black w-full py-1 rounded outline-none inline-block"
+                  type="submit"
                 >
                   {data.loading && (
                     <Loading width={"1rem"} height={"1rem"} />
@@ -77,10 +73,10 @@ const Login = () => {
               </div>
 
             </form>
-            <div className="mb-[1rem] w-[100%] text-right px-[1rem]">
+            <div className="mb-4 w-full text-right px-4">
               <Link to={'/forgot-password'} className="text-gray-600">Forgot Password?</Link>
             </div>
-            <div className="mb-[1rem] w-[100%] text-center border-t border-black pt-[.5rem]">
+            <div className="mb-4 w-full text-center border-t border-black pt-2">
               <p>Not have an <Link to={'/sign-up'} className='text-blue-600 underline'>Account</Link> ?</p>
             </div>
           </div>

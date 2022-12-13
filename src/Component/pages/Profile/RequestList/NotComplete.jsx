@@ -12,18 +12,13 @@ const NotComplete = () => {
 
     useEffect(() => {
         // if (token) {
-        let isCancelled = false;
-        if (!isCancelled) {
-            dispatch(RequestFormListNotComplete({ enqueueSnackbar }))
-        }
-        return () => {
-            isCancelled = true;
-        };
-    }, [enqueueSnackbar])
+        // }
+        dispatch(RequestFormListNotComplete({ enqueueSnackbar }))
+    }, [])
 
-    console.log(list.error);
+    // console.log(list.error);
 
-    if (list.error === "No data found") {
+    if (list.error === "No Data found") {
         return (
             <div>
                 <h1>No Data found</h1>
