@@ -26,7 +26,7 @@ const Login = () => {
   const signInHandler = (e) => {
     e.preventDefault()
 
-    dispatch(SignInThunk({ value, navigate, state, enqueueSnackbar }))
+    dispatch(SignInThunk({ value, navigate, state, enqueueSnackbar, setValue }))
 
   }
   return (
