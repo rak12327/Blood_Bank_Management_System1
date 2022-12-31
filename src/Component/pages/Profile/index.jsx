@@ -8,7 +8,7 @@ import { BsBucket } from "react-icons/bs"
 
 const Profile = () => {
 
-    const open = useSelector(state => state.dailog.openDailog)
+    const open = useSelector(state => state.dailog.openDailog);
 
     return (
         <div className='bg-[red] min-h-[100vh] h-auto'>
@@ -50,7 +50,6 @@ const Profile = () => {
                         </div>
 
                         <Outlet />
-
                     </div>
                 </div >
             </div >
