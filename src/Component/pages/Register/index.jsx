@@ -11,37 +11,35 @@ const Register = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { state } = useLocation();
-  const data = useSelector(state => state.signup)
+  const data = useSelector((state) => state.signup);
 
-  const [input, setInput] = useState(defaultSignup)
+  const [input, setInput] = useState(defaultSignup);
 
   const { enqueueSnackbar } = useSnackbar();
 
-
-  const changeHandler = e => {
-    setInput(values => ({ ...values, [e.target.name]: e.target.value }))
-  }
+  const changeHandler = (e) => {
+    setInput((values) => ({ ...values, [e.target.name]: e.target.value }));
+  };
 
   const submitHandler = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
 
-
-    dispatch(SignUpSliceThunk({ input, navigate, state, enqueueSnackbar, setInput }))
-
-
-  }
+    dispatch(
+      SignUpSliceThunk({ input, navigate, state, enqueueSnackbar, setInput })
+    );
+  };
 
   return (
     <div className="bg-red-500 h-screen">
       <div className="max-w-[1300px] mx-auto px-4 lg:px-8 py-4">
         <div className="h-[90vh] flex items-center justify-center">
           <div className="bg-[#fff] px-4 py-8 w-full lg:w-[40%] rounded">
-
             {/*---------Form Submission-------------*/}
             <form onSubmit={submitHandler}>
-
               {/*---------Heading-------------*/}
-              <div className="text-center text-2xl font-bold mb-4">Register</div>
+              <div className="text-center text-2xl font-bold mb-4">
+                Register
+              </div>
 
               {/*----------First Name------------*/}
               <div className="mb-2">
@@ -62,7 +60,7 @@ const Register = () => {
                 <input
                   type={"text"}
                   name={"lastName"}
-                  placeholder='Last Name'
+                  placeholder="Last Name"
                   value={input.lastName || ""}
                   onChange={changeHandler}
                   className="inputField"
@@ -75,7 +73,7 @@ const Register = () => {
                 <input
                   type={"email"}
                   name={"email"}
-                  placeholder='abc@gmail.com'
+                  placeholder="abc@gmail.com"
                   value={input.email || ""}
                   onChange={changeHandler}
                   className="inputField"
@@ -99,12 +97,19 @@ const Register = () => {
               <div className="mb-2">
                 <button className="w-full bg-black text-white text-base py-2 rounded outline-none">
                   {data.loading && <Loading width={"1rem"} height={"1rem"} />}
-                  Sign Up</button>
+                  Sign Up
+                </button>
               </div>
 
               {/*----------Link------------*/}
               <div className="w-full text-center">
-                <p>Already Have <Link to={"/sign-in"} className='text-blue-600 underline'>Account</Link> ?</p>
+                <p>
+                  Already Have{" "}
+                  <Link to={"/sign-in"} className="text-blue-600 underline">
+                    Account
+                  </Link>{" "}
+                  ?
+                </p>
               </div>
             </form>
           </div>

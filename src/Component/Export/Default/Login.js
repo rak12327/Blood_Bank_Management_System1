@@ -1,5 +1,6 @@
 import { object, string } from "yup";
 
+//Login Default value
 export const defaultValue = { email: "", password: "" };
 
 export const SignInSchema = object({
@@ -13,6 +14,7 @@ export const SignInSchema = object({
     .min(8, "Password must have 8 character"),
 });
 
+//Register Default value
 export const defaultSignup = {
   firstName: "",
   lastName: "",
@@ -31,4 +33,20 @@ export const SignUpSchema = object({
     .trim()
     .required("Password is required")
     .min(8, "Password must have 8 character"),
+});
+
+//Reset Default value
+export const ResetDefault = {
+  newPassword: "",
+  confirmPassword: "",
+};
+export const ResetSchema = object({
+  newPassword: string()
+    .trim()
+    .required("New Password is required")
+    .min(8, "New Password must have 8 character"),
+  confirmPassword: string()
+    .trim()
+    .required("Confirm Password is required")
+    .min(8, "Confirm Password must have 8 character"),
 });

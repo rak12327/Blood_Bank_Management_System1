@@ -1,57 +1,36 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk } from "@reduxjs/toolkit";
 import Api, { resetPasswordLink } from "../../API/Api";
-import { openAlert } from "../Model/AlertSlice";
+import { ResetDefault, ResetSchema } from "../../Export/Default/Login";
 
-export const ResetPasswordThunk = createAsyncThunk(resetPasswordLink, async ({ value, token, dispatch, navigate }, { rejectWithValue }) => {
+export const ResetPasswordThunk = createAsyncThunk(
+  resetPasswordLink,
+  async (
+    { value, token, navigate, setValue, enqueueSnackbar },
+    { rejectWithValue }
+  ) => {
     try {
-        const response = await Api.patch(`${resetPasswordLink}/${token}`, value);
-        await dispatch(openAlert({ color: "green", message: "Your password have been changed, Please login again" }));
-        await navigate("/sign-in")
-        console.log(response)
-        return response;
+      await ResetSchema.validate(value, { abortEarly: false });
+      const response = await Api.patch(`${resetPasswordLink}/${token}`, value);
+      setValue(ResetDefault);
+      enqueueSnackbar("Your password have been changed, Please login again", {
+        variant: "success",
+      });
+      await navigate("/sign-in");
+      return response;
     } catch (error) {
-        console.log(error.response)
-        if (error?.response && error?.response?.data?.message) {
-            dispatch(openAlert({ color: "red", message: error?.response?.data?.message ? error?.response?.data?.message : "Somthing went wrong" }))
-        }
-
-        return rejectWithValue(error)
+      console.log(error);
+      if (error.errors) {
+        enqueueSnackbar(error.errors[0], { variant: "warning" });
+      } else if (error?.response && error?.response?.data?.message) {
+        enqueueSnackbar(
+          error?.response?.data?.message
+            ? error?.response?.data?.message
+            : "Somthing went wrong",
+          { variant: "error" }
+        );
+        console.log(error);
+      }
+      return rejectWithValue(error);
     }
-})
-
-const resetPasswordSlice = createSlice({
-    name: "restPassword",
-    initialState: {
-        loading: false,
-        data: null,
-        error: null
-    },
-    reducers: {
-        clearResetPasswordData(state, action) {
-            state.loading = false;
-            state.data = null;
-            state.error = null;
-        }
-    },
-    extraReducers: (builder) => {
-        builder.addCase(ResetPasswordThunk.pending, (state, action) => {
-            state.loading = true;
-            state.data = null;
-            state.error = null;
-        });
-        builder.addCase(ResetPasswordThunk.fulfilled, (state, action) => {
-            state.loading = false;
-            state.data = action.payload;
-            state.error = null
-        });
-        builder.addCase(ResetPasswordThunk.rejected, (state, action) => {
-            state.loading = false;
-            state.error = action.payload;
-            state.data = null
-        })
-    }
-})
-
-export const { clearResetPasswordData } = resetPasswordSlice.actions
-
-export default resetPasswordSlice.reducer;
+  }
+);
