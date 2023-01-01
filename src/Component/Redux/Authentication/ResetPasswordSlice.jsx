@@ -16,7 +16,7 @@ export const ResetPasswordThunk = createAsyncThunk(
         variant: "success",
       });
       await navigate("/sign-in");
-      return response;
+      return response.data;
     } catch (error) {
       console.log(error);
       if (error.errors) {

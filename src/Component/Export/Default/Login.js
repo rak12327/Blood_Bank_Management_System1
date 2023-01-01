@@ -50,3 +50,9 @@ export const ResetSchema = object({
     .required("Confirm Password is required")
     .min(8, "Confirm Password must have 8 character"),
 });
+
+// Forgot password Default value
+export const ForgotSchema = string()
+  .trim()
+  .required("Email is required")
+  .email("Your email is not valid");

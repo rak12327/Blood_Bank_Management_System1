@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { ForgotPasswordThunk } from "./ForgotPasswordSlice";
 import { ResetPasswordThunk } from "./ResetPasswordSlice";
 
 const AuthSlice = createSlice({
@@ -32,7 +33,22 @@ const AuthSlice = createSlice({
       state.data = null;
     });
 
-    //   builder.addCase()
+    // ForgotPasswordThunk
+    builder.addCase(ForgotPasswordThunk.pending, (state, action) => {
+      state.loading = true;
+      state.data = null;
+      state.error = null;
+    });
+    builder.addCase(ForgotPasswordThunk.fulfilled, (state, action) => {
+      state.loading = false;
+      state.data = action.payload;
+      state.error = null;
+    });
+    builder.addCase(ForgotPasswordThunk.rejected, (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
+      state.data = null;
+    });
   },
 });
 

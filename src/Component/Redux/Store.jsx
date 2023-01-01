@@ -1,6 +1,5 @@
 import { configureStore } from "@reduxjs/toolkit";
 import AlertSlice from "./Model/AlertSlice";
-import ForgotPasswordSlice from "./Authentication/ForgotPasswordSlice";
 import ChangePasswordSlice from "./Authentication/ChangePasswordSlice";
 import ContactUsSlice from "./Contact/ContactUsSlice";
 import DailogHandlerSlice from "./Model/DailogHandlerSlice";
@@ -28,8 +27,6 @@ const Store = configureStore({
     update: UpdateSlice,
     changePassword: ChangePasswordSlice,
     dailog: DailogHandlerSlice,
-    forgotPassword: ForgotPasswordSlice,
-    // resetPassword: ResetPasswordSlice,
 
     auth: AuthSlice,
     deleteAccount: DeleteAccountSlice,

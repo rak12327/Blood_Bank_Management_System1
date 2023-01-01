@@ -1,48 +1,31 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk } from "@reduxjs/toolkit";
 import Api, { forgotPasswordLink } from "../../API/Api";
-import { openAlert } from "../Model/AlertSlice";
+import { ForgotSchema } from "../../Export/Default/Login";
 
-export const ForgotPasswordThunk = createAsyncThunk(forgotPasswordLink, async ({ email, dispatch }, { rejectWithValue }) => {
+export const ForgotPasswordThunk = createAsyncThunk(
+  forgotPasswordLink,
+  async ({ email, setEmail, enqueueSnackbar }, { rejectWithValue }) => {
     try {
-        const response = await Api.post(forgotPasswordLink, { email })
-        await dispatch(openAlert({ color: "green", message: `Reset password email sent to your ${email} email address` }));
-
-        return response;
+      await ForgotSchema.validate(email, { abortEarly: false });
+      const response = await Api.post(forgotPasswordLink, { email });
+      enqueueSnackbar(
+        `Reset password email sent to your ${email} email address`,
+        { variant: "success" }
+      );
+      setEmail("");
+      return response.data;
     } catch (error) {
-        dispatch(openAlert({ color: "red", message: error?.response?.data?.message ? error?.response?.data?.message : "Something went wrong" }))
-        console.log(error?.response?.data)
-        return rejectWithValue(error)
-    }
-})
+      if (error.response && error?.response?.data?.message) {
+        console.log(error?.response?.data?.message);
+        enqueueSnackbar(
+          error?.response?.data?.message || "Something went wrong",
+          { variant: "error" }
+        );
+      } else if (error?.errors[0]) {
+        enqueueSnackbar(error.errors[0], { variant: "warning" });
+      }
 
-const forgotPasswordSlice = createSlice({
-    name: "forgotPassword",
-    initialState: {
-        loading: false,
-        data: null,
-        error: null
-    },
-    reducers: {
-        clearForgotPasswordData(state, action) {
-            state.loading = false;
-            state.data = null;
-            state.error = null;
-        }
-    },
-    extraReducers: (builder) => {
-        builder.addCase(ForgotPasswordThunk.pending, (state, action) => {
-            state.loading = true;
-        })
-        builder.addCase(ForgotPasswordThunk.fulfilled, (state, action) => {
-            state.loading = false;
-            state.data = action.payload;
-        });
-        builder.addCase(ForgotPasswordThunk.rejected, (state, action) => {
-            state.loading = false;
-            state.error = action.error
-        })
+      return rejectWithValue(error);
     }
-})
-
-export const { clearForgotPasswordData } = forgotPasswordSlice.actions
-export default forgotPasswordSlice.reducer
+  }
+);
