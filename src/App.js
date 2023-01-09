@@ -33,17 +33,14 @@ const App = () => {
   const alert = useSelector((state) => state.alert);
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
+  const { token } = useSelector((state) => state.auth);
   const { enqueueSnackbar } = useSnackbar();
 
-  const token = JSON.parse(localStorage.getItem("token"));
+  // const token = localStorage.getItem("token");
   useEffect(() => {
-    dispatch(UserDataThunk({ token, enqueueSnackbar }));
-    // return () => {
-    //   if (token) {
-    //     console.log("hello");
-    //     dispatch(UserDataThunk({ token, enqueueSnackbar }));
-    //   }
-    // };
+    if (token) {
+      dispatch(UserDataThunk({ token, enqueueSnackbar }));
+    }
   }, [token]);
 
   if (user.loading) {

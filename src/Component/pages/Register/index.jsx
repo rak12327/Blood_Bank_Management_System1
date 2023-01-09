@@ -11,7 +11,7 @@ const Register = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { state } = useLocation();
-  const data = useSelector((state) => state.signup);
+  const data = useSelector((state) => state.auth);
 
   const [input, setInput] = useState(defaultSignup);
 

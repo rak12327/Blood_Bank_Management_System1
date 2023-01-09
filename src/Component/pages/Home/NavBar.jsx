@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
 import { MenuIcon, XIcon } from "@heroicons/react/outline";
+import { useSelector } from "react-redux";
 
 const NavBar = () => {
   const activeStyle = `text-[crimson] font-semibold text-[1rem]`;
@@ -8,7 +9,8 @@ const NavBar = () => {
 
   const [openNavBar, setOpenNavBar] = useState(true);
 
-  const user = JSON.parse(localStorage.getItem("token"));
+  const { token } = useSelector((state) => state.auth);
+  // const user = JSON.parse(localStorage.getItem("token"));
 
   return (
     <div className="h-[3.5rem] lg:h-[4rem]">
@@ -64,7 +66,7 @@ const NavBar = () => {
                         Contact Us
                       </NavLink>
                     </li>
-                    {!user ? (
+                    {!token ? (
                       <li className="flex items-center justify-between gap-2">
                         <NavLink
                           to={"/sign-in"}
@@ -157,7 +159,7 @@ const NavBar = () => {
                     </NavLink>
                   </li>
                   <div className="flex flex-col items-start mt-[1rem]">
-                    {!user ? (
+                    {!token ? (
                       <>
                         <NavLink
                           to={"/sign-in"}

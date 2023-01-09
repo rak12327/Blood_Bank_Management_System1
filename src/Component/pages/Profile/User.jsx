@@ -8,15 +8,13 @@ import { deleteUserData } from "../../Redux/Authentication/UserDataSlice";
 import { openForm } from "../../Redux/Model/DailogHandlerSlice";
 import ChangePassword from "../../Export/Dialog/Profile/ChangePassword";
 
-
 const User = () => {
   const navigate = useNavigate();
   const data = useSelector((state) => state.user);
   const { loading } = useSelector((state) => state.update);
   const dispatch = useDispatch();
 
-
-  const [updateAcc, setUpdateAcc] = useState('');
+  const [updateAcc, setUpdateAcc] = useState("");
 
   const [value, setValue] = useState({
     name: data?.user?.name || "",
@@ -29,30 +27,41 @@ const User = () => {
     gender: data?.user?.gender || "",
   });
 
-
-
   //Token
-  const token = JSON.parse(localStorage.getItem("token"))
-
-
+  const { token } = useSelector((state) => state.auth);
+  // const token = JSON.parse(localStorage.getItem("token"));
 
   const submitHandler = (e) => {
     e.preventDefault();
 
     if (!data?.user) {
-      dispatch(openAlert({ message: "Opps, Something went wrong with your session. Please login again...", color: "yellow" }))
-      return navigate("/sign-in")
+      dispatch(
+        openAlert({
+          message:
+            "Opps, Something went wrong with your session. Please login again...",
+          color: "yellow",
+        })
+      );
+      return navigate("/sign-in");
     }
 
-    if (updateAcc === 'update') {
-      dispatch(updateUserThunk({ value, dispatch, setUpdateAcc, token, setValue }))
+    if (updateAcc === "update") {
+      dispatch(
+        updateUserThunk({ value, dispatch, setUpdateAcc, token, setValue })
+      );
     } else {
-      return dispatch(openAlert({ color: "yellow", message: "Opps, It's seems something went wrong. Please refresh it or login again" }))
+      return dispatch(
+        openAlert({
+          color: "yellow",
+          message:
+            "Opps, It's seems something went wrong. Please refresh it or login again",
+        })
+      );
     }
-  }
+  };
 
   const backHandler = () => {
-    setUpdateAcc("")
+    setUpdateAcc("");
     if (updateAcc === "update") {
       setValue({
         ...value,
@@ -62,22 +71,24 @@ const User = () => {
         pinCode: data?.user?.pinCode || "",
         age: data?.user?.age || "",
         gender: data?.user?.gender || "",
-      })
+      });
     } else if (updateAcc === "change") {
-      setPasswordValue({ newPassword: "", currentPassword: "", confirmPassword: "" })
+      setPasswordValue({
+        newPassword: "",
+        currentPassword: "",
+        confirmPassword: "",
+      });
     }
-  }
-
+  };
 
   const logOut = () => {
     localStorage.removeItem("token");
     if (data.user) {
-      console.log(data.user)
-      dispatch(deleteUserData())
+      console.log(data.user);
+      dispatch(deleteUserData());
     }
     navigate("/sign-in");
   };
-
 
   return (
     <div className="basis-[70%] w-[100%] min-h-[50vh] h-[100%] pl-[1rem]">
@@ -97,7 +108,9 @@ const User = () => {
                 : () => setValue({ name: value.name })
             }
             className="px-[.5rem] py-[.4rem] w-[100%] text-sm rounded"
-            style={updateAcc === "update" ? { color: "black" } : { color: "gray" }}
+            style={
+              updateAcc === "update" ? { color: "black" } : { color: "gray" }
+            }
           />
         </div>
         <div className="mb-[.5rem]">
@@ -114,7 +127,9 @@ const User = () => {
             }
             type="email"
             className="px-[.5rem] py-[.4rem] w-[100%] text-sm rounded"
-            style={updateAcc === "update" ? { color: "black" } : { color: "gray" }}
+            style={
+              updateAcc === "update" ? { color: "black" } : { color: "gray" }
+            }
           />
         </div>
         <div className="flex items-center justify-center gap-[1rem] flex-col-reverse md:flex-row-reverse">
@@ -131,7 +146,9 @@ const User = () => {
                   : () => setValue({ gender: value.gender })
               }
               className="px-[.5rem] py-[.4rem] w-[100%] text-sm rounded"
-              style={updateAcc === "update" ? { color: "black" } : { color: "gray" }}
+              style={
+                updateAcc === "update" ? { color: "black" } : { color: "gray" }
+              }
             >
               <option value={"null"}>Select your Gender</option>
               <option value={"male"}>Male</option>
@@ -153,7 +170,9 @@ const User = () => {
               }
               type="tel"
               className="px-[.5rem] py-[.4rem] w-[100%] text-sm rounded"
-              style={updateAcc === "update" ? { color: "black" } : { color: "gray" }}
+              style={
+                updateAcc === "update" ? { color: "black" } : { color: "gray" }
+              }
             />
           </div>
         </div>
@@ -174,9 +193,15 @@ const User = () => {
                   : () => setValue({ adhaarNumber: value.adhaarNumber })
               }
               className="px-[.5rem] py-[.4rem] w-[100%] text-sm rounded"
-              style={updateAcc === "update" ? { color: "black" } : { color: "gray" }}
+              style={
+                updateAcc === "update" ? { color: "black" } : { color: "gray" }
+              }
             />
-            {updateAcc && false && value.adhaarNumber.length !== 12 && <p className="text-[red] text-sm">Please enter 12 digit adhaar number</p>}
+            {updateAcc && false && value.adhaarNumber.length !== 12 && (
+              <p className="text-[red] text-sm">
+                Please enter 12 digit adhaar number
+              </p>
+            )}
           </div>
           <div className="mb-[.5rem] w-[100%]">
             <label className="block mb-[.2rem]">Phone Number</label>
@@ -192,8 +217,9 @@ const User = () => {
               }
               type="tel"
               className="px-[.5rem] py-[.4rem] w-[100%] text-sm rounded"
-              style={updateAcc === "update" ? { color: "black" } : { color: "gray" }}
-
+              style={
+                updateAcc === "update" ? { color: "black" } : { color: "gray" }
+              }
             />
           </div>
         </div>
@@ -209,8 +235,9 @@ const User = () => {
                 : () => setValue({ address: value.address })
             }
             className="px-[.5rem] py-[.4rem] w-[100%] text-[1rem] leading-[20px] rounded resize-none h-[3.5rem]"
-            style={updateAcc === "update" ? { color: "black" } : { color: "gray" }}
-
+            style={
+              updateAcc === "update" ? { color: "black" } : { color: "gray" }
+            }
           />
         </div>
         <div className="mb-[.5rem]">
@@ -226,7 +253,9 @@ const User = () => {
             }
             type="tel"
             className="px-[.5rem] py-[.4rem] w-[100%] text-sm rounded"
-            style={updateAcc === "update" ? { color: "black" } : { color: "gray" }}
+            style={
+              updateAcc === "update" ? { color: "black" } : { color: "gray" }
+            }
           />
         </div>
 
@@ -242,19 +271,17 @@ const User = () => {
             )}
 
             {!updateAcc && (
-              <button className="userButton"
+              <button
+                className="userButton"
                 onClick={() => {
-                  dispatch(openForm("change"))
+                  dispatch(openForm("change"));
                 }}
               >
                 Change Password
               </button>
             )}
             {!updateAcc && (
-              <button
-                className="userButton"
-                onClick={logOut}
-              >
+              <button className="userButton" onClick={logOut}>
                 {data.loading && <Loading />}
                 Log out
               </button>
@@ -266,19 +293,17 @@ const User = () => {
                 Delete Account
               </button>
             )} */}
-            {updateAcc && <div className="w-full flex justify-between gap-2 flex-col-reverse sm:flex-row">
-              <button
-                className="userButton"
-                onClick={backHandler}
-              >Back</button>
-              <button
-                className="userButton"
-                onClick={submitHandler}
-              >
-                {loading && <Loading height={'1rem'} width={'1rem'} />}
-                Submit
-              </button>
-            </div>}
+            {updateAcc && (
+              <div className="w-full flex justify-between gap-2 flex-col-reverse sm:flex-row">
+                <button className="userButton" onClick={backHandler}>
+                  Back
+                </button>
+                <button className="userButton" onClick={submitHandler}>
+                  {loading && <Loading height={"1rem"} width={"1rem"} />}
+                  Submit
+                </button>
+              </div>
+            )}
           </div>
         </div>
       </div>

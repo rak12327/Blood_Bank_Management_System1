@@ -1,54 +1,45 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import Api, { changePasswordLink } from "../../API/Api";
 import { Token } from "../../Export";
-import { defaultPasswordValue, passwordSchema } from "../../Export/Default/Password";
+import {
+  defaultPasswordValue,
+  passwordSchema,
+} from "../../Export/Default/Password";
 
-export const changePasswordThunk = createAsyncThunk(changePasswordLink, async ({ value, setPasswordValue, enqueueSnackbar }, { rejectWithValue }) => {
+export const changePasswordThunk = createAsyncThunk(
+  changePasswordLink,
+  async ({ value, setPasswordValue, enqueueSnackbar }, { rejectWithValue }) => {
     try {
-        await passwordSchema.validate(value, {
-            abortEarly: false,
-        })
-        const response = await Api.patch(changePasswordLink, value, { headers: { Authorization: "Bearer " + Token() } });
-        await setPasswordValue(defaultPasswordValue);
-        localStorage.setItem("token", JSON.stringify(response?.data?.userToken))
-        enqueueSnackbar("Your pasword has been changed", { variant: "success" });
-        return response;
+      await passwordSchema.validate(value, {
+        abortEarly: false,
+      });
+      const response = await Api.patch(changePasswordLink, value, {
+        headers: { Authorization: "Bearer " + Token() },
+      });
+      await setPasswordValue(defaultPasswordValue);
+      localStorage.setItem("token", JSON.stringify(response?.data?.userToken));
+      enqueueSnackbar("Your pasword has been changed", { variant: "success" });
+      return response;
     } catch (error) {
-        if (error.errors) {
-            enqueueSnackbar(error?.errors[0], { variant: "warning" })
-            console.log(error?.errors)
-        } else if (error.response && error.response.data.message) {
-            enqueueSnackbar(error?.response?.data?.message ? error?.response?.data?.message : "Something went wrong, please try again later", { variant: "error" })
-            return rejectWithValue(error.response.data)
-        }
-        else {
-            enqueueSnackbar("Something went wrong, please try again later", { variant: "error" })
-            return rejectWithValue({ error, message: "Something went wrong, please try again later" })
-        }
+      if (error.errors) {
+        enqueueSnackbar(error?.errors[0], { variant: "warning" });
+      } else if (error.response && error.response.data.message) {
+        enqueueSnackbar(
+          error?.response?.data?.message
+            ? error?.response?.data?.message
+            : "Something went wrong, please try again later",
+          { variant: "error" }
+        );
+        return rejectWithValue(error.response.data);
+      } else {
+        enqueueSnackbar("Something went wrong, please try again later", {
+          variant: "error",
+        });
+        return rejectWithValue({
+          error,
+          message: "Something went wrong, please try again later",
+        });
+      }
     }
-})
-
-
-const changePasswordSlice = createSlice({
-    name: "changePasswordSlice",
-    initialState: {
-        loading: false,
-        data: null,
-        error: null
-    },
-    extraReducers: {
-        [changePasswordThunk.pending]: (state, action) => {
-            state.loading = true
-        },
-        [changePasswordThunk.fulfilled]: (state, action) => {
-            state.loading = false
-            state.data = action.payload
-        },
-        [changePasswordThunk.rejected]: (state, action) => {
-            state.laoding = false
-            state.error = action.payload
-        }
-    }
-})
-
-export default changePasswordSlice.reducer;
+  }
+);
