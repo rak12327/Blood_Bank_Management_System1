@@ -16,7 +16,7 @@ export const SignUpSliceThunk = createAsyncThunk(
       await SignUpSchema.validate(input, { abortEarly: false });
       const response = await Api.post(signUpLink, value);
       setInput(defaultSignup);
-      toast(`Welcome ${value.name}`, { type: "success" });
+      toast(`Welcome ${value.name}`, { type: "success", theme: "colored" });
       localStorage.setItem("token", JSON.stringify(response?.data?.token));
       await navigate(state?.path || "/");
       return response;

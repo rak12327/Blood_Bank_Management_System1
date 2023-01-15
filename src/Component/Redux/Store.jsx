@@ -1,10 +1,8 @@
 import { configureStore } from "@reduxjs/toolkit";
-import AlertSlice from "./Model/AlertSlice";
 import ContactUsSlice from "./Contact/ContactUsSlice";
 import DailogHandlerSlice from "./Model/DailogHandlerSlice";
 import RequestFormSlice from "./Request/RequestFormSlice";
 import RequestModel from "./Model/RequestModel";
-// import SignInSlice from "./Authentication/SignInSlice";
 import UpdateSlice from "./Authentication/UpdateSlice";
 import UserDataSlice from "./Authentication/UserDataSlice";
 import DeleteAccountSlice from "./Authentication/DeleteAccountSlice";
@@ -18,8 +16,6 @@ const Store = configureStore({
     requestModel: RequestModel,
     contactUsForm: ContactUsSlice,
     requestForm: RequestFormSlice,
-    alert: AlertSlice,
-    // signin: SignInSlice,
     user: UserDataSlice,
     update: UpdateSlice,
     dailog: DailogHandlerSlice,

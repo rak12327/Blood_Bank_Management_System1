@@ -3,10 +3,10 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import Loading from "../../Export/Icons/Loading";
 import { updateUserThunk } from "../../Redux/Authentication/UpdateSlice";
-import { openAlert } from "../../Redux/Model/AlertSlice";
 import { deleteUserData } from "../../Redux/Authentication/UserDataSlice";
 import { openForm } from "../../Redux/Model/DailogHandlerSlice";
 import ChangePassword from "../../Export/Dialog/Profile/ChangePassword";
+import { toast } from "react-toastify";
 
 const User = () => {
   const navigate = useNavigate();
@@ -35,12 +35,9 @@ const User = () => {
     e.preventDefault();
 
     if (!data?.user) {
-      dispatch(
-        openAlert({
-          message:
-            "Opps, Something went wrong with your session. Please login again...",
-          color: "yellow",
-        })
+      toast(
+        "Opps, Something went wrong with your session. Please login again...",
+        { type: "error", theme: "colored" }
       );
       return navigate("/sign-in");
     }
@@ -50,12 +47,9 @@ const User = () => {
         updateUserThunk({ value, dispatch, setUpdateAcc, token, setValue })
       );
     } else {
-      return dispatch(
-        openAlert({
-          color: "yellow",
-          message:
-            "Opps, It's seems something went wrong. Please refresh it or login again",
-        })
+      toast(
+        "Opps, It's seems something went wrong. Please refresh it or login again",
+        { type: "error", theme: "colored" }
       );
     }
   };

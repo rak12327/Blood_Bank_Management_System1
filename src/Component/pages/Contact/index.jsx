@@ -26,7 +26,8 @@ const Contact = () => {
 
     if (!user) {
       toast("Your are not authenticated, Please login your self", {
-        variant: "error",
+        type: "error",
+        theme: "colored",
       });
       navigate("/sign-in", { state: { path: location.pathname } });
     } else {

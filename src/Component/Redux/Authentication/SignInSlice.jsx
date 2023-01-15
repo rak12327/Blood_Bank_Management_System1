@@ -9,7 +9,7 @@ export const SignInThunk = createAsyncThunk(
     try {
       await SignInSchema.validate(value, { abortEarly: false });
       const response = await Api.post(signInLink, value);
-      // setValue(defaultValue);
+      setValue(defaultValue);
       toast(`Welcome back!!!`, { type: "success", theme: "colored" });
       await navigate(state?.path || "/");
       // window.location.reload();
