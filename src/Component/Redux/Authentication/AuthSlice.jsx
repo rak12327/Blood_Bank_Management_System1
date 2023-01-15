@@ -6,7 +6,7 @@ import { SignInThunk } from "./SignInSlice";
 import { SignUpSliceThunk } from "./SignUpSlice";
 
 const token = localStorage.getItem("token")
-  ? localStorage.getItem("token")
+  ? JSON.parse(localStorage.getItem("token"))
   : "";
 
 const AuthSlice = createSlice({
@@ -30,7 +30,7 @@ const AuthSlice = createSlice({
     });
     builder.addCase(SignInThunk.fulfilled, (state, action) => {
       state.loading = false;
-      localStorage.setItem("token", action?.payload?.token);
+      localStorage.setItem("token", JSON.stringify(action?.payload?.token));
       state.token = action.payload.token;
       state.data = action.payload;
     });
