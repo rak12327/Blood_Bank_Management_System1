@@ -4,7 +4,6 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import Loading from "../../Export/Icons/Loading";
 import { SignUpSliceThunk } from "../../Redux/Authentication/SignUpSlice";
 import { defaultSignup } from "../../Export/Default/Login";
-import { useSnackbar } from "notistack";
 import { useDispatch, useSelector } from "react-redux";
 
 const Register = () => {
@@ -15,8 +14,6 @@ const Register = () => {
 
   const [input, setInput] = useState(defaultSignup);
 
-  const { enqueueSnackbar } = useSnackbar();
-
   const changeHandler = (e) => {
     setInput((values) => ({ ...values, [e.target.name]: e.target.value }));
   };
@@ -24,9 +21,7 @@ const Register = () => {
   const submitHandler = async (e) => {
     e.preventDefault();
 
-    dispatch(
-      SignUpSliceThunk({ input, navigate, state, enqueueSnackbar, setInput })
-    );
+    dispatch(SignUpSliceThunk({ input, navigate, state, setInput }));
   };
 
   return (

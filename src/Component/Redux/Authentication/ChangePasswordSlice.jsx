@@ -1,4 +1,5 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk } from "@reduxjs/toolkit";
+import { toast } from "react-toastify";
 import Api, { changePasswordLink } from "../../API/Api";
 import { Token } from "../../Export";
 import {
@@ -8,7 +9,7 @@ import {
 
 export const changePasswordThunk = createAsyncThunk(
   changePasswordLink,
-  async ({ value, setPasswordValue, enqueueSnackbar }, { rejectWithValue }) => {
+  async ({ value, setPasswordValue }, { rejectWithValue }) => {
     try {
       await passwordSchema.validate(value, {
         abortEarly: false,
@@ -18,22 +19,26 @@ export const changePasswordThunk = createAsyncThunk(
       });
       await setPasswordValue(defaultPasswordValue);
       localStorage.setItem("token", JSON.stringify(response?.data?.userToken));
-      enqueueSnackbar("Your pasword has been changed", { variant: "success" });
+      toast("Your pasword has been changed", {
+        type: "success",
+        theme: "colored",
+      });
       return response;
     } catch (error) {
       if (error.errors) {
-        enqueueSnackbar(error?.errors[0], { variant: "warning" });
+        toast(error?.errors[0], { type: "warning", theme: "colored" });
       } else if (error.response && error.response.data.message) {
-        enqueueSnackbar(
+        toast(
           error?.response?.data?.message
             ? error?.response?.data?.message
             : "Something went wrong, please try again later",
-          { variant: "error" }
+          { type: "error", theme: "colored" }
         );
         return rejectWithValue(error.response.data);
       } else {
-        enqueueSnackbar("Something went wrong, please try again later", {
-          variant: "error",
+        toast("Something went wrong, please try again later", {
+          type: "error",
+          theme: "colored",
         });
         return rejectWithValue({
           error,

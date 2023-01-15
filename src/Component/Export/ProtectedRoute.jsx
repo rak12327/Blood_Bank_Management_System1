@@ -1,8 +1,8 @@
-import { useSnackbar } from "notistack";
 import React from "react";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { Navigate, useLocation, useParams } from "react-router-dom";
+import { toast } from "react-toastify";
 
 export const ProtectedRoute = ({ children }) => {
   const location = useLocation();
@@ -36,8 +36,6 @@ export const CheckUserData = ({ children }) => {
   const data = useSelector((state) => state.user?.user);
   const { requestData } = useSelector((state) => state.requestModel);
 
-  const { enqueueSnackbar } = useSnackbar();
-
   let userData = false;
 
   if (
@@ -53,10 +51,10 @@ export const CheckUserData = ({ children }) => {
 
   useEffect(() => {
     if (!userData) {
-      enqueueSnackbar(
-        "Your profile is not updated. Please Update your profile page.",
-        { variant: "warning" }
-      );
+      toast("Your profile is not updated. Please Update your profile page.", {
+        type: "warning",
+        theme: "colored",
+      });
     }
   }, []);
 

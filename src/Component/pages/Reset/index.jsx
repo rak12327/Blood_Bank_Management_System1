@@ -5,7 +5,6 @@ import { useNavigate, useParams } from "react-router-dom";
 import Loading from "../../Export/Icons/Loading";
 import { ResetPasswordThunk } from "../../Redux/Authentication/ResetPasswordSlice";
 import { ResetDefault } from "../../Export/Default/Login";
-import { useSnackbar } from "notistack";
 
 const ResetPassword = () => {
   const [value, setValue] = useState(ResetDefault);
@@ -14,7 +13,6 @@ const ResetPassword = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const userData = useSelector((state) => state.auth);
-  const { enqueueSnackbar } = useSnackbar();
 
   const changeHandler = (e) => {
     setValue((event) => ({
@@ -31,7 +29,6 @@ const ResetPassword = () => {
         navigate,
         token: params?.token,
         setValue,
-        enqueueSnackbar,
       })
     );
   };
@@ -68,9 +65,7 @@ const ResetPassword = () => {
                 type="submit"
                 className="w-[100%] mt-[.5rem] bg-[black] text-[#fff] text-md py-[.5rem] rounded"
               >
-                {userData?.loading && (
-                  <Loading width={"1rem"} height={"1rem"} />
-                )}
+                {userData?.loading && <Loading />}
                 Submit
               </button>
             </form>

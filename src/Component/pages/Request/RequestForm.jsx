@@ -1,22 +1,17 @@
-import { useSnackbar } from "notistack";
 import React from "react";
 import { useState } from "react";
 import Datepicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
-import { inValidCSS, validCSS } from "../../Export";
 import { defaultRequestValue } from "../../Export/Default/RequestForm";
 import Loading from "../../Export/Icons/Loading";
-import { openAlert } from "../../Redux/Model/AlertSlice";
 import { requestFormThunk } from "../../Redux/Request/RequestFormSlice";
 
 const RequestForm = () => {
   const navigate = useNavigate();
   const userData = useSelector((state) => state.user.user);
   const data = useSelector((state) => state.requestModel.requestData);
-  const { enqueueSnackbar } = useSnackbar();
 
   const [input, setInput] = useState(defaultRequestValue);
 
@@ -62,7 +57,7 @@ const RequestForm = () => {
                       <input
                         type={"text"}
                         placeholder="Patient Name"
-                        className={validCSS}
+                        className={"inputField"}
                         value={input.patientName || ""}
                         name={"patientName"}
                         onChange={changeHandler}
@@ -77,7 +72,7 @@ const RequestForm = () => {
                           <input
                             type="tel"
                             placeholder="18"
-                            className={validCSS}
+                            className={"inputField"}
                             value={input.age || ""}
                             name="age"
                             onChange={changeHandler}
@@ -88,7 +83,7 @@ const RequestForm = () => {
                         <div className="mb-[.5rem]">
                           <label className="block mb-[.2rem]">Gender</label>
                           <select
-                            className={validCSS}
+                            className={"inputField"}
                             value={input.gender || ""}
                             onChange={changeHandler}
                             name={"gender"}
@@ -110,7 +105,7 @@ const RequestForm = () => {
                       <input
                         type={"text"}
                         placeholder="Hospital Name"
-                        className={validCSS}
+                        className={"inputField"}
                         value={input.hospitalName || ""}
                         name={"hospitalName"}
                         onChange={changeHandler}
@@ -126,7 +121,7 @@ const RequestForm = () => {
                         type={"tel"}
                         name="hospitalPhoneNumber"
                         placeholder="Hospital Phone Number"
-                        className={validCSS}
+                        className={"inputField"}
                         value={input.hospitalPhoneNumber || ""}
                         onChange={changeHandler}
                       />
@@ -140,7 +135,7 @@ const RequestForm = () => {
                       <input
                         type={"text"}
                         placeholder="Consultant Name"
-                        className={validCSS}
+                        className={"inputField"}
                         value={input.consultantName || ""}
                         name={"consultantName"}
                         onChange={changeHandler}
@@ -153,7 +148,7 @@ const RequestForm = () => {
                       </label>
                       <Datepicker
                         selected={input?.dateOfReceivingBlood}
-                        className={validCSS}
+                        className={"inputField"}
                         minDate={new Date()}
                         onChange={(date) =>
                           setInput((values) => ({
@@ -180,7 +175,7 @@ const RequestForm = () => {
                     <button
                       onClick={submitHandler}
                       disabled={responseData.loading}
-                      className="bg-[black] text-[#ffff] w-[100%] lg:w-[10%] py-[.4rem] outline-none text-sm rounded"
+                      className="bg-black text-white w-full lg:w-[10%] p-1 outline-none text-sm rounded"
                     >
                       {responseData.loading && <Loading />}
                       Submit

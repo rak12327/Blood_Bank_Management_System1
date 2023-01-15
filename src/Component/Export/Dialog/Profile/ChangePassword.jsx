@@ -9,26 +9,22 @@ import { useDispatch, useSelector } from "react-redux";
 import { closeForm } from "../../../Redux/Model/DailogHandlerSlice";
 import { defaultPasswordValue } from "../../Default/Password";
 import { changePasswordThunk } from "../../../Redux/Authentication/ChangePasswordSlice";
-import { useSnackbar } from "notistack";
-
 
 const ChangePassword = () => {
   const open = useSelector((state) => state.dailog?.type);
 
   const dispatch = useDispatch();
-  const { enqueueSnackbar } = useSnackbar();
 
-
-  const [passwordValue, setPasswordValue] = useState(defaultPasswordValue)
+  const [passwordValue, setPasswordValue] = useState(defaultPasswordValue);
 
   const changeHandler = (e) => {
-    setPasswordValue({ ...passwordValue, [e.target.name]: e.target.value })
-  }
+    setPasswordValue({ ...passwordValue, [e.target.name]: e.target.value });
+  };
 
   const submitHandler = async (e) => {
     e.preventDefault();
-    dispatch(changePasswordThunk({ value: passwordValue, setPasswordValue, enqueueSnackbar }))
-  }
+    dispatch(changePasswordThunk({ value: passwordValue, setPasswordValue }));
+  };
 
   return (
     <Fragment>
@@ -83,11 +79,7 @@ const ChangePassword = () => {
           <button onClick={() => dispatch(closeForm())} className="userButton">
             Close
           </button>
-          <button
-            className="userButton"
-            type="submit"
-            onClick={submitHandler}
-          >
+          <button className="userButton" type="submit" onClick={submitHandler}>
             Submit
           </button>
         </DialogFooter>

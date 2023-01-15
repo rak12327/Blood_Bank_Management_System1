@@ -4,17 +4,15 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import Loading from "../../Export/Icons/Loading";
 import { ForgotPasswordThunk } from "../../Redux/Authentication/ForgotPasswordSlice";
-import { useSnackbar } from "notistack";
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState("");
   const dispatch = useDispatch();
-  const { enqueueSnackbar } = useSnackbar();
   const userData = useSelector((state) => state.auth);
 
   const submitHandler = (e) => {
     e.preventDefault();
-    dispatch(ForgotPasswordThunk({ email, setEmail, enqueueSnackbar }));
+    dispatch(ForgotPasswordThunk({ email, setEmail }));
   };
   return (
     <div className="bg-[red] h-[100vh]">

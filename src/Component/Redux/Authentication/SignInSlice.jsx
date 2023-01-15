@@ -1,38 +1,40 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk } from "@reduxjs/toolkit";
+import { toast } from "react-toastify";
 import Api, { signInLink } from "../../API/Api";
 import { defaultValue, SignInSchema } from "../../Export/Default/Login";
 
 export const SignInThunk = createAsyncThunk(
   "signin",
-  async (
-    { value, navigate, state, enqueueSnackbar, setValue },
-    { rejectWithValue }
-  ) => {
+  async ({ value, navigate, state, setValue }, { rejectWithValue }) => {
     try {
       await SignInSchema.validate(value, { abortEarly: false });
       const response = await Api.post(signInLink, value);
-      setValue(defaultValue);
-      enqueueSnackbar(`Welcome back!!!`, { variant: "success" });
+      // setValue(defaultValue);
+      toast(`Welcome back!!!`, { type: "success", theme: "colored" });
       await navigate(state?.path || "/");
       // window.location.reload();
       return response.data;
     } catch (error) {
       if (error.errors) {
-        enqueueSnackbar(error.errors[0], { variant: "warning" });
+        toast(error.errors[0], { type: "warning", theme: "colored" });
       } else if (
         error.message === "Network Error" ||
         error?.response?.data?.message ===
           `Can't find ${signInLink} on this server!`
       ) {
-        enqueueSnackbar(
+        toast(
           "Something went wrong from network site, Please try again later",
-          { variant: "error" }
+          { type: "error", theme: "colored" }
         );
       } else if (error?.response?.data?.message) {
-        enqueueSnackbar(error?.response?.data?.message, { variant: "error" });
+        toast(error?.response?.data?.message, {
+          type: "error",
+          theme: "colored",
+        });
       } else {
-        enqueueSnackbar("Something went wrong, Please try again later", {
-          variant: "error",
+        toast("Something went wrong, Please try again later", {
+          type: "error",
+          theme: "colored",
         });
       }
       return rejectWithValue({ error, message: "Something went wrong" });

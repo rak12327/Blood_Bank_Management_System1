@@ -8,6 +8,8 @@ const Complete = () => {
   const { token } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const completeList = useSelector((state) => state.requestList.completeList);
+  const responseData = useSelector((state) => state.requestForm);
+
   console.log(completeList);
 
   useEffect(() => {

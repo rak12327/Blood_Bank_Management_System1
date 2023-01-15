@@ -13,7 +13,6 @@ import { Route, Routes } from "react-router-dom";
 import ForgotPassword from "./Component/pages/ForgotPassword";
 import ResetPassword from "./Component/pages/Reset";
 import { useDispatch, useSelector } from "react-redux";
-import Toster from "./Component/Export/Alert";
 import User from "./Component/pages/Profile/User";
 import RequestOrder from "./Component/pages/Profile/RequestOrder";
 import {
@@ -27,7 +26,6 @@ import Loading from "./Component/Export/Icons/Loading";
 import RequestList from "./Component/pages/Profile/RequestList/RequestList";
 import NotComplete from "./Component/pages/Profile/RequestList/NotComplete";
 import Complete from "./Component/pages/Profile/RequestList/Complete";
-import { useSnackbar } from "notistack";
 import { ToastContainer, cssTransition } from "react-toastify";
 import "animate.css/animate.min.css";
 import "react-toastify/dist/ReactToastify.css";
@@ -38,16 +36,14 @@ const bounce = cssTransition({
 });
 
 const App = () => {
-  const alert = useSelector((state) => state.alert);
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
   const { token } = useSelector((state) => state.auth);
-  const { enqueueSnackbar } = useSnackbar();
 
   // const token = localStorage.getItem("token");
   useEffect(() => {
     if (token) {
-      dispatch(UserDataThunk({ token, enqueueSnackbar }));
+      dispatch(UserDataThunk({ token }));
     }
   }, [token]);
 
@@ -61,92 +57,84 @@ const App = () => {
   }
 
   return (
-    <>
-      <ToastContainer transition={bounce} />
-      <div>
-        {alert.alertOpen && (
-          <div className="w-[100%] relative z-50">
-            <Toster />
-          </div>
-        )}
-
-        <Routes>
-          <Route
-            element={
-              // <ProtectedRoute>
-              <Home />
-              // </ProtectedRoute>
-            }
-            path="/"
-          />
-          <Route
-            element={
-              // <ProtectedRoute>
-              <Profile />
-              // </ProtectedRoute>
-            }
-            path="profile/"
-          >
-            <Route element={<User />} index path="user" />
-            <Route element={<RequestOrder />} path="request-order-list">
-              <Route element={<RequestList />} path="request-list"></Route>
-              <Route element={<NotComplete />} path="not-complete"></Route>
-              <Route element={<Complete />} path="complete"></Route>
-            </Route>
+    <div>
+      <ToastContainer transition={bounce} className="z-50" />
+      <Routes>
+        <Route
+          element={
+            // <ProtectedRoute>
+            <Home />
+            // </ProtectedRoute>
+          }
+          path="/"
+        />
+        <Route
+          element={
+            // <ProtectedRoute>
+            <Profile />
+            // </ProtectedRoute>
+          }
+          path="profile/"
+        >
+          <Route element={<User />} index path="user" />
+          <Route element={<RequestOrder />} path="request-order-list">
+            <Route element={<RequestList />} path="request-list"></Route>
+            <Route element={<NotComplete />} path="not-complete"></Route>
+            <Route element={<Complete />} path="complete"></Route>
           </Route>
+        </Route>
 
-          <Route element={<Request />} path="request" />
-          <Route
-            element={
-              <ProtectedRoute>
-                <CheckUserData>
-                  <RequestForm />
-                </CheckUserData>
-              </ProtectedRoute>
-            }
-            path="request-form"
-          />
+        <Route element={<Request />} path="request" />
+        <Route
+          element={
+            <ProtectedRoute>
+              <CheckUserData>
+                <RequestForm />
+              </CheckUserData>
+            </ProtectedRoute>
+          }
+          path="request-form"
+        />
 
-          <Route
-            element={
-              <CheckRoute>
-                <Login />
-              </CheckRoute>
-            }
-            path="/sign-in"
-          />
+        <Route
+          element={
+            <CheckRoute>
+              <Login />
+            </CheckRoute>
+          }
+          path="/sign-in"
+        />
 
-          <Route
-            element={
-              <CheckRoute>
-                <Register />
-              </CheckRoute>
-            }
-            path="/sign-up"
-          />
-          <Route
-            path="/forgot-password"
-            element={
-              <CheckRoute>
-                <ForgotPassword />
-              </CheckRoute>
-            }
-          />
-          <Route
-            path="/reset-password/:token"
-            element={
-              <ProtectResetPassword>
-                <ResetPassword />
-              </ProtectResetPassword>
-            }
-          />
-          <Route element={<Contact />} path="/contact-us" />
-          <Route element={<Donor />} path="/donor" />
+        <Route
+          element={
+            <CheckRoute>
+              <Register />
+            </CheckRoute>
+          }
+          path="/sign-up"
+        />
+        <Route
+          path="/forgot-password"
+          element={
+            <CheckRoute>
+              <ForgotPassword />
+            </CheckRoute>
+          }
+        />
+        <Route
+          path="/reset-password/:token"
+          element={
+            <ProtectResetPassword>
+              <ResetPassword />
+            </ProtectResetPassword>
+          }
+        />
+        <Route element={<Contact />} path="/contact-us" />
+        <Route element={<Donor />} path="/donor" />
 
-          <Route element={<h1>Hello</h1>} path="/*" />
-        </Routes>
-      </div>
-    </>
+        <Route element={<h1>Hello</h1>} path="/*" />
+      </Routes>
+    </div>
   );
 };
 

@@ -1,9 +1,10 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { toast } from "react-toastify";
 import Api, { userLink } from "../../API/Api";
 
 export const UserDataThunk = createAsyncThunk(
   "userData",
-  async ({ token, enqueueSnackbar }, { rejectWithValue }) => {
+  async ({ token }, { rejectWithValue }) => {
     try {
       const response = await Api.get(userLink, {
         headers: { Authorization: "Bearer " + token },
@@ -13,31 +14,34 @@ export const UserDataThunk = createAsyncThunk(
     } catch (error) {
       if (error.response && error.response.data.message) {
         if (error.response.data.message === "Please login again.") {
-          enqueueSnackbar("Something Went Wrong", { variant: "error" });
+          toast("Something Went Wrong", {
+            type: "error",
+            theme: "colored",
+          });
         }
         if (error.response.data.error.message === "invalid signature") {
-          enqueueSnackbar(
-            "Your Account can't dedected, Please log in again!!",
-            { variant: "error" }
-          );
+          toast("Your Account can't dedected, Please log in again!!", {
+            type: "success",
+            theme: "colored",
+          });
         }
 
         if (error.response.data.error.message === "jwt expired") {
           localStorage.removeItem("token");
           //Check if i can navigate to home page?
-          enqueueSnackbar(
-            "Opps, Your session is expired. Please login again...",
-            { variant: "error" }
-          );
+          toast("Opps, Your session is expired. Please login again...", {
+            type: "success",
+            theme: "colored",
+          });
         }
 
-        enqueueSnackbar(error.response.data.message, { variant: "error" });
+        toast(error.response.data.message, { type: "error", theme: "colored" });
         return rejectWithValue(error.response.data.message);
       } else {
-        enqueueSnackbar(
-          "Something went wrong with network site, Please try again late",
-          { variant: "error" }
-        );
+        toast("Something went wrong with network site, Please try again late", {
+          type: "error",
+          theme: "colored",
+        });
         return rejectWithValue(error);
       }
 

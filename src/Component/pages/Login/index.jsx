@@ -1,4 +1,3 @@
-import { useSnackbar } from "notistack";
 import React from "react";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -14,7 +13,6 @@ const Login = () => {
   const data = useSelector((state) => state.auth);
 
   const [value, setValue] = useState(defaultValue);
-  const { enqueueSnackbar } = useSnackbar();
 
   const changeHandler = (e) => {
     setValue({ ...value, [e.target.name]: e.target.value });
@@ -23,9 +21,7 @@ const Login = () => {
   const signInHandler = (e) => {
     e.preventDefault();
 
-    dispatch(
-      SignInThunk({ value, navigate, state, enqueueSnackbar, setValue })
-    );
+    dispatch(SignInThunk({ value, navigate, state, setValue }));
   };
   return (
     <div className="bg-red-500 h-screen">

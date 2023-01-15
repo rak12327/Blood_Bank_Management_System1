@@ -1,13 +1,11 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
+import { toast } from "react-toastify";
 import Api, { signUpLink } from "../../API/Api";
 import { defaultSignup, SignUpSchema } from "../../Export/Default/Login";
 
 export const SignUpSliceThunk = createAsyncThunk(
   "userAuth",
-  async (
-    { input, enqueueSnackbar, navigate, state, setInput },
-    { rejectWithValue }
-  ) => {
+  async ({ input, navigate, state, setInput }, { rejectWithValue }) => {
     const value = {
       name: input.firstName + " " + input.lastName,
       email: input.email,
@@ -18,28 +16,32 @@ export const SignUpSliceThunk = createAsyncThunk(
       await SignUpSchema.validate(input, { abortEarly: false });
       const response = await Api.post(signUpLink, value);
       setInput(defaultSignup);
-      enqueueSnackbar(`Welcome ${value.name}`, { varaint: "success" });
+      toast(`Welcome ${value.name}`, { type: "success" });
       localStorage.setItem("token", JSON.stringify(response?.data?.token));
       await navigate(state?.path || "/");
       return response;
     } catch (error) {
       console.log(error);
       if (error.errors) {
-        enqueueSnackbar(error.errors[0], { variant: "warning" });
+        toast(error.errors[0], { type: "warning", theme: "colored" });
       } else if (
         error.message === "Network Error" ||
         error?.response?.data?.message ===
           `Can't find ${signUpLink} on this server!`
       ) {
-        enqueueSnackbar(
+        toast(
           "Something went wrong from network site, Please try again later",
-          { variant: "error" }
+          { type: "error", theme: "colored" }
         );
       } else if (error?.response?.data?.message) {
-        enqueueSnackbar(error?.response?.data?.message, { variant: "error" });
+        toast(error?.response?.data?.message, {
+          type: "error",
+          theme: "colored",
+        });
       } else {
-        enqueueSnackbar("Something went wrong, Please try again later", {
-          variant: "error",
+        toast("Something went wrong, Please try again later", {
+          type: "error",
+          theme: "colored",
         });
       }
       return rejectWithValue({ error, message: "Somthing went wrong!!!" });
