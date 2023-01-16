@@ -10,7 +10,10 @@ export const SignInThunk = createAsyncThunk(
       await SignInSchema.validate(value, { abortEarly: false });
       const response = await Api.post(signInLink, value);
       setValue(defaultValue);
-      toast(`Welcome back!!!`, { type: "success", theme: "colored" });
+      console.log(response);
+      // toast(`Welcome`, { type: "success", theme: "colored" });
+      // toast(`Welcome back!!!`, { type: "success", theme: "colored" });
+      localStorage.setItem("token", JSON.stringify(response?.data?.token));
       await navigate(state?.path || "/");
       // window.location.reload();
       return response.data;

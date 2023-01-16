@@ -30,9 +30,10 @@ const AuthSlice = createSlice({
     });
     builder.addCase(SignInThunk.fulfilled, (state, action) => {
       state.loading = false;
-      localStorage.setItem("token", JSON.stringify(action?.payload?.token));
+      // localStorage.setItem("token", JSON.stringify(action?.payload?.token));
       state.token = action.payload.token;
       state.data = action.payload;
+      state.error = null;
     });
     builder.addCase(SignInThunk.rejected, (state, action) => {
       state.loading = false;

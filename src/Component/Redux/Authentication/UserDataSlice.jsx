@@ -10,6 +10,7 @@ export const UserDataThunk = createAsyncThunk(
         headers: { Authorization: "Bearer " + token },
       });
       // console.log(response)
+      toast(`Welcome`, { type: "success", theme: "colored" });
       return response.data;
     } catch (error) {
       if (error.response && error.response.data.message) {
