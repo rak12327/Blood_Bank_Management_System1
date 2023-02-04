@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { defaultRequestValue } from "../../Export/Default/RequestForm";
 import Loading from "../../Export/Icons/Loading";
-import { requestFormThunk } from "../../Redux/Request/RequestFormSlice";
+import { requestFormThunk } from "../../Redux/Request/RequestFromThunk";
 
 const RequestForm = () => {
   const navigate = useNavigate();

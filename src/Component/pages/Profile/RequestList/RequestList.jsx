@@ -8,11 +8,11 @@ import {
 import "react-datepicker/dist/react-datepicker.css";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { RequestFormListBeforeDeliver } from "../../../Redux/Request/RequestFromThunk";
 import ChevronUp from "../../../Export/Icons/ChevronUp";
 import { Data, formatDate } from "../../../Export";
 import { RequestFormEdit } from "../../../Export/Dialog/RequestFormEdit";
 import { openForm } from "../../../Redux/Model/DailogHandlerSlice";
+import { RequestFormListBeforeDeliver } from "../../../Redux/Request/RequestFromThunk";
 
 const RequestList = () => {
   const [open, setOpen] = useState(0);
@@ -26,10 +26,10 @@ const RequestList = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (token) {
-      dispatch(RequestFormListBeforeDeliver({ dispatch }));
-    }
-  }, [token, dispatch]);
+    // if (token) {
+    // }
+    dispatch(RequestFormListBeforeDeliver({ dispatch }));
+  }, []);
 
   console.log(listData);
 

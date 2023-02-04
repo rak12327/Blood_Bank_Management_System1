@@ -12,11 +12,12 @@ import Datepicker from "react-datepicker";
 import { closeForm } from "../../Redux/Model/DailogHandlerSlice";
 import { UpdatedRequestList } from "../../Redux/Request/RequestFromThunk";
 import { RequestFormEditDefault } from "../Default/RequestFormEdit";
+import { defaultRequestValue } from "../Default/RequestForm";
 
 export const RequestFormEdit = () => {
   const open = useSelector((state) => state?.dailog?.type);
 
-  const [input, setInput] = useState(RequestFormEditDefault);
+  const [input, setInput] = useState(defaultRequestValue);
 
   const changeHandler = (e) => {
     setInput((values) => ({ ...values, [e.target.name]: e.target.value }));
@@ -26,6 +27,7 @@ export const RequestFormEdit = () => {
 
   const handleOpen = () => {
     dispatch(closeForm());
+    setInput(defaultRequestValue);
   };
 
   const handleOpenForm = (e) => {
@@ -152,18 +154,20 @@ export const RequestFormEdit = () => {
               }
               filterDate={(date) => date.getDay() !== 0}
               fixedHeight
-              placeholderText={formatDate(new Date())}
+              // placeholderText={formatDate(new Date())}
             />
           </div>
           {/* </div> */}
         </DialogBody>
-        <DialogFooter className="flexBtw">
-          <button onClick={handleOpen} className="blackButton">
-            <span>Cancel</span>
-          </button>
-          <button className="blackButton" onClick={handleOpenForm}>
-            <span>Confirm</span>
-          </button>
+        <DialogFooter>
+          <div className="flexBtw w-full">
+            <button onClick={handleOpen} className="blackButton">
+              <span>Cancel</span>
+            </button>
+            <button className="blackButton" onClick={handleOpenForm}>
+              <span>Confirmm</span>
+            </button>
+          </div>
         </DialogFooter>
       </Dialog>
     </Fragment>

@@ -14,6 +14,7 @@ const User = () => {
   const { loading } = useSelector((state) => state.update);
   const dispatch = useDispatch();
 
+  console.log(data)
   const [updateAcc, setUpdateAcc] = useState("");
 
   const [value, setValue] = useState({

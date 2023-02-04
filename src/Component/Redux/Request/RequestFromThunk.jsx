@@ -5,11 +5,14 @@ import Api, {
   ComponentName,
   deleteRequestFromList,
   requestFormComplete,
+  requestFormLink,
   requestFormList,
   requestFormNotComplete,
   updatedRequestForm,
 } from "../../API/Api";
+import { RequestFormSchema } from "../../Export/Default/RequestForm";
 import { closeForm } from "../Model/DailogHandlerSlice";
+import { clearModelData } from "../Model/RequestModel";
 
 export const RequestFormListBeforeDeliver = createAsyncThunk(
   requestFormList,
@@ -147,23 +150,69 @@ export const BloodDetailsThunk = createAsyncThunk(
   }
 );
 
+// Create request order
+export const requestFormThunk = createAsyncThunk(
+  "request-form",
+  async ({ input, dispatch, navigate, token }, { rejectWithValue }) => {
+    try {
+      await RequestFormSchema.validate(input, { abortEarly: false });
+      const response = await Api.post(requestFormLink, input, {
+        headers: {
+          Authorization: `Bearer ` + token,
+        },
+      });
+      toast("your response was succussfully submited", {
+        type: "success",
+        theme: "colored",
+      });
+      await navigate("/request");
+      // console.log(response)
+      await dispatch(clearModelData());
+      return response.data;
+    } catch (error) {
+      if (error.errors) {
+        toast(error.errors[0], { type: "error", theme: "colored" });
+      } else if (error.response && error.response.data.message) {
+        toast(error.response.data.message, { type: "error", theme: "colored" });
+        rejectWithValue(error.response.data);
+      } else {
+        toast("Something went wrong, Please try again later", {
+          type: "error",
+          theme: "colored",
+        });
+        dispatch(clearModelData());
+        return rejectWithValue({
+          error,
+          message: "Opps there seems to be an error",
+        });
+      }
+    }
+  }
+);
+
+// Update Request order
 export const UpdatedRequestList = createAsyncThunk(
   "updatedRequestList",
   async ({ dispatch, id, input }, { rejectWithValue }) => {
-    dispatch(closeForm());
     try {
+      await RequestFormSchema.validate(input, { abortEarly: false });
       const result = await Api.patch(`${updatedRequestForm}/${id}`, input, {
         headers: {
           Authorization: `Bearer ` + JSON.parse(localStorage.getItem("token")),
         },
       });
       console.log(result.data);
+      dispatch(closeForm());
+
       return result.data;
     } catch (error) {
-      if (error.response && error.response.data.message) {
+      if (error.errors) {
+        toast(error.errors[0], { type: "error", theme: "colored" });
+      } else if (error.response && error.response.data.message) {
         toast(error.response.data.message, { type: "error", theme: "colored" });
         return rejectWithValue(error.response.data);
       } else {
+        dispatch(closeForm());
         toast(
           "Opps, It;s seems Something is wrong form our site, Please try again later",
           { type: "error", theme: "colored" }

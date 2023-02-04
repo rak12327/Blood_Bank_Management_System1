@@ -12,6 +12,10 @@ body {
   z-index: 999 !important;
 }
 
+.Toastify div {
+  z-index: 9999 !important;
+}
+
 @layer components {
   /* universel css */
   .mainDiv {
