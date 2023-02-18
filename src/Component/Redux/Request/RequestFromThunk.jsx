@@ -10,9 +10,13 @@ import Api, {
   requestFormNotComplete,
   updatedRequestForm,
 } from "../../API/Api";
-import { RequestFormSchema } from "../../Export/Default/RequestForm";
+import {
+  defaultRequestValue,
+  RequestFormSchema,
+} from "../../Export/Default/RequestForm";
 import { closeForm } from "../Model/DailogHandlerSlice";
 import { clearModelData } from "../Model/RequestModel";
+import { updateRequestList } from "./RequestFormListSlice";
 
 export const RequestFormListBeforeDeliver = createAsyncThunk(
   requestFormList,
@@ -155,6 +159,7 @@ export const requestFormThunk = createAsyncThunk(
   "request-form",
   async ({ input, dispatch, navigate, token }, { rejectWithValue }) => {
     try {
+      console.log(input);
       await RequestFormSchema.validate(input, { abortEarly: false });
       const response = await Api.post(requestFormLink, input, {
         headers: {
@@ -193,7 +198,7 @@ export const requestFormThunk = createAsyncThunk(
 // Update Request order
 export const UpdatedRequestList = createAsyncThunk(
   "updatedRequestList",
-  async ({ dispatch, id, input }, { rejectWithValue }) => {
+  async ({ dispatch, id, input, setInput }, { rejectWithValue }) => {
     try {
       await RequestFormSchema.validate(input, { abortEarly: false });
       const result = await Api.patch(`${updatedRequestForm}/${id}`, input, {
@@ -202,9 +207,12 @@ export const UpdatedRequestList = createAsyncThunk(
         },
       });
       console.log(result.data);
+      setInput(defaultRequestValue);
+      dispatch(updateRequestList({ ...input, id }));
       dispatch(closeForm());
 
       return result.data;
+      // return input;
     } catch (error) {
       if (error.errors) {
         toast(error.errors[0], { type: "error", theme: "colored" });

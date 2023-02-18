@@ -6,12 +6,10 @@ import {
   DialogFooter,
 } from "@material-tailwind/react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import { formatDate, inValidCSS, validCSS } from "..";
 import Datepicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 import { closeForm } from "../../Redux/Model/DailogHandlerSlice";
 import { UpdatedRequestList } from "../../Redux/Request/RequestFromThunk";
-import { RequestFormEditDefault } from "../Default/RequestFormEdit";
 import { defaultRequestValue } from "../Default/RequestForm";
 
 export const RequestFormEdit = () => {
@@ -154,7 +152,6 @@ export const RequestFormEdit = () => {
               }
               filterDate={(date) => date.getDay() !== 0}
               fixedHeight
-              // placeholderText={formatDate(new Date())}
             />
           </div>
           {/* </div> */}

@@ -33,7 +33,7 @@ const RequestList = () => {
 
   console.log(listData);
 
-  if (listData?.message === "No Data found") {
+  if (listData?.length === 0) {
     return (
       <div>
         <h1>No Data found</h1>
