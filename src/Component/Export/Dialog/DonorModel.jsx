@@ -18,9 +18,7 @@ const DonorModel = ({ open, handleOpen, setOpen }) => {
 
     const submitHandler = e => {
         e.preventDefault()
-
         console.log(input);
-
         setOpen(!open)
     }
 
@@ -34,6 +32,7 @@ const DonorModel = ({ open, handleOpen, setOpen }) => {
                     mount: { scale: 1, y: 0 },
                     unmount: { scale: 0.9, y: -100 },
                 }}
+                className="min-w-[90%] w-4/5"
             >
                 <DialogHeader
                 >

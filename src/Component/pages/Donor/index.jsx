@@ -1,6 +1,6 @@
 import React from "react";
 import { useState } from "react";
-import DonorModel from "../../Export/DonorModel";
+import DonorModel from "../../Export/Dialog/DonorModel";
 import NavBar from "../Home/NavBar";
 
 const Donor = () => {
@@ -12,7 +12,7 @@ const Donor = () => {
   }
 
   return (
-    <div className="bg-[red] h-[100vh]">
+    <div className="bg-[red] min-h-[100vh]">
       <NavBar />
       <div className="max-w-[1300px] mx-auto px-[1rem] lg:px-[2rem] py-[2rem] flex">
         <div className="px-[1rem] py-[2rem] max-w-[1000px] m-auto bg-[#fff] rounded-xl flex flex-col md:flex-row items-center justify-around">
@@ -25,7 +25,7 @@ const Donor = () => {
               Blood donation is a community responsibility. While you're reading this, a local patient needs blood.
             </p>
 
-            <ul className="ml-[1rem] my-[.5rem] text-[.8rem]">
+            <ul className="ml-[1rem] my-[.5rem] text-[.8rem] list-disc">
               <li>
                 <i>
                   Blood is needed every two seconds.
@@ -64,9 +64,8 @@ const Donor = () => {
             </div>
           </div>
         </div>
-        <DonorModel open={open} handleOpen={handleOpen} setOpen={setOpen} />
       </div>
-
+        <DonorModel open={open} handleOpen={handleOpen} setOpen={setOpen} />
     </div>
   );
 };
