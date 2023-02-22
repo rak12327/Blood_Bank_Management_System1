@@ -13,18 +13,18 @@ const NavBar = () => {
   // const user = JSON.parse(localStorage.getItem("token"));
 
   return (
-    <div className="h-[3.5rem] lg:h-[4rem]">
-      <div className="fixed top-0 z-20 w-[100%] bg-[#fff] shadow-sm">
-        <div className="flex justify-center">
-          <div className="max-w-[1300px] w-[100%] h-[3.5rem] lg:h-[4rem] border-b'">
+    <div className="h-14 lg:h-16">
+      <div className="fixed top-0 z-20 w-full bg-white shadow-sm border-b-2">
+        {/* <div className="flex justify-center"> */}
+          <div className="max-w-[1300px] mx-auto w-full h-14 lg:h-16 border-b'">
             {/* destop view */}
-            <div className="px-[1rem] py-[.8rem] flex items-center justify-between">
+            <div className="px-4 py-[.8rem] h-full flex items-center justify-between">
               <div className="w-[15%] md:w-[10%] lg:w-[7%]">
                 <img src="/assets/logo.png" alt="..." className="w-full" />
               </div>
               <div className="hidden sm:block">
                 <nav>
-                  <ul className="flex items-center justify-between gap-[1.25rem] md:gap-[2.5rem]">
+                  <ul className="flex items-center justify-between gap-5 md:gap-10">
                     <li>
                       <NavLink
                         to={"/"}
@@ -116,7 +116,7 @@ const NavBar = () => {
 
             {/* mobile view */}
             {!openNavBar && (
-              <nav className="sm:hidden bg-[#fff] max-h-[70vh] overflow-y-auto z-10 fixed shadow-md w-full duration-1000">
+              <nav className="sm:hidden bg-[#fff] h-[100vh] overflow-y-auto z-10 fixed shadow-md w-full duration-1000">
                 <ul className="px-[1.5rem] py-[1.5rem]">
                   <li className="border-b border-black py-[.5rem] ">
                     <NavLink
@@ -192,7 +192,7 @@ const NavBar = () => {
               </nav>
             )}
           </div>
-        </div>
+        {/* </div> */}
       </div>
     </div>
   );
