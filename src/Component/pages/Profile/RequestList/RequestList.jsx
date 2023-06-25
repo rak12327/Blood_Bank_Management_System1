@@ -31,9 +31,9 @@ const RequestList = () => {
     dispatch(RequestFormListBeforeDeliver({ dispatch }));
   }, []);
 
-  console.log(listData);
+  // console.log(listData);
 
-  if (listData?.length === 0) {
+  if (listData) {
     return (
       <div>
         <h1>No Data found</h1>
