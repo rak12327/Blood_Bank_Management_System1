@@ -1,4 +1,3 @@
-// import { PencilAltIcon, TrashIcon } from '@heroicons/react/outline'
 import { Fragment, useState } from "react";
 import {
   Accordion,
@@ -26,14 +25,11 @@ const RequestList = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    // if (token) {
-    // }
     dispatch(RequestFormListBeforeDeliver({ dispatch }));
   }, []);
 
-  // console.log(listData);
 
-  if (listData) {
+  if (!listData) {
     return (
       <div>
         <h1>No Data found</h1>
